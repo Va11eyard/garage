@@ -1,0 +1,21 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { InventorySurplusDocumentDto } from './InventorySurplusDocumentDto';
+import type { Pageablenull } from './Pageablenull';
+import type { Sortnull } from './Sortnull';
+export type PageInventorySurplusDocumentDto = {
+    totalElements?: number;
+    totalPages?: number;
+    pageable?: Pageablenull;
+    size?: number;
+    content?: Array<InventorySurplusDocumentDto>;
+    number?: number;
+    sort?: Sortnull;
+    first?: boolean;
+    last?: boolean;
+    numberOfElements?: number;
+    empty?: boolean;
+};
+

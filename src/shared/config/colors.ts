@@ -1,0 +1,15 @@
+export const GOV_COLORS = {
+    primary: '#007A33',
+    primaryHover: '#006329',
+    primaryActive: '#005221',
+    secondary: '#009B4C',
+    accent: '#FEC600',
+    danger: '#B51C2B',
+    warning: '#F59E0B',
+    info: '#3B82F6',
+    success: '#10B981',
+    dark: '#1F2937',
+    gray: '#6B7280',
+    surface: '#F6F8FA',
+    border: '#E5E7EB',
+} as const
