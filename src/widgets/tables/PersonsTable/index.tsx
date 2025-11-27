@@ -16,8 +16,13 @@ export function PersonsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
-    const { filters, debouncedFilters, updateFilter } = useFilters({ iin: '', fullName: '' })
-    const { data, isLoading } = usePersons({ ...debouncedFilters, page, size })
+    const { filters, debouncedFilters, updateFilter } = useFilters({ lastName: '', firstName: '' })
+    const { data, isLoading } = usePersons({ 
+        lastName: debouncedFilters.lastName || undefined, 
+        firstName: debouncedFilters.firstName || undefined, 
+        page, 
+        size 
+    })
     const deleteMutation = useDeletePerson()
 
     const handleDelete = (id: string) => {
@@ -36,20 +41,20 @@ export function PersonsTable() {
             <div className="flex justify-between items-end gap-4 mb-4">
                 <div className="flex gap-4 flex-1">
                     <div>
-                        <label className="block text-sm font-medium mb-1">{t('persons.iin')}</label>
+                        <label className="block text-sm font-medium mb-1">{t('persons.lastName')}</label>
                         <Input
-                            placeholder={t('persons.iin')}
-                            value={filters.iin}
-                            onChange={(e) => updateFilter('iin', e.target.value)}
+                            placeholder={t('persons.lastName')}
+                            value={filters.lastName}
+                            onChange={(e) => updateFilter('lastName', e.target.value)}
                             className="w-full"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">{t('persons.fullName')}</label>
+                        <label className="block text-sm font-medium mb-1">{t('persons.firstName')}</label>
                         <Input
-                            placeholder={t('persons.fullName')}
-                            value={filters.fullName}
-                            onChange={(e) => updateFilter('fullName', e.target.value)}
+                            placeholder={t('persons.firstName')}
+                            value={filters.firstName}
+                            onChange={(e) => updateFilter('firstName', e.target.value)}
                             className="w-full"
                         />
                     </div>

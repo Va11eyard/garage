@@ -6,7 +6,7 @@ import {
 } from '@/shared/api/generated/__swagger_client'
 
 export class OrgUnitService {
-    async listByOrganization(orgId: string): Promise<OrgUnitDto[]> {
+    async listByOrganization1(orgId: string): Promise<OrgUnitDto[]> {
         return Service.listByOrganization1(orgId)
     }
 
@@ -18,7 +18,12 @@ export class OrgUnitService {
         page?: number
         size?: number
     }) {
-        return Service.search7(params.code, params.name, params.orgId, params.type, params.page, params.size)
+        // No paginated search endpoint for org-units - use listByOrganization
+        if (params.orgId) {
+            return Service.listByOrganization1(params.orgId)
+        }
+        // Return empty array if no orgId provided
+        return []
     }
 
     async get(id: string): Promise<OrgUnitDto> {

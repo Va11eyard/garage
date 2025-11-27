@@ -100,6 +100,7 @@ export type { PageReturnDocumentDto } from './models/PageReturnDocumentDto';
 export type { PageTemporaryIssueDocumentDto } from './models/PageTemporaryIssueDocumentDto';
 export type { PageUnitOfMeasureDto } from './models/PageUnitOfMeasureDto';
 export type { PageUserDto } from './models/PageUserDto';
+export type { PageWarehouseDto } from './models/PageWarehouseDto';
 export type { PageWriteOffDocumentDto } from './models/PageWriteOffDocumentDto';
 export type { PersonCreateRequest } from './models/PersonCreateRequest';
 export type { PersonDto } from './models/PersonDto';

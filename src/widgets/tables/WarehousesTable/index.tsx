@@ -5,10 +5,12 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useDeleteWarehouse } from '@/features/manage-warehouses/model/useDeleteWarehouse'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Spinner } from '@/shared/ui/spinner'
@@ -26,19 +28,24 @@ export function WarehousesTable() {
     const { data: organizations } = useOrganizations({})
     const { data: warehouses, isLoading } = useWarehouses({ ...debouncedFilters, page, size })
     const deleteMutation = useDeleteWarehouse()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('warehouses.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('warehouses.deleteConfirm'),
+            t('warehouses.deleteMessage') || 'Вы уверены, что хотите удалить этот склад?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: () => toast.error(t('common.error')),
+                })
+            }
+        )
     }
 
     const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const orgId = e.target.value
-        setFilters({ ...filters, organizationId: orgId, page: 0 })
+        setFilters({ ...filters, organizationId: orgId })
     }
 
     if (isLoading) return <Spinner />
@@ -98,7 +105,7 @@ export function WarehousesTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {warehouses?.content?.map((warehouse) => (
+                    {warehouses?.content?.map((warehouse: any) => (
                         <TableRow key={warehouse.id}>
                             <TableCell>{warehouse.code}</TableCell>
                             <TableCell>
@@ -136,6 +143,18 @@ export function WarehousesTable() {
                 </span>
                 <Button onClick={nextPage} disabled={warehouses?.last || page >= (warehouses?.totalPages ?? 1) - 1}>{t('pagination.next')}</Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

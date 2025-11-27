@@ -7,7 +7,7 @@ export function useDeleteInventory() {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, string>({
-        mutationFn: (id) => Service.delete21(id),
+        mutationFn: (id) => Service.delete22(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventories'] })
         },

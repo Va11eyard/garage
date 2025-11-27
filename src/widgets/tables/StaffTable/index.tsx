@@ -16,8 +16,12 @@ import { Route } from 'next'
 export function StaffTable() {
     const { t } = useTranslation()
     const { page, size, nextPage, previousPage } = usePagination()
-    const { filters, debouncedFilters, updateFilter } = useFilters({ personnelNumber: '', lastName: '' })
-    const { data, isLoading } = useStaff({ ...debouncedFilters, page, size })
+    const { filters, debouncedFilters, updateFilter } = useFilters({ personnelNumber: '' })
+    const { data, isLoading } = useStaff({ 
+        personnelNumber: debouncedFilters.personnelNumber || undefined, 
+        page, 
+        size 
+    })
     const dismissMutation = useDismissStaff()
 
     const handleDismiss = (id: string) => {
@@ -44,15 +48,6 @@ export function StaffTable() {
                             className="w-full"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('staff.lastName')}</label>
-                        <Input
-                            placeholder={t('staff.lastName')}
-                            value={filters.lastName}
-                            onChange={e => updateFilter('lastName', e.target.value)}
-                            className="w-full"
-                        />
-                    </div>
                 </div>
                 <Button variant="default" asChild className="shrink-0 text-black">
                     <Link href={"/staff/hiring" as Route}>{t('staff.hire')}</Link>
@@ -69,7 +64,7 @@ export function StaffTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map(employee => (
+                    {data?.content?.map((employee: any) => (
                         <TableRow key={employee.id}>
                             <TableCell>
                                 <Link href={`/staff/${employee.id}` as Route} className="underline">{employee.personnelNumber}</Link>

@@ -6,9 +6,11 @@ import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { X } from 'lucide-react'
 
 export function UserCreateForm() {
     const { t } = useTranslation()
@@ -39,6 +41,18 @@ export function UserCreateForm() {
             toast.error(t('common.error'))
         }
     }
+
+    const handleRoleSelect = (roleCode: string) => {
+        if (!formData.roles.includes(roleCode)) {
+            setFormData({ ...formData, roles: [...formData.roles, roleCode] })
+        }
+    }
+
+    const handleRoleRemove = (roleCode: string) => {
+        setFormData({ ...formData, roles: formData.roles.filter(r => r !== roleCode) })
+    }
+
+    const availableRoles = roles?.filter((role: any) => !formData.roles.includes(role.code)) || []
 
     return (
         <div className="space-y-6">
@@ -72,21 +86,40 @@ export function UserCreateForm() {
 
                 <div>
                     <GovLabel>{t('users.roles')}</GovLabel>
-                    <select 
-                        multiple 
-                        className="w-full border rounded px-3 py-2 min-h-[120px]"
-                        value={formData.roles}
-                        onChange={(e) => {
-                            const selected = Array.from(e.target.selectedOptions, option => option.value)
-                            setFormData({ ...formData, roles: selected })
-                        }}
-                    >
-                        {roles?.map((role: any) => (
-                            <option key={role.code} value={role.code}>
-                                {role.code} - {role.description}
-                            </option>
-                        ))}
-                    </select>
+                    <Select onValueChange={handleRoleSelect}>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select') + ' ' + t('users.roles').toLowerCase() + '...'} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {availableRoles.map((role: any) => (
+                                <SelectItem key={role.code} value={role.code}>
+                                    {role.code} - {role.description}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    {formData.roles.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                            {formData.roles.map((roleCode) => {
+                                const role = roles?.find((r: any) => r.code === roleCode)
+                                return (
+                                    <span
+                                        key={roleCode}
+                                        className="inline-flex items-center gap-1 px-2 py-1 bg-gov-blue-100 text-gov-blue-700 rounded-md text-sm"
+                                    >
+                                        {role?.code || roleCode}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRoleRemove(roleCode)}
+                                            className="hover:bg-gov-blue-200 rounded p-0.5"
+                                        >
+                                            <X className="w-3 h-3" />
+                                        </button>
+                                    </span>
+                                )
+                            })}
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex items-center gap-2">

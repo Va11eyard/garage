@@ -1,13 +1,14 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type WarehouseCreateRequest, type WarehouseDto } from '@/shared/api/generated/__swagger_client'
-
+import { type WarehouseCreateRequest, type WarehouseDto } from '@/shared/api/generated/__swagger_client'
+import { WarehouseService } from "./service";
+const service = new WarehouseService();
 export function useCreateWarehouse() {
     const queryClient = useQueryClient()
 
     return useMutation<WarehouseDto, Error, WarehouseCreateRequest>({
-        mutationFn: (data) => Service.create(data),
+        mutationFn: (data) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouses'] })
         },

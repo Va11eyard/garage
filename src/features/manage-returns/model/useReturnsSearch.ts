@@ -2,7 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { Service, type PageReturnDocumentDto } from '@/shared/api/generated/__swagger_client'
-
+import { ReturnService } from "./service";
+const service = new ReturnService();
 export function useReturnsSearch(params: {
     warehouseId?: string
     from?: string
@@ -12,7 +13,7 @@ export function useReturnsSearch(params: {
 }) {
     return useQuery<PageReturnDocumentDto, Error>({
         queryKey: ['returns', 'search', params],
-        queryFn: () => Service.searchByWarehouse2(
+        queryFn: () => service.searchByWarehouse(
             params.warehouseId || '',
             params.from,
             params.to,

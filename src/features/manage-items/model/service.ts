@@ -8,7 +8,7 @@ import {
 
 export class ItemService {
     async list(): Promise<ItemDto[]> {
-        return Service.list3()
+        return Service.list4()
     }
 
     async search(params: {
@@ -18,7 +18,7 @@ export class ItemService {
         page?: number
         size?: number
     }): Promise<PageItemDto> {
-        return Service.search3(params.code, params.name, params.groupId, params.page, params.size)
+        return Service.search5(params.code, params.name, params.groupId, params.page, params.size)
     }
 
     async get(id: string): Promise<ItemDto> {
@@ -26,14 +26,14 @@ export class ItemService {
     }
 
     async create(data: ItemCreateRequest): Promise<ItemDto> {
-        return Service.create7(data)
+        return Service.create8(data)
     }
 
     async update(id: string, data: ItemUpdateRequest): Promise<ItemDto> {
         return Service.update7(id, data)
     }
 
-    async remove(id: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         return Service.delete7(id)
     }
 }

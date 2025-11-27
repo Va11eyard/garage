@@ -1,11 +1,16 @@
 'use client'
 
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
-import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/useOrgUnitsByOrganization'
+import { useOrgUnits } from '@/features/manage-org-units/model/useOrgUnits'
 import { useDeleteOrgUnit } from '@/features/manage-org-units/model/useDeleteOrgUnit'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
+
+import { useFilters } from '@/shared/hooks/use-filters'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -16,37 +21,73 @@ import { Route } from 'next'
 export function OrgUnitsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
+
+    const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
     const [selectedOrgId, setSelectedOrgId] = useState<string>('')
+    
     const { data: organizations } = useOrganizations({})
-    const { data: orgUnits, isLoading } = useOrgUnitsByOrganization(selectedOrgId)
+    const { data: orgUnitsData, isLoading } = useOrgUnits({
+        code: debouncedFilters.code,
+        name: debouncedFilters.name,
+        organizationId: selectedOrgId || undefined,
+    })
+    
     const deleteMutation = useDeleteOrgUnit()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('orgUnits.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('orgUnits.deleteConfirm'),
+            t('orgUnits.deleteMessage') || 'Вы уверены, что хотите удалить это подразделение?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: () => toast.error(t('common.error')),
+                })
+            }
+        )
     }
+
+    const orgUnits = orgUnitsData || []
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-between items-end gap-4 mb-4">
-                <div className="flex-1">
-                    <label className="block text-sm font-medium mb-1">{t('organizations.organization')}</label>
-                    <Select onValueChange={setSelectedOrgId}>
-                        <SelectTrigger className="max-w-md">
-                            <SelectValue placeholder={t('organizations.selectOrganization')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {organizations?.content?.map((org: any) => (
-                                <SelectItem key={org.id} value={org.id!}>
-                                    {org.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+            <div className="flex justify-between items-end gap-4">
+                <div className="flex gap-4 flex-1">
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('orgUnits.code')}</label>
+                        <Input
+                            placeholder={t('orgUnits.code')}
+                            value={filters.code}
+                            onChange={(e) => updateFilter('code', e.target.value)}
+                            className="w-full"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('orgUnits.name')}</label>
+                        <Input
+                            placeholder={t('orgUnits.name')}
+                            value={filters.name}
+                            onChange={(e) => updateFilter('name', e.target.value)}
+                            className="w-full"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('organizations.organization')}</label>
+                        <Select value={selectedOrgId || '__ALL__'} onValueChange={(value) => setSelectedOrgId(value === '__ALL__' ? '' : value)}>
+                            <SelectTrigger className="w-[200px]">
+                                <SelectValue placeholder={t('common.all')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                                {organizations?.content?.map((org: any) => (
+                                    <SelectItem key={org.id} value={org.id!}>
+                                        {org.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
                 <Link href="/directories/org-units/create">
                     <Button className="shrink-0">{t('orgUnits.createUnit')}</Button>
@@ -55,49 +96,71 @@ export function OrgUnitsTable() {
 
             {isLoading && <div>{t('common.loading')}</div>}
 
-            {!selectedOrgId && <div className="text-center py-8">{t('organizations.selectOrganization')}</div>}
-
-            {selectedOrgId && orgUnits && (
+            {!isLoading && (
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableHead>{t('orgUnits.code')}</TableHead>
                             <TableHead>{t('orgUnits.name')}</TableHead>
+                            {!isMobile && <TableHead>{t('organizations.organization')}</TableHead>}
                             {!isMobile && <TableHead>{t('orgUnits.type')}</TableHead>}
                             <TableHead>{t('common.actions')}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {orgUnits.map((unit: any) => (
-                            <TableRow key={unit.id}>
-                                <TableCell>{unit.code}</TableCell>
-                                <TableCell>{unit.name}</TableCell>
-                                {!isMobile && <TableCell>{unit.type || '-'}</TableCell>}
-                                <TableCell>
-                                    <Link href={`/directories/org-units/${unit.id}` as Route}>
-                                        <Button variant="ghost" size="sm">
-                                            {t('common.view')}
-                                        </Button>
-                                    </Link>
-                                    <Link href={`/directories/org-units/${unit.id}/edit` as Route}>
-                                        <Button variant="ghost" size="sm">
-                                            {t('common.edit')}
-                                        </Button>
-                                    </Link>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="text-red-600"
-                                        onClick={() => handleDelete(unit.id!)}
-                                    >
-                                        {t('common.delete')}
-                                    </Button>
+                        {orgUnits.length === 0 ? (
+                            <TableRow>
+                                <TableCell colSpan={isMobile ? 3 : 5} className="text-center py-8">
+                                    {t('common.noData')}
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        ) : (
+                            orgUnits.map((unit: any) => (
+                                <TableRow key={unit.id}>
+                                    <TableCell>{unit.code}</TableCell>
+                                    <TableCell>{unit.name}</TableCell>
+                                    {!isMobile && <TableCell>{unit.organizationName || '-'}</TableCell>}
+                                    {!isMobile && <TableCell>{unit.type || '-'}</TableCell>}
+                                    <TableCell>
+                                        <Link href={`/directories/org-units/${unit.id}` as Route}>
+                                            <Button variant="ghost" size="sm">
+                                                {t('common.view')}
+                                            </Button>
+                                        </Link>
+                                        <Link href={`/directories/org-units/${unit.id}/edit` as Route}>
+                                            <Button variant="ghost" size="sm">
+                                                {t('common.edit')}
+                                            </Button>
+                                        </Link>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="text-red-600"
+                                            onClick={() => handleDelete(unit.id!)}
+                                        >
+                                            {t('common.delete')}
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                 </Table>
             )}
+
+            {/* No pagination - using list endpoint */}
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

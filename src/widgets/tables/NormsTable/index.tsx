@@ -18,11 +18,10 @@ export function NormsTable() {
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({ 
-        employeeCategoryId: '', 
-        itemId: '' 
+        search: '' 
     })
     const { data, isLoading } = useNormsSearch({ 
-        ...debouncedFilters, 
+        search: debouncedFilters.search || undefined, 
         page, 
         size 
     })
@@ -44,20 +43,11 @@ export function NormsTable() {
             <div className="flex justify-between items-end gap-4 mb-4">
                 <div className="flex gap-4 flex-1">
                     <div>
-                        <label className="block text-sm font-medium mb-1">{t('norm.category')}</label>
+                        <label className="block text-sm font-medium mb-1">{t('common.search')}</label>
                         <Input
-                            placeholder={t('norm.filterByCategory')}
-                            value={filters.employeeCategoryId}
-                            onChange={(e) => updateFilter('employeeCategoryId', e.target.value)}
-                            className="w-full"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('norm.item')}</label>
-                        <Input
-                            placeholder={t('norm.filterByItem')}
-                            value={filters.itemId}
-                            onChange={(e) => updateFilter('itemId', e.target.value)}
+                            placeholder={t('common.search')}
+                            value={filters.search}
+                            onChange={(e) => updateFilter('search', e.target.value)}
                             className="w-full"
                         />
                     </div>

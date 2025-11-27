@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { WarehouseService } from './service'
+
+const service = new WarehouseService()
 
 export function useDeleteWarehouse() {
     const queryClient = useQueryClient()
 
-    return useMutation({
-        mutationFn: (id: string) => Service.delete(id),
+    return useMutation<void, Error, string>({
+        mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouses'] })
         },

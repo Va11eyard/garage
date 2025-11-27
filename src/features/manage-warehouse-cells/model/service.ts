@@ -21,7 +21,15 @@ export class WarehouseCellService {
         page?: number
         size?: number
     }) {
-        return Service.search5(params.warehouseId, params.zoneId, params.code, params.page, params.size)
+        // No paginated search endpoint for warehouse cells - use list methods
+        if (params.zoneId) {
+            return Service.listByZone(params.zoneId)
+        }
+        if (params.warehouseId) {
+            return Service.listByWarehouse1(params.warehouseId)
+        }
+        // Return empty array if no filter provided
+        return []
     }
 
     async get(id: string): Promise<WarehouseCellDto> {
@@ -36,7 +44,7 @@ export class WarehouseCellService {
         return Service.update2(id, data)
     }
 
-    async remove(id: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         return Service.delete2(id)
     }
 }

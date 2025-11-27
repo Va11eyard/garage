@@ -2,12 +2,13 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Service, type UnitOfMeasureUpdateRequest, type UnitOfMeasureDto } from '@/shared/api/generated/__swagger_client'
-
+import { UnitOfMeasureService } from './service'
+const service = new UnitOfMeasureService()
 export function useUpdateUnit() {
     const queryClient = useQueryClient()
 
     return useMutation<UnitOfMeasureDto, Error, { id: string; data: UnitOfMeasureUpdateRequest }>({
-        mutationFn: ({ id, data }: { id: string; data: UnitOfMeasureUpdateRequest }) => Service.update6(id, data),
+        mutationFn: ({ id, data }: { id: string; data: UnitOfMeasureUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['units'] })
             queryClient.invalidateQueries({ queryKey: ['unit'] })

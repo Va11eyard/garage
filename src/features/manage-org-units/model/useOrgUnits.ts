@@ -1,23 +1,33 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageOrgUnitDto } from '@/shared/api/generated/__swagger_client'
+import { type OrgUnitDto } from '@/shared/api/generated/__swagger_client'
+import { OrgUnitService } from './service'
+
+const service = new OrgUnitService()
 
 export function useOrgUnits(params: {
-    code?: string,
-    name?: string,
-    organizationId?: string,
+    code?: string
+    name?: string
+    organizationId?: string
     page?: number
     size?: number
 }) {
-    return useQuery<PageOrgUnitDto, Error>({
+    return useQuery<OrgUnitDto[], Error>({
         queryKey: ['org-units', params],
-        queryFn: () => Service.search7(
-            params.code,
-            params.name,
-            params.organizationId,
-            params.page,
-            params.size
-        ),
+        queryFn: async () => {
+            // No paginated search endpoint - use listByOrganization
+            if (params.organizationId) {
+                const data = await service.listByOrganization1(params.organizationId)
+                // Client-side filtering
+                return data.filter((unit: OrgUnitDto) => {
+                    const matchesCode = !params.code || unit.code?.toLowerCase().includes(params.code.toLowerCase())
+                    const matchesName = !params.name || unit.name?.toLowerCase().includes(params.name.toLowerCase())
+                    return matchesCode && matchesName
+                })
+            }
+            return []
+        },
+        enabled: !!params.organizationId,
     })
 }

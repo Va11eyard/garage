@@ -13,7 +13,7 @@ export function useQualityAcceptancesByWarehouse(params: {
 }) {
     return useQuery<PageQualityAcceptanceDocumentDto, Error>({
         queryKey: ['qualityAcceptances', params],
-        queryFn: () => Service.searchByWarehouse3(
+        queryFn: () => Service.search14(
             params.warehouseId,
             params.from,
             params.to,

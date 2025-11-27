@@ -7,7 +7,7 @@ export function useUpdateQualityAcceptance(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<QualityAcceptanceDocumentDto, Error, QualityAcceptanceUpdateRequest>({
-        mutationFn: (data) => Service.update17(id, data),
+        mutationFn: (data) => Service.update18(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance', id] })

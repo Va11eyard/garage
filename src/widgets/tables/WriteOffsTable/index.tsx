@@ -1,10 +1,14 @@
 'use client'
 
-import { useWriteOffsSearch } from '@/features/manage-write-offs/model/useWriteOffsSearch'
+import { useWriteOffs } from '@/features/manage-write-offs/model/useWriteOffs'
 import { useDeleteWriteOff } from '@/features/manage-write-offs/model/useDeleteWriteOff'
 import { usePagination } from '@/shared/hooks/use-pagination'
+import { useFilters } from '@/shared/hooks/use-filters'
+import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -15,7 +19,18 @@ export function WriteOffsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
-    const { data, isLoading } = useWriteOffsSearch({ page, size })
+    const { filters, debouncedFilters, updateFilter } = useFilters({
+        warehouseId: '__ALL__',
+        dateFrom: '',
+        dateTo: ''
+    })
+    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data, isLoading } = useWriteOffs({ 
+        ...debouncedFilters, 
+        warehouseId: debouncedFilters.warehouseId === '__ALL__' ? '' : debouncedFilters.warehouseId,
+        page, 
+        size 
+    })
     const deleteMutation = useDeleteWriteOff()
 
     const handleDelete = (id: string) => {
@@ -31,7 +46,41 @@ export function WriteOffsTable() {
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-end">
+            <div className="flex justify-between items-end gap-4 flex-wrap">
+                <div className="flex gap-4 flex-1 flex-wrap">
+                    <div className="min-w-[200px]">
+                        <label className="block text-sm font-medium mb-1">{t('documents.warehouse')}</label>
+                        <Select value={filters.warehouseId} onValueChange={(value) => updateFilter('warehouseId', value === '__ALL__' ? '' : value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('warehouses.selectWarehouse')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                                {warehousesData?.content?.map((warehouse: any) => (
+                                    <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                        {warehouse.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
+                        <Input
+                            type="date"
+                            value={filters.dateFrom}
+                            onChange={(e) => updateFilter('dateFrom', e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
+                        <Input
+                            type="date"
+                            value={filters.dateTo}
+                            onChange={(e) => updateFilter('dateTo', e.target.value)}
+                        />
+                    </div>
+                </div>
                 <Button asChild className="shrink-0 text-black">
                     <Link href="/inventory/writeoff/create">{t('writeOffs.createWriteOff')}</Link>
                 </Button>

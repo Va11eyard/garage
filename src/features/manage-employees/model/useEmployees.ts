@@ -6,16 +6,16 @@ import { Service, type PageEmployeeDto } from '@/shared/api/generated/__swagger_
 export function useEmployees(params: {
     organizationId?: string
     orgUnitId?: string
-    personId?: string
+    personnelNumber?: string
     page?: number
     size?: number
 }) {
     return useQuery<PageEmployeeDto, Error>({
         queryKey: ['employees', params],
-        queryFn: () => Service.search9(
+        queryFn: () => Service.search10(
             params.organizationId,
             params.orgUnitId,
-            undefined,
+            params.personnelNumber,
             params.page,
             params.size
         ),

@@ -13,11 +13,12 @@ export function useInventorySurpluses(params: {
 }) {
     return useQuery<PageInventorySurplusDocumentDto, Error>({
         queryKey: ['inventorySurpluses', params],
-        queryFn: () => Service.search2(
+        queryFn: () => Service.search16(
             params.warehouseId,
-            params.documentNumber,
             params.dateFrom,
             params.dateTo,
+            undefined,
+            params.documentNumber,
             params.page,
             params.size
         ),

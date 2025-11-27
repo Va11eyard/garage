@@ -8,35 +8,35 @@ import {
 
 export class UserService {
     async list(): Promise<UserDto[]> {
-        return Service.list5()
+        return Service.list8()
     }
 
-    async search(params: {
-        username?: string
-        roles?: string[]
-        page?: number
+    async search(
+        username?: string,
+        roles?: string[],
+        page?: number,
         size?: number
-    }): Promise<PageUserDto> {
-        return Service.search9(params.username, params.roles, params.page, params.size)
+    ): Promise<PageUserDto> {
+        return Service.search17(username, roles, page, size)
     }
 
     async get(id: string): Promise<UserDto> {
-        return Service.get18(id)
+        return Service.get23(id)
     }
 
     async create(data: CreateUserRequest): Promise<UserDto> {
-        return Service.create18(data)
+        return Service.create26(data)
     }
 
     async update(id: string, data: UpdateUserRequest): Promise<UserDto> {
-        return Service.update18(id, data)
+        return Service.update23(id, data)
     }
 
     async restore(id: string): Promise<UserDto> {
         return Service.restore(id)
     }
 
-    async remove(id: string): Promise<void> {
-        return Service.delete18(id)
+    async delete(id: string): Promise<void> {
+        return Service.delete23(id)
     }
 }

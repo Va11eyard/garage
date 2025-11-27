@@ -1,23 +1,22 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type Page } from '@/shared/api/generated/__swagger_client'
-
+import { type Page } from '@/shared/api/generated/__swagger_client'
+import { WarehouseService } from "./service";
+const service = new WarehouseService();
 export function useWarehouses(params?: {
     code?: string
     name?: string
-    organizationId?: string
     page?: number
     size?: number
 }) {
     return useQuery<Page, Error>({
         queryKey: ['warehouses', params],
-        queryFn: () => Service.search(
+        queryFn: () => service.search(
             params?.code,
             params?.name,
-            params?.organizationId,
             params?.page,
-            params?.size as any,
+            params?.size,
         ),
     })
 }

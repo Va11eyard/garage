@@ -13,9 +13,9 @@ export type PageQualityCategoryDto = {
     content?: Array<QualityCategoryDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 

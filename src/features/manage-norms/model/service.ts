@@ -8,13 +8,14 @@ import {
 
 export class ProvisionNormService {
     async search(params: {
-        code?: string
-        name?: string
-        categoryId?: string
+        organizationId?: string
+        employeeCategory?: string
+        season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON'
+        search?: string
         page?: number
         size?: number
     }): Promise<PageProvisionNormDto> {
-        return Service.search8(params.code, params.name, params.categoryId, params.page, params.size)
+        return Service.search8(params.organizationId, params.employeeCategory, params.season, params.search, params.page, params.size)
     }
 
     async get(id: string): Promise<ProvisionNormDto> {

@@ -8,16 +8,15 @@ import {
 
 export class QualityCategoryService {
     async list(): Promise<QualityCategoryDto[]> {
-        return Service.list1()
+        return Service.list2()
     }
 
     async search(params: {
-        code?: string
-        name?: string
+        q?: string
         page?: number
         size?: number
     }): Promise<PageQualityCategoryDto> {
-        return Service.search3(params.code, params.name, params.page, params.size)
+        return Service.search3(params.q, params.page, params.size)
     }
 
     async get(id: string): Promise<QualityCategoryDto> {

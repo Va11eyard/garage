@@ -2,22 +2,24 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { Service, type PageReceiptDocumentDto } from '@/shared/api/generated/__swagger_client'
-
+import { ReceiptService } from './service'
+const service = new ReceiptService()
 export function useReceipts(params: {
-    warehouseId?: string
+    warehouseId?: string,
+    status?: 'DRAFT' | 'POSTED' | 'CANCELLED',
     documentNumber?: string
-    dateFrom?: string
-    dateTo?: string
+    fromDate?: string
+    toDate?: string
     page?: number
     size?: number
 }) {
     return useQuery<PageReceiptDocumentDto, Error>({
         queryKey: ['receipts', params],
-        queryFn: () => Service.search13(
+        queryFn: () => service.search(
             params.warehouseId,
-            undefined,
-            params.dateFrom,
-            params.dateTo,
+            params.status,
+            params.fromDate,
+            params.toDate,
             params.page,
             params.size
         ),

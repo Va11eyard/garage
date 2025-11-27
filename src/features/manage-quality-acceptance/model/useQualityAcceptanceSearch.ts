@@ -12,10 +12,12 @@ export function useQualityAcceptanceSearch(params: {
 }) {
     return useQuery<PageQualityAcceptanceDocumentDto, Error>({
         queryKey: ['quality-acceptance', 'search', params],
-        queryFn: () => Service.searchByWarehouse4(
-            params.warehouseId || '',
+        queryFn: () => Service.search15(
+            params.warehouseId || undefined,
             params.from,
             params.to,
+            undefined,
+            undefined,
             params.page,
             params.size
         ),

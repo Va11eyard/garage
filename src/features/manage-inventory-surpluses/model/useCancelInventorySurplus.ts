@@ -7,7 +7,7 @@ export function useCancelInventorySurplus() {
     const queryClient = useQueryClient()
 
     return useMutation<InventorySurplusDocumentDto, Error, string>({
-        mutationFn: (id) => Service.cancel1(id),
+        mutationFn: (id) => Service.cancel7(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventorySurpluses'] })
         },

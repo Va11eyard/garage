@@ -25,7 +25,11 @@ export class ItemGroupService {
         page?: number
         size?: number
     }) {
-        return Service.search6(params.code, params.name, params.parentId, params.page, params.size)
+        // No paginated search endpoint for item-groups - use list methods
+        if (params.parentId) {
+            return Service.listByParent(params.parentId)
+        }
+        return Service.listAll()
     }
 
     async get(id: string): Promise<ItemGroupDto> {

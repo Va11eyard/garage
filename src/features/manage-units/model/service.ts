@@ -8,7 +8,7 @@ import {
 
 export class UnitOfMeasureService {
     async list(): Promise<UnitOfMeasureDto[]> {
-        return Service.list()
+        return Service.list1()
     }
 
     async search(params: {
@@ -32,7 +32,7 @@ export class UnitOfMeasureService {
         return Service.update3(id, data)
     }
 
-    async remove(id: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         return Service.delete3(id)
     }
 }

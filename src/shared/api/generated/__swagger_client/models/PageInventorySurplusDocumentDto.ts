@@ -13,9 +13,9 @@ export type PageInventorySurplusDocumentDto = {
     content?: Array<InventorySurplusDocumentDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 

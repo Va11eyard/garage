@@ -5,7 +5,7 @@ import {
 
 export class EquipmentService {
     async list(): Promise<Device[]> {
-        return Service.list6()
+        return Service.list7()
     }
 
     async register(params: {

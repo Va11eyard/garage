@@ -9,29 +9,23 @@ import {
 
 export class EmployeeService {
     async search(params: {
-        lastName?: string
-        firstName?: string
-        middleName?: string
+        organizationId?: string
         orgUnitId?: string
-        categoryId?: string
-        active?: boolean
+        personnelNumber?: string
         page?: number
         size?: number
     }): Promise<PageEmployeeDto> {
         return Service.search10(
-            params.lastName,
-            params.firstName,
-            params.middleName,
+            params.organizationId,
             params.orgUnitId,
-            params.categoryId,
-            params.active,
+            params.personnelNumber,
             params.page,
             params.size
         )
     }
 
     async get(id: string): Promise<EmployeeDto> {
-        return Service.get25(id)
+        return Service.get26(id)
     }
 
     async getHistory(employeeId: string): Promise<EmployeeStatusEventDto[]> {
@@ -39,7 +33,7 @@ export class EmployeeService {
     }
 
     async getAssignments(params: {
-        employeeId?: string
+        employeeId: string
         itemId?: string
         page?: number
         size?: number
@@ -57,6 +51,6 @@ export class EmployeeService {
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete24(id)
+        return Service.delete25(id)
     }
 }

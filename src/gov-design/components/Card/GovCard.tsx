@@ -24,7 +24,7 @@ export function GovCardHeader({ className, gradient = true, ...props }: GovCardH
     <div
       className={cn(
         "px-6 py-4",
-        gradient && "bg-gradient-to-r from-gov-blue-500 to-gov-blue-700 text-white",
+        gradient && "bg-gradient-to-r from-gov-blue-500 to-gov-blue-700 text-black",
         !gradient && "border-b border-gov-gray-200",
         className
       )}

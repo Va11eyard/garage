@@ -7,14 +7,31 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/shared/ui/button'
 import { Spinner } from '@/shared/ui/spinner'
 import { Badge } from '@/shared/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { useFilters } from '@/shared/hooks/use-filters'
 import { toast } from 'sonner'
 import { format } from 'date-fns'
 import Link from 'next/link'
+import { useMemo } from 'react'
+import { IntegrationEndpoint } from '@/shared/api/generated/__swagger_client'
 
 export function IntegrationEndpointsTable() {
     const { t } = useTranslation()
     const { data, isLoading } = useIntegrationEndpoints()
     const testMutation = useTestIntegrationEndpoint()
+    const { filters, updateFilter } = useFilters({
+        system: 'ALL',
+        status: 'ALL'
+    })
+
+    const filteredData = useMemo(() => {
+        if (!data) return []
+        return data.filter((endpoint: IntegrationEndpoint) => {
+            const matchesSystem = filters.system === 'ALL' || endpoint.externalSystem === filters.system
+            const matchesStatus = filters.status === 'ALL' || endpoint.status === filters.status
+            return matchesSystem && matchesStatus
+        })
+    }, [data, filters])
 
     const handleTest = (code: string) => {
         testMutation.mutate(code, {
@@ -25,9 +42,59 @@ export function IntegrationEndpointsTable() {
 
     if (isLoading) return <Spinner />
 
+    const getStatusBadge = (status?: string) => {
+        if (!status) return 'secondary'
+        const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+            ACTIVE: 'default',
+            INACTIVE: 'secondary',
+            ERROR: 'destructive',
+            NOT_CONFIGURED: 'outline'
+        }
+        return variants[status] || 'secondary'
+    }
+
+    const getLastTestDate = (endpoint: IntegrationEndpoint) => {
+        const success = endpoint.lastSuccessAt ? new Date(endpoint.lastSuccessAt).getTime() : 0
+        const error = endpoint.lastErrorAt ? new Date(endpoint.lastErrorAt).getTime() : 0
+        const max = Math.max(success, error)
+        return max > 0 ? format(new Date(max), 'dd.MM.yyyy HH:mm') : '—'
+    }
+
     return (
         <div className="space-y-4">
-            <div className="flex justify-end">
+            <div className="flex justify-between items-end gap-4 flex-wrap">
+                <div className="flex gap-4 flex-1 flex-wrap">
+                    <div className="min-w-[200px]">
+                        <label className="block text-sm font-medium mb-1">{t('integrationEndpoints.system')}</label>
+                        <Select value={filters.system} onValueChange={(value) => updateFilter('system', value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.all')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
+                                <SelectItem value="HR_SYSTEM">{t('integrationEndpoints.systems.hrSystem')}</SelectItem>
+                                <SelectItem value="ERP">{t('integrationEndpoints.systems.erp')}</SelectItem>
+                                <SelectItem value="ACCOUNTING">{t('integrationEndpoints.systems.accounting')}</SelectItem>
+                                <SelectItem value="SECURITY_SYSTEM">{t('integrationEndpoints.systems.securitySystem')}</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="min-w-[150px]">
+                        <label className="block text-sm font-medium mb-1">{t('integrationEndpoints.status')}</label>
+                        <Select value={filters.status} onValueChange={(value) => updateFilter('status', value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.all')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
+                                <SelectItem value="ACTIVE">{t('integrationEndpoints.status.active')}</SelectItem>
+                                <SelectItem value="INACTIVE">{t('integrationEndpoints.status.inactive')}</SelectItem>
+                                <SelectItem value="ERROR">{t('integrationEndpoints.status.error')}</SelectItem>
+                                <SelectItem value="NOT_CONFIGURED">{t('integrationEndpoints.status.notConfigured')}</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
                 <Button variant="default" asChild className="text-black">
                     <Link href="/admin/integration-endpoints/create">{t('integrationEndpoints.createEndpoint')}</Link>
                 </Button>
@@ -46,29 +113,27 @@ export function IntegrationEndpointsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((endpoint) => (
+                    {filteredData.map((endpoint: IntegrationEndpoint) => (
                         <TableRow key={endpoint.id}>
                             <TableCell className="font-mono">{endpoint.code}</TableCell>
                             <TableCell>{endpoint.name}</TableCell>
                             <TableCell>
-                                {t(`integrationEndpoints.systems.${endpoint.system.toLowerCase().replace('_', '')}`)}
+                                {endpoint.externalSystem ? t(`integrationEndpoints.systems.${endpoint.externalSystem.toLowerCase().replace('_', '')}`) : '—'}
                             </TableCell>
                             <TableCell className="font-mono text-xs">{endpoint.baseUrl || '—'}</TableCell>
                             <TableCell>
-                                <Badge variant={endpoint.active ? 'default' : 'secondary'}>
-                                    {endpoint.active ? t('common.active') : t('common.inactive')}
+                                <Badge variant={getStatusBadge(endpoint.status)}>
+                                    {endpoint.status ? t(`integrationEndpoints.status.${endpoint.status.toLowerCase()}`) : '—'}
                                 </Badge>
                             </TableCell>
                             <TableCell>
-                                {endpoint.lastTestDate
-                                    ? format(new Date(endpoint.lastTestDate), 'dd.MM.yyyy HH:mm')
-                                    : '—'}
+                                {getLastTestDate(endpoint)}
                             </TableCell>
                             <TableCell>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleTest(endpoint.code)}
+                                    onClick={() => handleTest(endpoint.code!)}
                                     disabled={testMutation.isPending}
                                 >
                                     {t('integrationEndpoints.testEndpoint')}
@@ -76,6 +141,13 @@ export function IntegrationEndpointsTable() {
                             </TableCell>
                         </TableRow>
                     ))}
+                    {filteredData.length === 0 && (
+                        <TableRow>
+                            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                                {t('common.noData')}
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>

@@ -21,7 +21,7 @@ export function useWearReport(filters: WearReportFilters = {}) {
             if (!hasValidOrgId) {
                 return Promise.resolve({ content: [], totalElements: 0, totalPages: 0 })
             }
-            return Service.search6(
+            return Service.search7(
                 filters.organizationId!,
                 filters.orgUnitId || undefined,
                 filters.itemId || undefined,

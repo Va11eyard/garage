@@ -7,7 +7,7 @@ export function useCancelIssue() {
     const queryClient = useQueryClient()
 
     return useMutation<IssueDocumentDto, Error, string>({
-        mutationFn: (id) => Service.cancel5(id),
+        mutationFn: (id) => Service.cancel6(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['issues'] })
         },

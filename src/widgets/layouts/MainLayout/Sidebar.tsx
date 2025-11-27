@@ -11,7 +11,7 @@ import {
     Layers, Ruler, User, BarChart3, FileText,
     Download, Upload, RotateCcw, Trash2, Plus, CheckCircle,
     Clock, Truck, ClipboardList, Users, Award, Settings,
-    ScrollText, ChevronLeft, ChevronRight, Link2
+    ScrollText, ChevronLeft, ChevronRight, Link2, BadgeCheck
 } from 'lucide-react'
 
 export function Sidebar() {
@@ -28,7 +28,6 @@ export function Sidebar() {
     })
 
     useEffect(() => {
-        // Only access localStorage on client side
         if (typeof window !== 'undefined') {
             const roles = localStorage.getItem('user_roles')
             if (roles) {
@@ -74,7 +73,7 @@ export function Sidebar() {
                 { label: t('sidebar.items'), href: '/directories/items', icon: ClipboardList },
                 { label: t('sidebar.itemGroups'), href: '/directories/item-groups', icon: Layers },
                 { label: t('sidebar.units'), href: '/directories/units', icon: Ruler },
-//                { label: t('sidebar.qualityCategoris'), href: '/directories/quality-categories', icon: Users },
+                { label: t('sidebar.qualityCategories'), href: '/directories/quality-categories', icon: BadgeCheck  },
                 { label: t('sidebar.employeeCategories'), href: '/directories/employee-categories', icon: Users },
                 { label: t('sidebar.persons'), href: '/directories/persons', icon: User },
                 { label: t('sidebar.norms'), href: '/directories/norms', icon: BarChart3 },
@@ -108,9 +107,12 @@ export function Sidebar() {
         {
             id: 'reports',
             label: t('nav.reports'),
-            icon: FileText,
+            icon: BarChart3,
             items: [
                 { label: t('reports.staff'), href: '/reports/staff', icon: Users },
+                { label: t('reports.inventory'), href: '/reports/inventory', icon: Package },
+                { label: t('reports.analytics'), href: '/reports/analytics', icon: BarChart3 },
+                { label: t('reports.planning'), href: '/reports/planning', icon: ClipboardList },
             ],
         },
     ]
@@ -238,21 +240,40 @@ export function Sidebar() {
             </nav>
 
             {!isCollapsed && (
-                <div className="p-4 border-t border-gov-gray-200 bg-gov-gray-50">
-                    <div className="text-xs">
-                        <div className="font-semibold mb-1 text-gov-gray-900">
-                            {username}
+                <div className="p-4 border-t border-gov-gray-200 bg-gradient-to-br from-gov-blue-50 to-gov-gray-50">
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                            <User className="w-4 h-4 text-gov-blue-600 shrink-0" />
+                            <div className="flex-1 min-w-0">
+                                <div className="text-xs text-gov-gray-600 font-medium mb-0.5">
+                                    {t('common.user')} / {t('common.userKz')}
+                                </div>
+                                <div className="font-semibold text-sm text-gov-gray-900 truncate" title={username}>
+                                    {username}
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex flex-wrap gap-1">
-                            {userRoles.map((role) => (
-                                <span
-                                    key={role}
-                                    className="px-2 py-0.5 bg-gov-blue-100 text-gov-blue-700 rounded text-[10px] font-medium"
-                                >
-                                    {role}
-                                </span>
-                            ))}
-                        </div>
+                        {userRoles.length > 0 && (
+                            <div className="flex items-start gap-2 pt-2 border-t border-gov-gray-200">
+                                <Award className="w-4 h-4 text-gov-blue-600 shrink-0 mt-0.5" />
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-xs text-gov-gray-600 font-medium mb-1">
+                                        {t('common.roles')} / {t('common.rolesKz')}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1">
+                                        {userRoles.map((role) => (
+                                            <span
+                                                key={role}
+                                                className="px-2 py-0.5 bg-gov-blue-100 text-gov-blue-700 rounded-full text-[10px] font-medium border border-gov-blue-200"
+                                                title={role}
+                                            >
+                                                {role}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

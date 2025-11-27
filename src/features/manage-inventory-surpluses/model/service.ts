@@ -1,31 +1,53 @@
-import { Service, type ItemGroupDto, type ItemGroupCreateRequest, type ItemGroupUpdateRequest } from '@/shared/api/generated/__swagger_client'
+import { 
+    Service, 
+    type InventorySurplusDocumentDto, 
+    type InventorySurplusCreateRequest, 
+    type InventorySurplusUpdateRequest,
+    type PageInventorySurplusDocumentDto 
+} from '@/shared/api/generated/__swagger_client'
 
-export class ItemGroupService {
-    async listAll(): Promise<ItemGroupDto[]> {
-        return Service.listAll()
+export class InventorySurplusService {
+    async search(params: {
+        warehouseId?: string
+        from?: string
+        to?: string
+        status?: 'DRAFT' | 'POSTED' | 'CANCELLED'
+        docNumber?: string
+        page?: number
+        size?: number
+    }): Promise<PageInventorySurplusDocumentDto> {
+        return Service.search16(
+            params.warehouseId,
+            params.from,
+            params.to,
+            params.status,
+            params.docNumber,
+            params.page,
+            params.size
+        )
     }
 
-    async listRootGroups(): Promise<ItemGroupDto[]> {
-        return Service.listRootGroups()
+    async get(id: string): Promise<InventorySurplusDocumentDto> {
+        return Service.get21(id)
     }
 
-    async listByParent(parentId: string): Promise<ItemGroupDto[]> {
-        return Service.listByParent(parentId)
+    async create(data: InventorySurplusCreateRequest): Promise<InventorySurplusDocumentDto> {
+        return Service.create24(data)
     }
 
-    async get(id: string): Promise<ItemGroupDto> {
-        return Service.get8(id)
+    async update(id: string, data: InventorySurplusUpdateRequest): Promise<InventorySurplusDocumentDto> {
+        return Service.update21(id, data)
     }
 
-    async create(data: ItemGroupCreateRequest): Promise<ItemGroupDto> {
-        return Service.create8(data)
+    async post(id: string): Promise<InventorySurplusDocumentDto> {
+        return Service.post11(id)
     }
 
-    async update(id: string, data: ItemGroupUpdateRequest): Promise<ItemGroupDto> {
-        return Service.update8(id, data)
+    async cancel(id: string): Promise<InventorySurplusDocumentDto> {
+        return Service.cancel7(id)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete8(id)
+        return Service.delete21(id)
     }
 }

@@ -7,7 +7,7 @@ export function useCreateNorm() {
     const queryClient = useQueryClient()
 
     return useMutation<ItemSupplyNormDto, Error, ItemSupplyNormCreateRequest>({
-        mutationFn: (data) => Service.create8(data),
+        mutationFn: (data) => Service.create9(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['norms'] })
         },

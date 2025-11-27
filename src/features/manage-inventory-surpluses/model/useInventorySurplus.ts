@@ -6,7 +6,7 @@ import { Service, type InventorySurplusDocumentDto } from '@/shared/api/generate
 export function useInventorySurplus(id: string) {
     return useQuery<InventorySurplusDocumentDto, Error>({
         queryKey: ['inventory-surpluses', id],
-        queryFn: () => Service.get20(id),
+        queryFn: () => Service.get21(id),
         enabled: !!id,
     })
 }

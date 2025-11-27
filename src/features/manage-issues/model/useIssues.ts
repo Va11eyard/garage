@@ -13,11 +13,11 @@ export function useIssues(params: {
 }) {
     return useQuery<PageIssueDocumentDto, Error>({
         queryKey: ['issues', params],
-        queryFn: () => Service.search3(
-            params.warehouseId,
-            params.documentNumber,
+        queryFn: () => Service.searchByWarehouse4(
+            params.warehouseId!,
             params.dateFrom,
             params.dateTo,
+            undefined,
             params.page,
             params.size
         ),

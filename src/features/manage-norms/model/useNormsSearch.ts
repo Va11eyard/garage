@@ -4,9 +4,10 @@ import { ProvisionNormService } from './service'
 const service = new ProvisionNormService()
 
 export function useNormsSearch(params: {
-    code?: string
-    name?: string
-    categoryId?: string
+    organizationId?: string
+    employeeCategory?: string
+    season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON'
+    search?: string
     page?: number
     size?: number
 }) {

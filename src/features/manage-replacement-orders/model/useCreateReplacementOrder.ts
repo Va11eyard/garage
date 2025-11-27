@@ -7,7 +7,7 @@ export function useCreateReplacementOrder() {
     const queryClient = useQueryClient()
 
     return useMutation<ReplacementOrderDto, Error, ReplacementOrderCreateRequest>({
-        mutationFn: (data) => Service.create14(data),
+        mutationFn: (data) => Service.create19(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['replacement-orders'] })
         },

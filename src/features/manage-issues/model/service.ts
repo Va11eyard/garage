@@ -36,26 +36,26 @@ export class IssueService {
     }
 
     async get(id: string): Promise<IssueDocumentDto> {
-        return Service.get16(id)
+        return Service.get20(id)
     }
 
     async create(data: IssueCreateRequest): Promise<IssueDocumentDto> {
-        return Service.create16(data)
+        return Service.create23(data)
     }
 
     async update(id: string, data: IssueUpdateRequest): Promise<IssueDocumentDto> {
-        return Service.update16(id, data)
+        return Service.update20(id, data)
     }
 
     async post(id: string): Promise<IssueDocumentDto> {
-        return Service.post6(id)
+        return Service.post10(id)
     }
 
     async cancel(id: string): Promise<IssueDocumentDto> {
-        return Service.cancel5(id)
+        return Service.cancel6(id)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete16(id)
+        return Service.delete20(id)
     }
 }

@@ -13,11 +13,12 @@ export function useQualityAcceptances(params: {
 }) {
     return useQuery<PageQualityAcceptanceDocumentDto, Error>({
         queryKey: ['qualityAcceptances', params],
-        queryFn: () => Service.search5(
+        queryFn: () => Service.search15(
             params.warehouseId,
-            params.documentNumber,
             params.dateFrom,
             params.dateTo,
+            undefined,
+            params.documentNumber,
             params.page,
             params.size
         ),

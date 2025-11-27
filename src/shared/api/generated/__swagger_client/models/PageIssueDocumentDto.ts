@@ -13,9 +13,9 @@ export type PageIssueDocumentDto = {
     content?: Array<IssueDocumentDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 

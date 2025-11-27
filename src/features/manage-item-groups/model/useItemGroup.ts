@@ -2,11 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { Service, type ItemGroupDto } from '@/shared/api/generated/__swagger_client'
-
+import { ItemGroupService } from "./service";
+const service = new ItemGroupService();
 export function useItemGroup(id: string) {
     return useQuery<ItemGroupDto, Error>({
         queryKey: ['itemGroup', id],
-        queryFn: () => Service.get8(id),
+        queryFn: () => service.get(id),
         enabled: !!id,
     })
 }

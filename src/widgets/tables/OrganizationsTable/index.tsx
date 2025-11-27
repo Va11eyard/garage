@@ -5,9 +5,11 @@ import { useDeleteOrganization } from '@/features/manage-organizations/model/use
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { useTranslation } from '@/shared/i18n/use-translation'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
 
@@ -17,14 +19,19 @@ export function OrganizationsTable() {
     const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
     const { data, isLoading } = useOrganizations({ ...debouncedFilters, page, size })
     const deleteMutation = useDeleteOrganization()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('organizations.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('organizations.deleteSuccess')),
-                onError: () => toast.error(t('organizations.deleteError')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('organizations.deleteConfirm'),
+            t('organizations.deleteMessage') || 'Вы уверены, что хотите удалить эту организацию?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('organizations.deleteSuccess')),
+                    onError: () => toast.error(t('organizations.deleteError')),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -105,6 +112,18 @@ export function OrganizationsTable() {
                     {t('pagination.next')}
                 </Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

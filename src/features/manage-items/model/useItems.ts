@@ -2,6 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { Service, type PageItemDto } from '@/shared/api/generated/__swagger_client'
+import {ItemService} from "./service";
+const service = new ItemService();
 
 export function useItems(params: {
     code?: string
@@ -12,7 +14,7 @@ export function useItems(params: {
 }) {
     return useQuery<PageItemDto, Error>({
         queryKey: ['items', params],
-        queryFn: () => Service.search10(
+        queryFn: () => service.search(
             params.code,
             params.name,
             params.itemGroupId,

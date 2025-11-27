@@ -36,26 +36,26 @@ export class ReturnService {
     }
 
     async get(id: string): Promise<ReturnDocumentDto> {
-        return Service.get12(id)
+        return Service.get15(id)
     }
 
     async create(data: ReturnCreateRequest): Promise<ReturnDocumentDto> {
-        return Service.create12(data)
+        return Service.create18(data)
     }
 
     async update(id: string, data: ReturnUpdateRequest): Promise<ReturnDocumentDto> {
-        return Service.update12(id, data)
+        return Service.update15(id, data)
     }
 
     async post(id: string): Promise<ReturnDocumentDto> {
-        return Service.post2(id)
+        return Service.post5(id)
     }
 
     async cancel(id: string): Promise<ReturnDocumentDto> {
         return Service.cancel2(id)
     }
 
-    async remove(id: string): Promise<void> {
-        return Service.delete12(id)
+    async delete(id: string): Promise<void> {
+        return Service.delete15(id)
     }
 }

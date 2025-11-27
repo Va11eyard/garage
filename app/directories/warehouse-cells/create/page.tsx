@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovTextarea } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useWarehouseZonesByWarehouse } from '@/features/manage-warehouse-zones/model/useWarehouseZonesByWarehouse'
 import { useCreateWarehouseCell } from '@/features/manage-warehouse-cells/model/useCreateWarehouseCell'
@@ -26,7 +27,7 @@ export default function WarehouseCellCreatePage() {
         capacity: '',
     })
 
-    const { data: zones } = useWarehouseZonesByWarehouse(formData.warehouseId || undefined)
+    const { data: zones, isLoading: zonesLoading } = useWarehouseZonesByWarehouse(formData.warehouseId || undefined)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -62,81 +63,95 @@ export default function WarehouseCellCreatePage() {
             ]} />
 
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
-                        <div>
-                            <GovLabel required>{t('warehouseCells.warehouse')}</GovLabel>
-                            <GovSelect
-                                value={formData.warehouseId}
-                                onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value, zoneId: '' })}
-                                required
-                            >
-                                <option value="">{t('warehouseCells.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse) => (
-                                    <option key={warehouse.id} value={warehouse.id!}>
-                                        {warehouse.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
-                        </div>
+                <div>
+                    <GovLabel required>{t('warehouseCells.warehouse')}</GovLabel>
+                    <Select
+                        value={formData.warehouseId}
+                        onValueChange={(value) => setFormData({ ...formData, warehouseId: value, zoneId: '' })}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('warehouseCells.selectWarehouse')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {warehouses?.content?.map((warehouse) => (
+                                <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                    {warehouse.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
 
-                        {formData.warehouseId && zones && zones.length > 0 && (
-                            <div>
-                                <GovLabel>{t('warehouseCells.zone')}</GovLabel>
-                                <GovSelect
-                                    value={formData.zoneId}
-                                    onChange={(e) => setFormData({ ...formData, zoneId: e.target.value })}
-                                >
-                                    <option value="">{t('warehouseCells.selectZone')}</option>
-                                    {zones.map((zone) => (
-                                        <option key={zone.id} value={zone.id!}>
+                {formData.warehouseId && (
+                    <div>
+                        <GovLabel>{t('warehouseCells.zone')}</GovLabel>
+                        <Select
+                            value={formData.zoneId}
+                            onValueChange={(value) => setFormData({ ...formData, zoneId: value })}
+                            disabled={zonesLoading}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('warehouseCells.selectZone')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {zones && zones.length > 0 ? (
+                                    zones.map((zone) => (
+                                        <SelectItem key={zone.id} value={zone.id!}>
                                             {zone.name}
-                                        </option>
-                                    ))}
-                                </GovSelect>
-                            </div>
-                        )}
+                                        </SelectItem>
+                                    ))
+                                ) : (
+                                    <div className="px-2 py-1.5 text-sm text-gray-500">
+                                        {t('common.noData')}
+                                    </div>
+                                )}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
 
-                        <div>
-                            <GovLabel required>{t('warehouseCells.code')}</GovLabel>
-                            <GovInput
-                                value={formData.code}
-                                onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                                required
-                                placeholder={t('warehouseCells.code')}
-                            />
-                        </div>
+                <div>
+                    <GovLabel required>{t('warehouseCells.code')}</GovLabel>
+                    <GovInput
+                        value={formData.code}
+                        onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                        required
+                        placeholder={t('warehouseCells.code')}
+                    />
+                </div>
 
-                        <div>
-                            <GovLabel>{t('warehouseCells.description')}</GovLabel>
-                            <GovTextarea
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                placeholder={t('warehouseCells.description')}
-                                rows={3}
-                            />
-                        </div>
+                <div>
+                    <GovLabel>{t('warehouseCells.description')}</GovLabel>
+                    <GovTextarea
+                        value={formData.description}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        placeholder={t('warehouseCells.description')}
+                        rows={3}
+                    />
+                </div>
 
-                        <div>
-                            <GovLabel>{t('warehouseCells.capacity')}</GovLabel>
-                            <GovInput
-                                type="number"
-                                value={formData.capacity}
-                                onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
-                                placeholder={t('warehouseCells.capacity')}
-                            />
-                        </div>
+                <div>
+                    <GovLabel>{t('warehouseCells.capacity')}</GovLabel>
+                    <GovInput
+                        type="number"
+                        value={formData.capacity}
+                        onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
+                        placeholder={t('warehouseCells.capacity')}
+                    />
+                </div>
 
-                        <div className="flex gap-3 pt-4">
-                            <GovButton type="submit" disabled={createMutation.isPending}>
-                                {createMutation.isPending ? t('common.loading') : t('common.create')}
-                            </GovButton>
-                            <GovButton 
-                                type="button" 
-                                variant="secondary"
-                                onClick={() => router.back()}
-                            >
-                                {t('common.cancel')}
-                            </GovButton>
-                        </div>
+                <div className="flex gap-3 pt-4">
+                    <GovButton type="submit" disabled={createMutation.isPending}>
+                        {createMutation.isPending ? t('common.loading') : t('common.create')}
+                    </GovButton>
+                    <GovButton 
+                        type="button" 
+                        variant="secondary"
+                        onClick={() => router.back()}
+                    >
+                        {t('common.cancel')}
+                    </GovButton>
+                </div>
             </form>
         </div>
     )

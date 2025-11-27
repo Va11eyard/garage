@@ -1,7 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageOrganizationDto } from '@/shared/api/generated/__swagger_client'
+import { type PageOrganizationDto } from '@/shared/api/generated/__swagger_client'
+import { OrganizationService } from './service'
+
+const service = new OrganizationService()
 
 export function useOrganizations(params: {
     code?: string,
@@ -11,11 +14,11 @@ export function useOrganizations(params: {
 }) {
     return useQuery<PageOrganizationDto, Error>({
         queryKey: ['organizations', params],
-        queryFn: () => Service.search3(
-            params.code,
-            params.name,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.search({
+            code: params.code,
+            name: params.name,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

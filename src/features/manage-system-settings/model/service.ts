@@ -6,7 +6,7 @@ import {
 
 export class SystemSettingService {
     async list(): Promise<SystemSettingDto[]> {
-        return Service.list8()
+        return Service.list9()
     }
 
     async upsert(data: SystemSettingUpsertRequest): Promise<SystemSettingDto> {

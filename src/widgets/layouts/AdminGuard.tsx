@@ -16,7 +16,6 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
             try {
                 const roles = rolesStr ? JSON.parse(rolesStr) : []
                 if (!roles.includes('ADMIN')) {
-                    // Redirect non-admin users to dashboard
                     router.replace('/dashboard')
                     return
                 }

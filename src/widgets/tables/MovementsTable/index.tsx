@@ -3,8 +3,12 @@
 import { useMovementsSearch } from '@/features/manage-movements/model/useMovementsSearch'
 import { useDeleteMovement } from '@/features/manage-movements/model/useDeleteMovement'
 import { usePagination } from '@/shared/hooks/use-pagination'
+import { useFilters } from '@/shared/hooks/use-filters'
+import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -15,7 +19,13 @@ export function MovementsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
-    const { data, isLoading } = useMovementsSearch({ page, size })
+    const { filters, debouncedFilters, updateFilter } = useFilters({
+        fromWarehouseId: '',
+        dateFrom: '',
+        dateTo: ''
+    })
+    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data, isLoading } = useMovementsSearch({ ...debouncedFilters, page, size })
     const deleteMutation = useDeleteMovement()
 
     const handleDelete = (id: string) => {
@@ -31,7 +41,41 @@ export function MovementsTable() {
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-end">
+            <div className="flex justify-between items-end gap-4 flex-wrap">
+                <div className="flex gap-4 flex-1 flex-wrap">
+                    <div className="min-w-[200px]">
+                        <label className="block text-sm font-medium mb-1">{t('movements.fromWarehouse')}</label>
+                        <Select value={filters.fromWarehouseId || 'ALL'} onValueChange={(value) => updateFilter('fromWarehouseId', value === 'ALL' ? '' : value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('warehouses.selectWarehouse')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
+                                {warehousesData?.content?.map((warehouse: any) => (
+                                    <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                        {warehouse.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
+                        <Input
+                            type="date"
+                            value={filters.dateFrom}
+                            onChange={(e) => updateFilter('dateFrom', e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
+                        <Input
+                            type="date"
+                            value={filters.dateTo}
+                            onChange={(e) => updateFilter('dateTo', e.target.value)}
+                        />
+                    </div>
+                </div>
                 <Button asChild className="shrink-0 text-black">
                     <Link href="/inventory/movements/create">{t('documents.createDocument')}</Link>
                 </Button>

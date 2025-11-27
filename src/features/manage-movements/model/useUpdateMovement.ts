@@ -7,7 +7,7 @@ export function useUpdateMovement(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<MovementDocumentDto, Error, MovementDocumentUpdateRequest>({
-        mutationFn: (data) => Service.update18(id, data),
+        mutationFn: (data) => Service.update19(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['movements'] })
             queryClient.invalidateQueries({ queryKey: ['movements', id] })

@@ -4,8 +4,7 @@ import { QualityCategoryService } from './service'
 const service = new QualityCategoryService()
 
 export function useQualityCategoriesSearch(params: {
-    code?: string
-    name?: string
+    q?: string
     page?: number
     size?: number
 }) {

@@ -7,7 +7,7 @@ export function useDeleteQualityAcceptance() {
     const queryClient = useQueryClient()
 
     return useMutation<any, Error, string>({
-        mutationFn: (id) => Service.delete17(id),
+        mutationFn: (id) => Service.delete18(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
         },

@@ -7,7 +7,7 @@ export function useDeleteNorm() {
     const queryClient = useQueryClient()
 
     return useMutation<any, Error, string>({
-        mutationFn: (id) => Service.delete8(id),
+        mutationFn: (id) => Service.delete7(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['norms'] })
         },

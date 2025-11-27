@@ -7,7 +7,7 @@ export function useUpdateInventory(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<InventoryDocumentDto, Error, InventoryDocumentUpdateRequest>({
-        mutationFn: (data) => Service.update21(id, data),
+        mutationFn: (data) => Service.update22(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventories'] })
             queryClient.invalidateQueries({ queryKey: ['inventories', id] })

@@ -12,7 +12,7 @@ export function useStaff(params: {
 }) {
     return useQuery<PageEmployeeDto, Error>({
         queryKey: ['staff', params],
-        queryFn: () => Service.search9(
+        queryFn: () => Service.search10(
             params.organizationId,
             params.orgUnitId,
             params.personnelNumber,

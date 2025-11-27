@@ -6,7 +6,7 @@ import { Service, type QualityAcceptanceDocumentDto } from '@/shared/api/generat
 export function useQualityAcceptance(id: string) {
     return useQuery<QualityAcceptanceDocumentDto, Error>({
         queryKey: ['quality-acceptance', id],
-        queryFn: () => Service.get17(id),
+        queryFn: () => Service.get18(id),
         enabled: !!id,
     })
 }

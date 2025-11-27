@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Spinner } from '@/shared/ui/spinner'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 
 export function WearReportTable() {
     const { t } = useTranslation()
@@ -25,20 +26,24 @@ export function WearReportTable() {
     return (
         <div className="space-y-4">
             <div className="flex gap-4">
-                <div>
+                <div className="min-w-[200px]">
                     <label className="block text-sm font-medium mb-1">{t('reports.organization')}</label>
-                    <select
-                        className="border rounded px-3 py-2 w-full min-w-[200px]"
-                        value={filters.organizationId}
-                        onChange={(e) => updateFilter('organizationId', e.target.value)}
+                    <Select
+                        value={filters.organizationId || '__ALL__'}
+                        onValueChange={(value) => updateFilter('organizationId', value === '__ALL__' ? '' : value)}
                     >
-                        <option value="">{t('organizations.selectOrganization')}</option>
-                        {organizations?.content?.map((org: any) => (
-                            <option key={org.id} value={org.id}>
-                                {org.name}
-                            </option>
-                        ))}
-                    </select>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('organizations.selectOrganization')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                            {organizations?.content?.map((org: any) => (
+                                <SelectItem key={org.id} value={org.id}>
+                                    {org.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">{t('reports.employeeName')}</label>

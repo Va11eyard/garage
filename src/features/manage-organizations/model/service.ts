@@ -2,11 +2,11 @@ import { Service, type OrganizationDto, type OrganizationCreateRequest, type Org
 
 export class OrganizationService {
     async list(): Promise<OrganizationDto[]> {
-        return Service.list2()
+        return Service.list3()
     }
 
     async search(params: { code?: string; name?: string; page?: number; size?: number }): Promise<PageOrganizationDto> {
-        return Service.search2(params.code, params.name, params.page, params.size)
+        return Service.search4(params.code, params.name, params.page, params.size)
     }
 
     async get(id: string): Promise<OrganizationDto> {
@@ -14,7 +14,7 @@ export class OrganizationService {
     }
 
     async create(data: OrganizationCreateRequest): Promise<OrganizationDto> {
-        return Service.create5(data)
+        return Service.create6(data)
     }
 
     async update(id: string, data: OrganizationUpdateRequest): Promise<OrganizationDto> {

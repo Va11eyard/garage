@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouseCell } from '@/features/manage-warehouse-cells/model/useWarehouseCell'
 import { useUpdateWarehouseCell } from '@/features/manage-warehouse-cells/model/useUpdateWarehouseCell'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
-import { useWarehouseZones } from '@/features/manage-warehouse-zones/model/useWarehouseZones'
+import { useWarehouseZonesByWarehouse } from '@/features/manage-warehouse-zones/model/useWarehouseZonesByWarehouse'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
@@ -30,7 +31,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
         capacity: '',
     })
 
-    const { data: zones } = useWarehouseZones(formData.warehouseId)
+    const { data: zones, isLoading: zonesLoading } = useWarehouseZonesByWarehouse(formData.warehouseId || undefined)
 
     useEffect(() => {
         if (cell) {
@@ -47,7 +48,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.warehouseId || !formData.zoneId || !formData.code) {
+        if (!formData.warehouseId || !formData.code) {
             toast.error(t('common.required'))
             return
         }
@@ -57,6 +58,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
                 id,
                 data: {
                     ...formData,
+                    zoneId: formData.zoneId || undefined,
                     capacity: formData.capacity ? parseInt(formData.capacity) : undefined,
                     description: formData.description || undefined,
                 }
@@ -90,35 +92,47 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
                             <GovLabel required>{t('warehouseCells.warehouse')}</GovLabel>
-                            <GovSelect
+                            <Select
                                 value={formData.warehouseId}
-                                onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value, zoneId: '' })}
-                                required
+                                onValueChange={(value) => setFormData({ ...formData, warehouseId: value, zoneId: '' })}
                             >
-                                <option value="">{t('warehouseCells.selectWarehouse')}</option>
-                                {warehouses.map((w: any) => (
-                                    <option key={w.id} value={w.id}>
-                                        {w.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('warehouseCells.selectWarehouse')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {warehouses.map((w: any) => (
+                                        <SelectItem key={w.id} value={w.id}>
+                                            {w.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div>
-                            <GovLabel required>{t('warehouseCells.zone')}</GovLabel>
-                            <GovSelect
+                            <GovLabel>{t('warehouseCells.zone')}</GovLabel>
+                            <Select
                                 value={formData.zoneId}
-                                onChange={(e) => setFormData({ ...formData, zoneId: e.target.value })}
-                                required
-                                disabled={!formData.warehouseId}
+                                onValueChange={(value) => setFormData({ ...formData, zoneId: value })}
+                                disabled={!formData.warehouseId || zonesLoading}
                             >
-                                <option value="">{t('warehouseCells.selectZone')}</option>
-                                {zones?.map((z: any) => (
-                                    <option key={z.id} value={z.id}>
-                                        {z.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('warehouseCells.selectZone')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {zones && zones.length > 0 ? (
+                                        zones.map((z: any) => (
+                                            <SelectItem key={z.id} value={z.id}>
+                                                {z.name}
+                                            </SelectItem>
+                                        ))
+                                    ) : (
+                                        <div className="px-2 py-1.5 text-sm text-gray-500">
+                                            {formData.warehouseId ? t('common.noData') : t('warehouseCells.selectWarehouse')}
+                                        </div>
+                                    )}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div>

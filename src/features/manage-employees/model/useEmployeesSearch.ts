@@ -4,12 +4,9 @@ import { EmployeeService } from './service'
 const service = new EmployeeService()
 
 export function useEmployeesSearch(params: {
-    lastName?: string
-    firstName?: string
-    middleName?: string
+    organizationId?: string
     orgUnitId?: string
-    categoryId?: string
-    active?: boolean
+    personnelNumber?: string
     page?: number
     size?: number
 }) {

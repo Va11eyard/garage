@@ -8,7 +8,7 @@ import {
 
 export class PersonService {
     async list(): Promise<PersonDto[]> {
-        return Service.list5()
+        return Service.list6()
     }
 
     async search(params: {

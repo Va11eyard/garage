@@ -1,52 +1,81 @@
 'use client'
 
 import { useOrgUnit } from '@/features/manage-org-units/model/useOrgUnit'
+import { useOrganization } from '@/features/manage-organizations/model/useOrganization'
 import { useTranslation } from '@/shared/i18n/use-translation'
-import { Button } from '@/shared/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
+import { GovBreadcrumb } from '@/gov-design/patterns'
+import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
+import { GovButton } from '@/gov-design/components/Button'
+import { Spinner } from '@/shared/ui/spinner'
 import Link from 'next/link'
 
 export function OrgUnitDetails({ id }: { id: string }) {
     const { t } = useTranslation()
     const { data: orgUnit, isLoading } = useOrgUnit(id)
+    const { data: organization } = useOrganization(orgUnit?.organizationId || '')
 
-    if (isLoading) return <div>{t('common.loading')}</div>
-    if (!orgUnit) return <div>{t('common.noData')}</div>
+    if (isLoading) return <Spinner />
+    if (!orgUnit) return <div className="p-6">{t('common.notFound')}</div>
 
     return (
-        <div className="container mx-auto py-6 space-y-4">
+        <div className="space-y-6">
+            <GovBreadcrumb items={[
+                { label: t('sidebar.directoriesSection'), href: '/directories' },
+                { label: t('orgUnits.title'), href: '/directories/org-units' },
+                { label: orgUnit.name || '' }
+            ]} />
+
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">{orgUnit.name}</h1>
-                <Link href={`/directories/org-units/${id}/edit`}>
-                    <Button>{t('common.edit')}</Button>
-                </Link>
+                <h1 className="text-2xl font-bold text-gov-gray-900">{orgUnit.name}</h1>
+                <div className="flex gap-2">
+                    <Link href={`/directories/org-units/${id}/edit`}>
+                        <GovButton>{t('common.edit')}</GovButton>
+                    </Link>
+                    <Link href="/directories/org-units">
+                        <GovButton variant="secondary">{t('common.back')}</GovButton>
+                    </Link>
+                </div>
             </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>{t('orgUnits.title')}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                    <div>
-                        <span className="font-semibold">{t('orgUnits.code')}: </span>
-                        <span>{orgUnit.code}</span>
-                    </div>
-                    <div>
-                        <span className="font-semibold">{t('orgUnits.name')}: </span>
-                        <span>{orgUnit.name}</span>
-                    </div>
-                    {orgUnit.type && (
+            <GovCard>
+                <GovCardHeader>
+                    <GovCardTitle>{t('orgUnits.title')}</GovCardTitle>
+                </GovCardHeader>
+                <GovCardContent>
+                    <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <span className="font-semibold">{t('orgUnits.type')}: </span>
-                            <span>{orgUnit.type}</span>
+                            <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.code')}</dt>
+                            <dd className="mt-1 text-sm text-gov-gray-900">{orgUnit.code}</dd>
                         </div>
-                    )}
-                    <div>
-                        <span className="font-semibold">{t('common.active')}: </span>
-                        <span>{orgUnit.active ? t('common.yes') : t('common.no')}</span>
-                    </div>
-                </CardContent>
-            </Card>
+                        <div>
+                            <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.name')}</dt>
+                            <dd className="mt-1 text-sm text-gov-gray-900">{orgUnit.name}</dd>
+                        </div>
+                        <div>
+                            <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.organization')}</dt>
+                            <dd className="mt-1 text-sm text-gov-gray-900">{organization?.name || '-'}</dd>
+                        </div>
+                        {orgUnit.type && (
+                            <div>
+                                <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.type')}</dt>
+                                <dd className="mt-1 text-sm text-gov-gray-900">{orgUnit.type}</dd>
+                            </div>
+                        )}
+                        <div>
+                            <dt className="text-sm font-medium text-gov-gray-500">{t('organizations.status')}</dt>
+                            <dd className="mt-1">
+                                <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                                    orgUnit.active 
+                                        ? 'bg-green-100 text-green-800' 
+                                        : 'bg-red-100 text-red-800'
+                                }`}>
+                                    {orgUnit.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </dd>
+                        </div>
+                    </dl>
+                </GovCardContent>
+            </GovCard>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import {
 
 export class EmployeeCategoryService {
     async list(): Promise<EmployeeCategoryDto[]> {
-        return Service.list4()
+        return Service.list5()
     }
 
     async get(id: string): Promise<EmployeeCategoryDto> {

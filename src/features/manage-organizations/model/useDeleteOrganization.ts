@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { OrganizationService } from './service'
+
+const service = new OrganizationService()
 
 export function useDeleteOrganization() {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, string>({
-        mutationFn: (id: string) => Service.delete5(id),
+        mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['organizations'] })
         },

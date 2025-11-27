@@ -1,13 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type OrgUnitCreateRequest, type OrgUnitDto } from '@/shared/api/generated/__swagger_client'
+import { type OrgUnitCreateRequest, type OrgUnitDto } from '@/shared/api/generated/__swagger_client'
+import { OrgUnitService } from './service'
+
+const service = new OrgUnitService()
 
 export function useCreateOrgUnit() {
     const queryClient = useQueryClient()
 
     return useMutation<OrgUnitDto, Error, OrgUnitCreateRequest>({
-        mutationFn: (data: OrgUnitCreateRequest) => Service.create7(data),
+        mutationFn: (data: OrgUnitCreateRequest) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['org-units'] })
         },

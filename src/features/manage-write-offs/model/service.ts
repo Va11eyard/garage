@@ -26,26 +26,26 @@ export class WriteOffService {
     }
 
     async get(id: string): Promise<WriteOffDocumentDto> {
-        return Service.get10(id)
+        return Service.get13(id)
     }
 
     async create(data: WriteOffCreateRequest): Promise<WriteOffDocumentDto> {
-        return Service.create10(data)
+        return Service.create16(data)
     }
 
     async update(id: string, data: WriteOffUpdateRequest): Promise<WriteOffDocumentDto> {
-        return Service.update10(id, data)
+        return Service.update13(id, data)
     }
 
     async post(id: string): Promise<WriteOffDocumentDto> {
-        return Service.post(id)
+        return Service.post3(id)
     }
 
     async cancel(id: string): Promise<WriteOffDocumentDto> {
         return Service.cancel(id)
     }
 
-    async remove(id: string): Promise<void> {
-        return Service.delete10(id)
+    async delete(id: string): Promise<void> {
+        return Service.delete13(id)
     }
 }

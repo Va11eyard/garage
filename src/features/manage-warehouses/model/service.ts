@@ -5,14 +5,17 @@ export class WarehouseService {
         return Service.listByOrganization(orgId)
     }
 
-    async search(params: {
-        code?: string
-        name?: string
-        orgId?: string
-        page?: number
+    async list(): Promise<WarehouseDto[]> {
+        return Service.list()
+    }
+
+    async search(
+        code?: string,
+        name?: string,
+        page?: number,
         size?: number
-    }) {
-        return Service.search1(params.code, params.name, params.orgId, params.page, params.size)
+    ) {
+        return Service.search1(code, name, page, size)
     }
 
     async get(id: string): Promise<WarehouseDto> {
@@ -27,7 +30,7 @@ export class WarehouseService {
         return Service.update(id, data)
     }
 
-    async remove(id: string): Promise<void> {
+    async delete(id: string): Promise<void> {
         return Service.delete(id)
     }
 }

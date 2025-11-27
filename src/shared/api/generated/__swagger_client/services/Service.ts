@@ -75,6 +75,7 @@ import type { PageReturnDocumentDto } from '../models/PageReturnDocumentDto';
 import type { PageTemporaryIssueDocumentDto } from '../models/PageTemporaryIssueDocumentDto';
 import type { PageUnitOfMeasureDto } from '../models/PageUnitOfMeasureDto';
 import type { PageUserDto } from '../models/PageUserDto';
+import type { PageWarehouseDto } from '../models/PageWarehouseDto';
 import type { PageWriteOffDocumentDto } from '../models/PageWriteOffDocumentDto';
 import type { PersonCreateRequest } from '../models/PersonCreateRequest';
 import type { PersonDto } from '../models/PersonDto';
@@ -1666,6 +1667,18 @@ export class Service {
         });
     }
     /**
+     * Список складов (без пагинации)
+     * Возвращает полный список активных складов. Для UI обычно рекомендуется использовать пагинированный эндпоинт /page.
+     * @returns WarehouseDto OK
+     * @throws ApiError
+     */
+    public static list(): CancelablePromise<Array<WarehouseDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/nsi/warehouses',
+        });
+    }
+    /**
      * Создать склад
      * Создаёт новый склад в рамках указанной организации.
      * Код склада должен быть уникальным в пределах организации.
@@ -1730,7 +1743,7 @@ export class Service {
      * @returns UnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<UnitOfMeasureDto>> {
+    public static list1(): CancelablePromise<Array<UnitOfMeasureDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/units',
@@ -1759,7 +1772,7 @@ export class Service {
      * @returns QualityCategoryDto OK
      * @throws ApiError
      */
-    public static list1(): CancelablePromise<Array<QualityCategoryDto>> {
+    public static list2(): CancelablePromise<Array<QualityCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/quality-categories',
@@ -1788,7 +1801,7 @@ export class Service {
      * @returns OrganizationDto OK
      * @throws ApiError
      */
-    public static list2(): CancelablePromise<Array<OrganizationDto>> {
+    public static list3(): CancelablePromise<Array<OrganizationDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/organizations',
@@ -1836,7 +1849,7 @@ export class Service {
      * @returns ItemDto OK
      * @throws ApiError
      */
-    public static list3(): CancelablePromise<Array<ItemDto>> {
+    public static list4(): CancelablePromise<Array<ItemDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/items',
@@ -1917,7 +1930,7 @@ export class Service {
      * @returns EmployeeCategoryDto OK
      * @throws ApiError
      */
-    public static list4(): CancelablePromise<Array<EmployeeCategoryDto>> {
+    public static list5(): CancelablePromise<Array<EmployeeCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/employee-categories',
@@ -2045,7 +2058,7 @@ export class Service {
      * @returns PersonDto OK
      * @throws ApiError
      */
-    public static list5(): CancelablePromise<Array<PersonDto>> {
+    public static list6(): CancelablePromise<Array<PersonDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/hr/persons',
@@ -2217,7 +2230,7 @@ export class Service {
      * @returns Device OK
      * @throws ApiError
      */
-    public static list6(): CancelablePromise<Array<Device>> {
+    public static list7(): CancelablePromise<Array<Device>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/equipment/devices',
@@ -2915,7 +2928,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static list7(): CancelablePromise<Array<UserDto>> {
+    public static list8(): CancelablePromise<Array<UserDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/users',
@@ -2961,7 +2974,7 @@ export class Service {
      * @returns SystemSettingDto OK
      * @throws ApiError
      */
-    public static list8(): CancelablePromise<Array<SystemSettingDto>> {
+    public static list9(): CancelablePromise<Array<SystemSettingDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/settings',
@@ -2989,7 +3002,7 @@ export class Service {
      * @returns RoleDto OK
      * @throws ApiError
      */
-    public static list9(): CancelablePromise<Array<RoleDto>> {
+    public static list10(): CancelablePromise<Array<RoleDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/roles',
@@ -3019,7 +3032,7 @@ export class Service {
      * @returns PurchasePlanDto OK
      * @throws ApiError
      */
-    public static list10(
+    public static list11(
         organizationId?: string,
     ): CancelablePromise<Array<PurchasePlanDto>> {
         return __request(OpenAPI, {
@@ -3121,6 +3134,38 @@ export class Service {
         });
     }
     /**
+     * Пагинированный поиск складов
+     * Возвращает страницу складов с возможностью фильтрации по коду и/или наименованию.
+     * Поиск по подстроке, регистр не учитывается. По умолчанию сортировка идёт по наименованию.
+     *
+     * @param code Фильтр по коду складов (подстрока, регистр не учитывается)
+     * @param name Фильтр по наименованию складов (подстрока, регистр не учитывается)
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns PageWarehouseDto OK
+     * @throws ApiError
+     */
+    public static search1(
+        code?: string,
+        name?: string,
+        page?: any,
+        size?: any,
+        sort?: Array<any>,
+    ): CancelablePromise<PageWarehouseDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/nsi/warehouses/page',
+            query: {
+                'code': code,
+                'name': name,
+                'page': page,
+                'size': size,
+                'sort': sort,
+            },
+        });
+    }
+    /**
      * Список складов по организации
      * Возвращает список всех складов, принадлежащих указанной организации.
      * Обычно используется при настройке адресного хранения и выборе склада в документах.
@@ -3213,7 +3258,7 @@ export class Service {
      * @returns PageUnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static search1(
+    public static search2(
         code?: string,
         name?: string,
         page?: any,
@@ -3242,7 +3287,7 @@ export class Service {
      * @returns PageQualityCategoryDto OK
      * @throws ApiError
      */
-    public static search2(
+    public static search3(
         q?: string,
         page?: any,
         size?: any,
@@ -3272,7 +3317,7 @@ export class Service {
      * @returns PageOrganizationDto OK
      * @throws ApiError
      */
-    public static search3(
+    public static search4(
         code?: string,
         name?: string,
         page?: any,
@@ -3325,7 +3370,7 @@ export class Service {
      * @returns PageItemDto OK
      * @throws ApiError
      */
-    public static search4(
+    public static search5(
         code?: string,
         name?: string,
         groupId?: string,
@@ -3359,7 +3404,7 @@ export class Service {
      * @returns PageItemSupplyNormDto OK
      * @throws ApiError
      */
-    public static search5(
+    public static search6(
         employeeCategoryId?: string,
         itemId?: string,
         page?: any,
@@ -3429,7 +3474,7 @@ export class Service {
      * @returns PageEmployeeWearReportRowDto OK
      * @throws ApiError
      */
-    public static search6(
+    public static search7(
         organizationId: string,
         orgUnitId?: string,
         itemId?: string,
@@ -3472,7 +3517,7 @@ export class Service {
      * @returns PageProvisionNormDto OK
      * @throws ApiError
      */
-    public static search7(
+    public static search8(
         organizationId?: string,
         employeeCategory?: string,
         season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON',
@@ -3538,7 +3583,7 @@ export class Service {
      * @returns PagePersonDto OK
      * @throws ApiError
      */
-    public static search8(
+    public static search9(
         lastName?: string,
         firstName?: string,
         page?: any,
@@ -3665,7 +3710,7 @@ export class Service {
      * @returns PageEmployeeDto OK
      * @throws ApiError
      */
-    public static search9(
+    public static search10(
         organizationId?: string,
         orgUnitId?: string,
         personnelNumber?: string,
@@ -3738,7 +3783,7 @@ export class Service {
      * @returns PageEmployeeReturnDocumentDto OK
      * @throws ApiError
      */
-    public static search10(
+    public static search11(
         organizationId: string,
         from?: string,
         to?: string,
@@ -3811,7 +3856,7 @@ export class Service {
      * @returns PageEmployeeIssueDocumentDto OK
      * @throws ApiError
      */
-    public static search11(
+    public static search12(
         organizationId: string,
         from?: string,
         to?: string,
@@ -3866,7 +3911,7 @@ export class Service {
      * @returns PageEmployeeItemAssignmentDto OK
      * @throws ApiError
      */
-    public static search12(
+    public static search13(
         organizationId: string,
         orgUnitId?: string,
         itemId?: string,
@@ -4169,7 +4214,7 @@ export class Service {
      * @returns PageReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static search13(
+    public static search14(
         warehouseId?: string,
         status?: 'DRAFT' | 'POSTED' | 'CANCELLED',
         fromDate?: string,
@@ -4208,7 +4253,7 @@ export class Service {
      * @returns PageQualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static search14(
+    public static search15(
         warehouseId?: string,
         from?: string,
         to?: string,
@@ -4390,7 +4435,7 @@ export class Service {
      * @returns PageInventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static search15(
+    public static search16(
         warehouseId?: string,
         from?: string,
         to?: string,
@@ -4474,7 +4519,7 @@ export class Service {
      * @returns PageUserDto OK
      * @throws ApiError
      */
-    public static search16(
+    public static search17(
         username?: string,
         roles?: Array<string>,
         page?: any,
@@ -4551,7 +4596,7 @@ export class Service {
      * @returns AdminSearchResultDto OK
      * @throws ApiError
      */
-    public static search17(
+    public static search18(
         q: string,
         limitPerType: number = 10,
     ): CancelablePromise<Array<AdminSearchResultDto>> {
@@ -4581,7 +4626,7 @@ export class Service {
      * @returns PageAuditLogDto OK
      * @throws ApiError
      */
-    public static search18(
+    public static search19(
         userId?: string,
         username?: string,
         action?: string,

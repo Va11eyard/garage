@@ -1,7 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageUserDto, type UserDto } from '@/shared/api/generated/__swagger_client'
+import { type PageUserDto, type UserDto } from '@/shared/api/generated/__swagger_client'
+import { UserService } from './service'
+
+const service = new UserService()
 
 export function useUsers(params: {
     username?: string
@@ -11,13 +14,13 @@ export function useUsers(params: {
 }) {
     return useQuery<PageUserDto, Error>({
         queryKey: ['users', params],
-        queryFn: () => Service.search9(params.username, params.roles, params.page, params.size),
+        queryFn: () => service.search(params.username, params.roles, params.page, params.size),
     })
 }
 
 export function useUsersList() {
     return useQuery<UserDto[], Error>({
         queryKey: ['users', 'list'],
-        queryFn: () => Service.list5(),
+        queryFn: () => service.list(),
     })
 }

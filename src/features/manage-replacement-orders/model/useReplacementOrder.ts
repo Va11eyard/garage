@@ -6,7 +6,7 @@ import { Service, type ReplacementOrderDto } from '@/shared/api/generated/__swag
 export function useReplacementOrder(id: string) {
     return useQuery<ReplacementOrderDto, Error>({
         queryKey: ['replacement-orders', id],
-        queryFn: () => Service.get15(id),
+        queryFn: () => Service.get16(id),
         enabled: !!id,
     })
 }

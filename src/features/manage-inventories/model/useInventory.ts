@@ -6,7 +6,7 @@ import { Service, type InventoryDocumentDto } from '@/shared/api/generated/__swa
 export function useInventory(id: string) {
     return useQuery<InventoryDocumentDto, Error>({
         queryKey: ['inventories', id],
-        queryFn: () => Service.get21(id),
+        queryFn: () => Service.get22(id),
         enabled: !!id,
     })
 }

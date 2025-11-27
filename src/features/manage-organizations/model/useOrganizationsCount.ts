@@ -7,7 +7,7 @@ export function useOrganizationsCount() {
     return useQuery({
         queryKey: ['organizations', 'count'],
         queryFn: async () => {
-            const page = await Service.search3(undefined, undefined, 0, 1);
+            const page = await Service.search4(undefined, undefined, 0, 1);
             return page.totalElements;
         },
     })

@@ -6,7 +6,7 @@ import { Service, type TemporaryIssueDocumentDto } from '@/shared/api/generated/
 export function useTemporaryIssue(id: string) {
     return useQuery<TemporaryIssueDocumentDto, Error>({
         queryKey: ['temporary-issues', id],
-        queryFn: () => Service.get13(id),
+        queryFn: () => Service.get14(id),
         enabled: !!id,
     })
 }

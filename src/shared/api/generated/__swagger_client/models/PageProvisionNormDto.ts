@@ -13,9 +13,9 @@ export type PageProvisionNormDto = {
     content?: Array<ProvisionNormDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 
