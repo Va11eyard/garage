@@ -12,7 +12,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: 'http://192.168.19.132/api/:path*', // Proxy к backend
+                destination: `${process.env.BACKEND_URL}/api/:path*`,
             },
         ]
     },
