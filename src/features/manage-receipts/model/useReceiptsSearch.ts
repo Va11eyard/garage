@@ -15,9 +15,9 @@ export function useReceiptsSearch(params: {
         queryKey: ['receipts', 'search', params],
         queryFn: () => service.search(
             params.warehouseId,
-            params.from,
-            params.to,
-            params.page,
+            params.from as any,
+            params.to as any,
+            params.page as any,
             params.size
         ),
     })

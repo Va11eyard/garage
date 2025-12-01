@@ -7,7 +7,7 @@ export function usePostIssue() {
     const queryClient = useQueryClient()
 
     return useMutation<IssueDocumentDto, Error, string>({
-        mutationFn: (id) => Service.post10(id),
+        mutationFn: (id: string) => Service.post10(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['issues'] })
         },

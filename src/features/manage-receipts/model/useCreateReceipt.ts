@@ -10,7 +10,7 @@ export function useCreateReceipt() {
     const queryClient = useQueryClient()
 
     return useMutation<ReceiptDocumentDto, Error, ReceiptCreateRequest>({
-        mutationFn: (data) => service.create(data),
+        mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['receipts'] })
         },

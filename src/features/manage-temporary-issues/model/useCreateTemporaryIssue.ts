@@ -7,7 +7,7 @@ export function useCreateTemporaryIssue() {
     const queryClient = useQueryClient()
 
     return useMutation<TemporaryIssueDocumentDto, Error, TemporaryIssueCreateRequest>({
-        mutationFn: (data) => Service.create17(data),
+        mutationFn: (data: any) => Service.create17(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
         },

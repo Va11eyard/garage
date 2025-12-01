@@ -67,7 +67,7 @@ export function ReceiptDetails({ id }: { id: string }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {receipt.lines.map((line, idx) => (
+                                {receipt.lines.map((line: any, idx: number) => (
                                     <TableRow key={idx}>
                                         <TableCell>{line.itemId}</TableCell>
                                         <TableCell>{line.quantity}</TableCell>

@@ -14,9 +14,9 @@ export function useTemporaryIssuesSearch(params: {
         queryKey: ['temporary-issues', 'search', params],
         queryFn: () => Service.searchByWarehouse1(
             params.warehouseId || '',
-            params.from,
-            params.to,
-            params.page,
+            params.from as any,
+            params.to as any,
+            params.page as any,
             params.size
         ),
     })

@@ -13,12 +13,12 @@ export function useReturnsSearch(params: {
 }) {
     return useQuery<PageReturnDocumentDto, Error>({
         queryKey: ['returns', 'search', params],
-        queryFn: () => service.searchByWarehouse(
-            params.warehouseId || '',
-            params.from,
-            params.to,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.searchByWarehouse({
+            warehouseId: params.warehouseId || '',
+            from: params.from,
+            to: params.to,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

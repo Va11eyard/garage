@@ -20,6 +20,6 @@ export class CategoryChangeService {
         page?: number
         size?: number
     }): Promise<PageCategoryChangeDocumentDto> {
-        return Service.search(params.warehouseId, params.status, params.page, params.size)
+        return Service.search(params.warehouseId || '', params.status, params.page as any, params.size as any)
     }
 }

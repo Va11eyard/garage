@@ -1,5 +1,8 @@
-import { EmployeeCategoryEditForm } from '@/widgets/forms/EmployeeCategoryForms/EmployeeCategoryEditForm'
-
-export default function EmployeeCategoryEditPage({ params }: { params: { id: string } }) {
-    return <EmployeeCategoryEditForm id={params.id} />
+export default function EditEmployeeCategoryPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit Employee Category</h1>
+      <p>Category ID: {params.id}</p>
+    </div>
+  );
 }

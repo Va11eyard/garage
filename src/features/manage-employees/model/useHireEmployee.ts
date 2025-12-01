@@ -7,7 +7,7 @@ export function useHireEmployee() {
     const queryClient = useQueryClient()
 
     return useMutation<EmployeeDto, Error, EmployeeHireRequest>({
-        mutationFn: (data) => Service.hire(data),
+        mutationFn: (data: EmployeeHireRequest) => Service.hire(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['employees'] })
         },

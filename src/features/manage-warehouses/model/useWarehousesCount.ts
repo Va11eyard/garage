@@ -8,7 +8,7 @@ export function useWarehousesCount() {
     return useQuery({
         queryKey: ['warehouses', 'count'],
         queryFn: async () => {
-            const page = await service.search(undefined, undefined, undefined, 0, 1);
+            const page = await service.search(undefined, undefined, 0, 1);
             return page.totalElements;
         },
     })

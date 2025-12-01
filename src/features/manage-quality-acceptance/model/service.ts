@@ -15,8 +15,8 @@ export function useQualityAcceptancesByWarehouse(params: {
         queryKey: ['qualityAcceptances', params],
         queryFn: () => Service.search14(
             params.warehouseId,
-            params.from,
-            params.to,
+            params.from as any,
+            params.to as any,
             params.status,
             params.page,
             params.size

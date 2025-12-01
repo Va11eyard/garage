@@ -1,22 +1,8 @@
-'use client'
-
-import { useTranslation } from '@/shared/i18n/use-translation'
-import { Button } from '@/shared/ui/button'
-import { useRouter } from 'next/navigation'
-
-export default function MovementEditPage({ params }: { params: { id: string } }) {
-    const { t } = useTranslation()
-    const router = useRouter()
-
-    return (
-        <div className="gov-page-content">
-            <div className="gov-card max-w-2xl space-y-6">
-                <h2 className="gov-title">Редактировать перемещение</h2>
-                <p className="text-[var(--gov-gray)]">Movement document editing form will be implemented here.</p>
-                <Button onClick={() => router.back()} className="gov-button-secondary">
-                    {t('common.back')}
-                </Button>
-            </div>
-        </div>
-    )
+export default function EditMovementPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit Movement</h1>
+      <p>Movement ID: {params.id}</p>
+    </div>
+  );
 }

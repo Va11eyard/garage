@@ -7,7 +7,7 @@ export function useCreateIssue() {
     const queryClient = useQueryClient()
 
     return useMutation<IssueDocumentDto, Error, IssueCreateRequest>({
-        mutationFn: (data) => Service.create23(data),
+        mutationFn: (data: any) => Service.create23(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['issues'] })
         },

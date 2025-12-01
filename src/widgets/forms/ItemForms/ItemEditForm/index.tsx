@@ -20,7 +20,7 @@ export function ItemEditForm({ id }: { id: string }) {
     const { data, isLoading } = useItem(id)
     const { mutateAsync } = useUpdateItem()
     const { data: groups } = useItemGroups()
-    const { data: units } = useUnits({})
+    const { data: units } = useUnits()
     const { register, handleSubmit, setValue, formState: { isSubmitting } } = useForm<ItemUpdateRequest>()
 
     const router = useRouter()

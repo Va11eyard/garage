@@ -10,7 +10,7 @@ export function useCreateReturn() {
     const queryClient = useQueryClient()
 
     return useMutation<ReturnDocumentDto, Error, ReturnCreateRequest>({
-        mutationFn: (data) => service.create(data),
+        mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['returns'] })
         },

@@ -32,7 +32,7 @@ export function UnitCreateForm() {
         try {
             await Service.create4({
                 ...formData,
-                shortName: formData.shortName || undefined,
+                shortName: formData.shortName || '',
             })
             toast.success(t('common.success'))
             router.push('/directories/units')

@@ -31,7 +31,7 @@ export function SystemSettingsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((setting) => (
+                    {data?.map((setting: any) => (
                         <TableRow key={setting.id}>
                             <TableCell className="font-mono text-sm">{setting.key}</TableCell>
                             <TableCell className="max-w-xs truncate">{setting.value}</TableCell>

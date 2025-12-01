@@ -45,7 +45,7 @@ export function EmployeeCategoriesTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((category) => (
+                    {data?.map((category: any) => (
                         <TableRow key={category.id}>
                             <TableCell>{category.code}</TableCell>
                             <TableCell>{category.name}</TableCell>

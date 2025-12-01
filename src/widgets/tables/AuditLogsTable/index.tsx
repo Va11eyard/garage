@@ -57,7 +57,7 @@ export function AuditLogsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((log) => (
+                    {data?.content?.map((log: any) => (
                         <TableRow key={log.id}>
                             <TableCell>{format(new Date(log.timestamp), 'dd.MM.yyyy HH:mm:ss')}</TableCell>
                             <TableCell>{log.username || log.userId}</TableCell>

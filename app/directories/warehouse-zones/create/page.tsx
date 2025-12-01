@@ -10,6 +10,7 @@ import { useCreateWarehouseZone } from '@/features/manage-warehouse-zones/model/
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import type { WarehouseDto } from '@/shared/api/generated/__swagger_client/models/WarehouseDto'
 
 export default function WarehouseZoneCreatePage() {
     const router = useRouter()
@@ -63,7 +64,7 @@ export default function WarehouseZoneCreatePage() {
                                 required
                             >
                                 <option value="">{t('warehouseZones.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse) => (
+                                {warehouses?.content?.map((warehouse: WarehouseDto) => (
                                     <option key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
                                     </option>

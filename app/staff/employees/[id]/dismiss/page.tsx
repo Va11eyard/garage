@@ -1,5 +1,8 @@
-import { EmployeeDismissForm } from '@/widgets/forms/EmployeeForms/EmployeeDismissForm'
-
-export default function EmployeeDismissPage({ params }: { params: { id: string } }) {
-    return <EmployeeDismissForm id={params.id} />
+export default function DismissEmployeePage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Dismiss Employee</h1>
+      <p>Employee ID: {params.id}</p>
+    </div>
+  );
 }

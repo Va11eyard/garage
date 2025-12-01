@@ -1,5 +1,8 @@
-import { InventorySurplusDetails } from '@/widgets/details/InventorySurplusDetails'
-
-export default function InventorySurplusDetailsPage({ params }: { params: { id: string } }) {
-    return <InventorySurplusDetails id={params.id} />
+export default function SurplusDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Surplus Details</h1>
+      <p>Surplus ID: {params.id}</p>
+    </div>
+  );
 }

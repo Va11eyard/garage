@@ -1,5 +1,8 @@
-import { ReceiptEditForm } from '@/widgets/forms/ReceiptForms/ReceiptEditForm'
-
-export default function ReceiptEditPage({ params }: { params: { id: string } }) {
-    return <ReceiptEditForm id={params.id} />
+export default function EditReceiptPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit Receipt</h1>
+      <p>Receipt ID: {params.id}</p>
+    </div>
+  );
 }

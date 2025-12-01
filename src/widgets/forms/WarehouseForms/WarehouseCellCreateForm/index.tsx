@@ -79,7 +79,7 @@ export function WarehouseCellCreateForm() {
                                 required
                             >
                                 <option value="">{t('warehouseCells.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse) => (
+                                {warehouses?.content?.map((warehouse: any) => (
                                     <option key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
                                     </option>
@@ -95,7 +95,7 @@ export function WarehouseCellCreateForm() {
                                     onChange={(e) => setFormData({ ...formData, zoneId: e.target.value })}
                                 >
                                     <option value="">{t('warehouseCells.selectZone')}</option>
-                                    {zones.map((zone) => (
+                                    {zones.map((zone: any) => (
                                         <option key={zone.id} value={zone.id!}>
                                             {zone.name}
                                         </option>

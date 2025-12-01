@@ -10,7 +10,7 @@ export function useUpdateUser() {
     const queryClient = useQueryClient()
 
     return useMutation<UserDto, Error, { id: string; data: UpdateUserRequest }>({
-        mutationFn: ({ id, data }) => service.update(id, data),
+        mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] })
         },

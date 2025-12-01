@@ -8,7 +8,7 @@ export function usePostReceipt() {
     const queryClient = useQueryClient()
 
     return useMutation<ReceiptDocumentDto, Error, string>({
-        mutationFn: (id) => service.post(id),
+        mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['receipts'] })
         },

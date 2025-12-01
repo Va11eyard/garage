@@ -17,7 +17,7 @@ export function UnitsTable() {
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
-    const { data, isLoading } = useUnits({ ...debouncedFilters, page, size })
+    const { data, isLoading } = useUnits()
     const deleteMutation = useDeleteUnit()
 
     const handleDelete = (id: string) => {

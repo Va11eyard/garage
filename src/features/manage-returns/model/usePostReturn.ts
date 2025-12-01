@@ -10,7 +10,7 @@ export function usePostReturn() {
     const queryClient = useQueryClient()
 
     return useMutation<ReturnDocumentDto, Error, string>({
-        mutationFn: (id) => service.post(id),
+        mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['returns'] })
         },

@@ -11,7 +11,7 @@ export function useEmployeeAssignments(params: {
 }) {
     return useQuery({
         queryKey: ['employee-assignments', params],
-        queryFn: () => service.getAssignments(params),
+        queryFn: () => service.getAssignments(params as any),
         enabled: !!params.employeeId,
     })
 }

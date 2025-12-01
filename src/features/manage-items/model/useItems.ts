@@ -14,12 +14,12 @@ export function useItems(params: {
 }) {
     return useQuery<PageItemDto, Error>({
         queryKey: ['items', params],
-        queryFn: () => service.search(
-            params.code,
-            params.name,
-            params.itemGroupId,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.search({
+            code: params.code,
+            name: params.name,
+            groupId: params.itemGroupId,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

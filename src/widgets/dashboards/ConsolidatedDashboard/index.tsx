@@ -104,7 +104,7 @@ export function ConsolidatedDashboard() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-2">
-                            {data.recentActivities.slice(0, 5).map((activity) => (
+                            {data.recentActivities.slice(0, 5).map((activity: any) => (
                                 <div
                                     key={activity.id}
                                     className="flex items-center justify-between border-b pb-2 last:border-0"

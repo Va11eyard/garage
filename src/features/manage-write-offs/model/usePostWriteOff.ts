@@ -8,7 +8,7 @@ export function usePostWriteOff() {
     const queryClient = useQueryClient()
 
     return useMutation<WriteOffDocumentDto, Error, string>({
-        mutationFn: (id) => service.post(id),
+        mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
         },

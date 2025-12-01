@@ -1,5 +1,8 @@
-import { ItemDetails } from '@/widgets/details/ItemDetails'
-
-export default function ItemDetailsPage({ params }: { params: { id: string } }) {
-    return <ItemDetails id={params.id} />
+export default function ItemDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Item Details</h1>
+      <p>Item ID: {params.id}</p>
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useHireStaff } from '@/features/hire-staff/model/useHireStaff'
+import { useHireEmployee } from '@/features/manage-employees/model/useHireEmployee'
 import { usePersons } from '@/features/manage-persons/model/usePersons'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useOrgUnits } from '@/features/manage-org-units/model/useOrgUnits'
@@ -18,7 +18,7 @@ import { useState } from 'react'
 export function StaffHireForm() {
     const { t } = useTranslation()
     const { register, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm<EmployeeHireRequest>()
-    const { mutateAsync } = useHireStaff()
+    const { mutateAsync } = useHireEmployee()
     const router = useRouter()
 
     const [organizationId, setOrganizationId] = useState<string>('')

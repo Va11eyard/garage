@@ -1,5 +1,8 @@
-import { RoleEditForm } from '@/widgets/forms/RoleForms/RoleEditForm'
-
-export default function RoleEditPage({ params }: { params: { id: string } }) {
-    return <RoleEditForm code={params.id} />
+export default function EditRolePage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit Role</h1>
+      <p>Role ID: {params.id}</p>
+    </div>
+  );
 }
