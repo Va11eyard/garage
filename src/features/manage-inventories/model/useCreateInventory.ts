@@ -7,7 +7,7 @@ export function useCreateInventory() {
     const queryClient = useQueryClient()
 
     return useMutation<InventoryDocumentDto, Error, InventoryDocumentCreateRequest>({
-        mutationFn: (data) => Service.create25(data),
+        mutationFn: (data: InventoryDocumentCreateRequest) => Service.create25(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventories'] })
         },

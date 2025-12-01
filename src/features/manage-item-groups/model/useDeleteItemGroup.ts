@@ -8,7 +8,7 @@ export function useDeleteItemGroup() {
     const queryClient = useQueryClient()
 
     return useMutation<any, Error, string>({
-        mutationFn: (id) => service.delete(id),
+        mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['item-groups'] })
         },

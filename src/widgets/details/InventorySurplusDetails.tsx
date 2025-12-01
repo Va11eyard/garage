@@ -22,7 +22,7 @@ export function InventorySurplusDetails({ id }: { id: string }) {
                     </span>
                 </div>
                 {surplus.status === 'DRAFT' && (
-                    <Link href={`/inventory/surplus/${id}/edit`}>
+                    <Link href={`/inventory/surplus/${id}/edit` as any}>
                         <Button className="gov-button-primary">{t('common.edit')}</Button>
                     </Link>
                 )}

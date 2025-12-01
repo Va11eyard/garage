@@ -1,5 +1,8 @@
-import { WarehouseCellDetails } from '@/widgets/details/WarehouseCellDetails'
-
-export default function WarehouseCellDetailsPage({ params }: { params: { id: string } }) {
-    return <WarehouseCellDetails id={params.id} />
+export default function WarehouseCellDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Warehouse Cell Details</h1>
+      <p>Cell ID: {params.id}</p>
+    </div>
+  );
 }

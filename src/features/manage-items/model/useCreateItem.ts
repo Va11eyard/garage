@@ -10,7 +10,7 @@ export function useCreateItem() {
     const queryClient = useQueryClient()
 
     return useMutation<ItemDto, Error, ItemCreateRequest>({
-        mutationFn: (data) => service.create(data),
+        mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['items'] })
         },

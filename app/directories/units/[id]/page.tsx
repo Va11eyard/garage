@@ -1,4 +1,8 @@
-import { UnitDetails } from '@/widgets/details/UnitDetails'
-export default function UnitDetailsPage({ params }: { params: { id: string } }) {
-    return <UnitDetails id={params.id} />
+export default function UnitDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Unit Details</h1>
+      <p>Unit ID: {params.id}</p>
+    </div>
+  );
 }

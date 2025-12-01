@@ -1,5 +1,8 @@
-import { IssueEditForm } from '@/widgets/forms/DocumentForms/IssueEditForm'
-
-export default function IssueEditPage({ params }: { params: { id: string } }) {
-    return <IssueEditForm id={params.id} />
+export default function EditIssuePage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit Issue</h1>
+      <p>Issue ID: {params.id}</p>
+    </div>
+  );
 }

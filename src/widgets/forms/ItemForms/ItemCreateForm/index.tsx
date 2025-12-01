@@ -18,7 +18,7 @@ export function ItemCreateForm() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ItemCreateRequest>()
   const { mutateAsync } = useCreateItem()
   const { data: groups } = useItemGroups()
-  const { data: units } = useUnits({})
+  const { data: units } = useUnits()
   const router = useRouter()
 
   const onSubmit = async (data: ItemCreateRequest) => {

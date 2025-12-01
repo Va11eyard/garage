@@ -40,7 +40,7 @@ export function GovBreadcrumb({ items, className }: GovBreadcrumbProps) {
             <ChevronRight className="w-4 h-4 text-gov-gray-400" />
             {item.href && !isLast ? (
               <Link
-                href={item.href}
+                href={item.href as any}
                 className="text-gov-gray-600 hover:text-gov-blue-500 transition-colors"
               >
                 {item.label}

@@ -53,7 +53,7 @@ export function EmployeeProvisionCard({ employeeId }: EmployeeProvisionCardProps
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.items?.map((item) => (
+                        {data.items?.map((item: any) => (
                             <TableRow key={item.itemId}>
                                 <TableCell>
                                     <div>

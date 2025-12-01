@@ -10,7 +10,7 @@ export function useUpdateWarehouse() {
     const queryClient = useQueryClient()
 
     return useMutation<WarehouseDto, Error, { id: string; data: WarehouseUpdateRequest }>({
-        mutationFn: ({ id, data }) => service.update(id, data),
+        mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouses'] })
         },

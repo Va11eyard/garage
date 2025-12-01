@@ -2,8 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { WarehouseService } from './service'
 
 const service = new WarehouseService()
-import { WarehouseService } from "./service";
-const service = new WarehouseService();
+
 export function useWarehousesSearch(params: {
     code?: string
     name?: string
@@ -13,6 +12,6 @@ export function useWarehousesSearch(params: {
 }) {
     return useQuery({
         queryKey: ['warehouses', 'search', params],
-        queryFn: () => service.search(params),
+        queryFn: () => service.search(params.code, params.name, params.page, params.size),
     })
 }

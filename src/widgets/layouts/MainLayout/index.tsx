@@ -8,7 +8,7 @@ import { useMobile } from '@/shared/hooks/use-mobile'
 import React from 'react'
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
-    const { isMobile } = useMobile()
+    const isMobile = useMobile()
 
     return (
         <div className="min-h-screen flex flex-col bg-gov-gray-50">

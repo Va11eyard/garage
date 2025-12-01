@@ -14,13 +14,13 @@ export function useWriteOffs(params: {
 }) {
     return useQuery<PageWriteOffDocumentDto, Error>({
         queryKey: ['writeOffs', params],
-        queryFn: () => service.searchByWarehouse(
-            params.warehouseId!,
-            params.dateFrom,
-            params.dateTo,
-            undefined,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.searchByWarehouse({
+            warehouseId: params.warehouseId!,
+            from: params.dateFrom,
+            to: params.dateTo,
+            status: undefined,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

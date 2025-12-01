@@ -8,7 +8,7 @@ export function useRestoreUser() {
     const queryClient = useQueryClient()
 
     return useMutation<UserDto, Error, string>({
-        mutationFn: (id) => service.restore(id),
+        mutationFn: (id: string) => service.restore(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] })
         },

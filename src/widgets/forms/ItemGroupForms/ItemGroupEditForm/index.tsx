@@ -20,7 +20,7 @@ export function ItemGroupEditForm({ id }: { id: string }) {
     const { data: itemGroup, isLoading } = useItemGroup(id)
     const { data: itemGroups } = useItemGroups()
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<ItemGroupUpdateRequest>()
-    const { mutateAsync } = useUpdateItemGroup(id)
+    const { mutateAsync } = useUpdateItemGroup()
     const router = useRouter()
 
     const active = watch('active')
@@ -35,7 +35,7 @@ export function ItemGroupEditForm({ id }: { id: string }) {
 
     const onSubmit = async (data: ItemGroupUpdateRequest) => {
         try {
-            await mutateAsync(data)
+            await mutateAsync({ id, data })
             toast.success(t('common.success'))
             router.push(`/directories/item-groups/${id}`)
         } catch {

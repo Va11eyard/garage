@@ -9,7 +9,7 @@ export function useDeleteWarehouseZone() {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, string>({
-        mutationFn: (id) => service.delete(id),
+        mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouseZones'] })
         },

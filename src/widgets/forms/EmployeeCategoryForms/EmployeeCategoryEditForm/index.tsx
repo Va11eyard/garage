@@ -18,7 +18,7 @@ export function EmployeeCategoryEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
     const { data: category, isLoading } = useEmployeeCategory(id)
     const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<EmployeeCategoryUpdateRequest>()
-    const { mutateAsync } = useUpdateEmployeeCategory(id)
+    const { mutateAsync } = useUpdateEmployeeCategory()
     const router = useRouter()
 
     const active = watch('active')
@@ -33,7 +33,7 @@ export function EmployeeCategoryEditForm({ id }: { id: string }) {
 
     const onSubmit = async (data: EmployeeCategoryUpdateRequest) => {
         try {
-            await mutateAsync(data)
+            await mutateAsync({ id, data })
             toast.success(t('common.success'))
             router.push(`/directories/employee-categories/${id}`)
         } catch {

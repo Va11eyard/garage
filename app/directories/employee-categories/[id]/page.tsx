@@ -1,5 +1,8 @@
-import { EmployeeCategoryDetails } from '@/widgets/details/EmployeeCategoryDetails'
-
-export default function EmployeeCategoryDetailsPage({ params }: { params: { id: string } }) {
-    return <EmployeeCategoryDetails id={params.id} />
+export default function EmployeeCategoryDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Employee Category Details</h1>
+      <p>Category ID: {params.id}</p>
+    </div>
+  );
 }

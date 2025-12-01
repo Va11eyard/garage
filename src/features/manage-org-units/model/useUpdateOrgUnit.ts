@@ -10,7 +10,7 @@ export function useUpdateOrgUnit() {
     const queryClient = useQueryClient()
 
     return useMutation<OrgUnitDto, Error, { id: string; data: OrgUnitUpdateRequest }>({
-        mutationFn: ({ id, data }) => service.update(id, data),
+        mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['org-units'] })
             queryClient.invalidateQueries({ queryKey: ['orgUnit'] })

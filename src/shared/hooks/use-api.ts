@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { ApiError } from '@/shared/api'
+import { ApiError } from '@/shared/api/generated/__swagger_client'
 
 export interface UseApiState<T> {
   data: T | null

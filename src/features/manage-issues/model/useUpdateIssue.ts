@@ -7,7 +7,7 @@ export function useUpdateIssue(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<IssueDocumentDto, Error, IssueUpdateRequest>({
-        mutationFn: (data) => Service.update20(id, data),
+        mutationFn: (data: any) => Service.update20(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['issues'] })
             queryClient.invalidateQueries({ queryKey: ['issues', id] })

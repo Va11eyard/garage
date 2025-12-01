@@ -1,5 +1,8 @@
-import { ReceiptDetails } from '@/widgets/details/ReceiptDetails'
-
-export default function ReceiptDetailsPage({ params }: { params: { id: string } }) {
-    return <ReceiptDetails id={params.id} />
+export default function ReceiptDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Receipt Details</h1>
+      <p>Receipt ID: {params.id}</p>
+    </div>
+  );
 }

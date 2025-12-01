@@ -68,7 +68,7 @@ export function ItemsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map(item => (
+                    {data?.content?.map((item: any) => (
                         <TableRow key={item.id}>
                             <TableCell>
                                 <Link href={`/directories/items/${item.id}` as Route} className="underline">{item.code}</Link>

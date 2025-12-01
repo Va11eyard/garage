@@ -7,7 +7,7 @@ export function useTransferEmployee(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<EmployeeDto, Error, EmployeeTransferRequest>({
-        mutationFn: (data) => Service.transfer(id, data),
+        mutationFn: (data: EmployeeTransferRequest) => Service.transfer(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['employees'] })
             queryClient.invalidateQueries({ queryKey: ['employees', id] })

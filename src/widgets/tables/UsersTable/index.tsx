@@ -70,7 +70,7 @@ export function UsersTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((u) => (
+                    {data?.content?.map((u: any) => (
                         <TableRow key={u.id}>
                             <TableCell>{u.username}</TableCell>
                             <TableCell>{u.fullName}</TableCell>

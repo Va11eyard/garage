@@ -7,7 +7,7 @@ export function useUpdateInventorySurplus(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<InventorySurplusDocumentDto, Error, InventorySurplusUpdateRequest>({
-        mutationFn: (data) => Service.update21(id, data),
+        mutationFn: (data: any) => Service.update21(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'] })
             queryClient.invalidateQueries({ queryKey: ['inventory-surpluses', id] })

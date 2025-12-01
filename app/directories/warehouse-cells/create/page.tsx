@@ -12,6 +12,8 @@ import { useCreateWarehouseCell } from '@/features/manage-warehouse-cells/model/
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import type { WarehouseDto } from '@/shared/api/generated/__swagger_client/models/WarehouseDto'
+import type { WarehouseZoneDto } from '@/shared/api/generated/__swagger_client/models/WarehouseZoneDto'
 
 export default function WarehouseCellCreatePage() {
     const router = useRouter()
@@ -73,7 +75,7 @@ export default function WarehouseCellCreatePage() {
                             <SelectValue placeholder={t('warehouseCells.selectWarehouse')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {warehouses?.content?.map((warehouse) => (
+                            {warehouses?.content?.map((warehouse: WarehouseDto) => (
                                 <SelectItem key={warehouse.id} value={warehouse.id!}>
                                     {warehouse.name}
                                 </SelectItem>
@@ -95,7 +97,7 @@ export default function WarehouseCellCreatePage() {
                             </SelectTrigger>
                             <SelectContent>
                                 {zones && zones.length > 0 ? (
-                                    zones.map((zone) => (
+                                    zones.map((zone: WarehouseZoneDto) => (
                                         <SelectItem key={zone.id} value={zone.id!}>
                                             {zone.name}
                                         </SelectItem>

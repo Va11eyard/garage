@@ -9,7 +9,7 @@ export function useCancelWriteOff() {
     const queryClient = useQueryClient()
 
     return useMutation<WriteOffDocumentDto, Error, string>({
-        mutationFn: (id) => service.cancel(id),
+        mutationFn: (id: string) => service.cancel(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
         },

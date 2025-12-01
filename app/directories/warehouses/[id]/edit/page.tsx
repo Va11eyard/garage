@@ -13,6 +13,8 @@ import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/use
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import type { OrganizationDto } from '@/shared/api/generated/__swagger_client/models/OrganizationDto'
+import type { OrgUnitDto } from '@/shared/api/generated/__swagger_client/models/OrgUnitDto'
 
 export default function WarehouseEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
@@ -103,7 +105,7 @@ export default function WarehouseEditPage({ params }: { params: Promise<{ id: st
                                 required
                             >
                                 <option value="">{t('warehouses.selectOrganization')}</option>
-                                {organizations?.content?.map((org) => (
+                                {organizations?.content?.map((org: OrganizationDto) => (
                                     <option key={org.id} value={org.id!}>
                                         {org.name}
                                     </option>
@@ -119,7 +121,7 @@ export default function WarehouseEditPage({ params }: { params: Promise<{ id: st
                                     onChange={(e) => setFormData({ ...formData, orgUnitId: e.target.value })}
                                 >
                                     <option value="">Не выбрано</option>
-                                    {orgUnits.map((unit) => (
+                                    {orgUnits.map((unit: OrgUnitDto) => (
                                         <option key={unit.id} value={unit.id!}>
                                             {unit.name}
                                         </option>

@@ -8,7 +8,7 @@ export function useUpdateReceipt(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<ReceiptDocumentDto, Error, ReceiptUpdateRequest>({
-        mutationFn: (data) => service.update(id, data),
+        mutationFn: (data: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['receipts'] })
             queryClient.invalidateQueries({ queryKey: ['receipts', id] })

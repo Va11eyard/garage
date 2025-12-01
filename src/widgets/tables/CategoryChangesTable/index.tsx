@@ -75,7 +75,7 @@ export function CategoryChangesTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((doc) => (
+                    {data?.content?.map((doc: any) => (
                         <TableRow key={doc.id}>
                             <TableCell>
                                 <Link href={`/admin/category-changes/${doc.id}` as Route} className="underline">

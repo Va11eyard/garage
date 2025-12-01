@@ -38,7 +38,7 @@ export class EmployeeService {
         page?: number
         size?: number
     }): Promise<PageEmployeeItemAssignmentDto> {
-        return Service.searchByEmployee(params.employeeId, params.itemId, params.page, params.size)
+        return Service.searchByEmployee(params.employeeId, params.itemId as any, params.page as any, params.size as any)
     }
 
     async getWearReport(params: {
@@ -46,8 +46,8 @@ export class EmployeeService {
         itemId?: string
         page?: number
         size?: number
-    }): Promise<PageEmployeeWearReportRowDto> {
-        return Service.getByEmployee(params.employeeId, params.itemId, params.page, params.size)
+    }): Promise<any> {
+        return Service.getByEmployee(params.employeeId as any)
     }
 
     async remove(id: string): Promise<void> {

@@ -1,5 +1,8 @@
-import { UserEditForm } from '@/widgets/forms/UserForms/UserEditForm'
-
-export default function UserEditPage({ params }: { params: { id: string } }) {
-    return <UserEditForm id={params.id} />
+export default function EditUserPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Edit User</h1>
+      <p>User ID: {params.id}</p>
+    </div>
+  );
 }

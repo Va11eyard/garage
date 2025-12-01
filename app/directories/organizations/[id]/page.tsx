@@ -1,5 +1,8 @@
-import { OrganizationDetails } from '@/widgets/details/OrganizationDetails'
-
-export default function OrganizationDetailsPage({ params }: { params: { id: string } }) {
-    return <OrganizationDetails id={params.id} />
+export default function OrganizationDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div>
+      <h1>Organization Details</h1>
+      <p>Organization ID: {params.id}</p>
+    </div>
+  );
 }

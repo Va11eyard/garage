@@ -72,7 +72,7 @@ export function WarehouseZoneCreateForm() {
                                 required
                             >
                                 <option value="">{t('warehouseZones.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse) => (
+                                {warehouses?.content?.map((warehouse: any) => (
                                     <option key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
                                     </option>
