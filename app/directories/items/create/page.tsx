@@ -22,12 +22,13 @@ export default function ItemCreatePage() {
     const [formData, setFormData] = useState({
         code: '',
         name: '',
-        description: '',
-        itemGroupId: '',
-        unitOfMeasureId: '',
+        groupId: '',
+        baseUnitId: '',
+        barcode: '',
+        weightKg: undefined as number | undefined,
+        volumeM3: undefined as number | undefined,
     })
 
-    // Load item groups and units
     useState(() => {
         const loadData = async () => {
             setIsLoading(true)
@@ -50,16 +51,20 @@ export default function ItemCreatePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.code || !formData.name || !formData.unitOfMeasureId) {
+        if (!formData.code || !formData.name || !formData.baseUnitId) {
             toast.error(t('common.required'))
             return
         }
 
         try {
             await createMutation.mutateAsync({
-                ...formData,
-                itemGroupId: formData.itemGroupId || undefined,
-                description: formData.description || undefined,
+                code: formData.code,
+                name: formData.name,
+                baseUnitId: formData.baseUnitId,
+                groupId: formData.groupId || undefined,
+                barcode: formData.barcode || undefined,
+                weightKg: formData.weightKg,
+                volumeM3: formData.volumeM3,
             })
             toast.success(t('common.success'))
             router.push('/directories/items')
@@ -102,8 +107,8 @@ export default function ItemCreatePage() {
                         <div>
                             <GovLabel>{t('items.itemGroup')}</GovLabel>
                             <GovSelect
-                                value={formData.itemGroupId}
-                                onChange={(e) => setFormData({ ...formData, itemGroupId: e.target.value })}
+                                value={formData.groupId}
+                                onChange={(e) => setFormData({ ...formData, groupId: e.target.value })}
                             >
                                 <option value="">{t('common.select')}</option>
                                 {itemGroups.map((group) => (
@@ -117,8 +122,8 @@ export default function ItemCreatePage() {
                         <div>
                             <GovLabel required>{t('items.unitOfMeasure')}</GovLabel>
                             <GovSelect
-                                value={formData.unitOfMeasureId}
-                                onChange={(e) => setFormData({ ...formData, unitOfMeasureId: e.target.value })}
+                                value={formData.baseUnitId}
+                                onChange={(e) => setFormData({ ...formData, baseUnitId: e.target.value })}
                                 required
                             >
                                 <option value="">{t('common.select')}</option>
@@ -131,12 +136,11 @@ export default function ItemCreatePage() {
                         </div>
 
                         <div>
-                            <GovLabel>{t('items.description')}</GovLabel>
-                            <GovTextarea
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                placeholder={t('items.description')}
-                                rows={3}
+                            <GovLabel>{t('items.barcode')}</GovLabel>
+                            <GovInput
+                                value={formData.barcode}
+                                onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
+                                placeholder={t('items.barcode')}
                             />
                         </div>
 
