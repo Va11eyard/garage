@@ -1,8 +1,9 @@
-export default function ResponsiblePersonDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Responsible Person Details</h1>
-      <p>Person ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { ResponsiblePersonDetails } from '@/widgets/details/ResponsiblePersonDetails'
+
+export default function ResponsiblePersonDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <ResponsiblePersonDetails id={id} />
 }

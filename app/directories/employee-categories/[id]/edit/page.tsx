@@ -1,8 +1,9 @@
-export default function EditEmployeeCategoryPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Employee Category</h1>
-      <p>Category ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { EmployeeCategoryEditForm } from '@/widgets/forms/EmployeeCategoryForms/EmployeeCategoryEditForm'
+
+export default function EmployeeCategoryEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <EmployeeCategoryEditForm id={id} />
 }

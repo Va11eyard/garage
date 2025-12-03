@@ -26,18 +26,18 @@ export class WarehouseZoneService {
     }
 
     async get(id: string): Promise<WarehouseZoneDto> {
-        return Service.get1(id)
+        return Service.get(id)
     }
 
     async create(data: WarehouseZoneCreateRequest): Promise<WarehouseZoneDto> {
-        return Service.create2(data)
+        return Service.create1(data)
     }
 
     async update(id: string, data: WarehouseZoneUpdateRequest): Promise<WarehouseZoneDto> {
-        return Service.update1(id, data)
+        return Service.update(id, data)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete1(id)
+        return Service.delete(id)
     }
 }

@@ -1,8 +1,9 @@
-export default function UserDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>User Details</h1>
-      <p>User ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { UserDetails } from '@/widgets/details/UserDetails'
+
+export default function UserDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <UserDetails id={id} />
 }

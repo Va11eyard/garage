@@ -18,7 +18,7 @@ export function useOrgUnits(params: {
         queryFn: async () => {
             // No paginated search endpoint - use listByOrganization
             if (params.organizationId) {
-                const data = await service.listByOrganization1(params.organizationId)
+                const data = await service.listByOrganization(params.organizationId)
                 // Client-side filtering
                 return data.filter((unit: OrgUnitDto) => {
                     const matchesCode = !params.code || unit.code?.toLowerCase().includes(params.code.toLowerCase())

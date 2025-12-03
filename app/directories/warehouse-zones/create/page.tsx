@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useCreateWarehouseZone } from '@/features/manage-warehouse-zones/model/useCreateWarehouseZone'
 import { useTranslation } from '@/shared/i18n/use-translation'
@@ -58,18 +59,22 @@ export default function WarehouseZoneCreatePage() {
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
                         <div>
                             <GovLabel required>{t('warehouseZones.warehouse')}</GovLabel>
-                            <GovSelect
+                            <Select
                                 value={formData.warehouseId}
-                                onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value })}
+                                onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
                                 required
                             >
-                                <option value="">{t('warehouseZones.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse: WarehouseDto) => (
-                                    <option key={warehouse.id} value={warehouse.id!}>
-                                        {warehouse.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('warehouseZones.selectWarehouse')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {warehouses?.content?.map((warehouse: WarehouseDto) => (
+                                        <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                            {warehouse.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div>

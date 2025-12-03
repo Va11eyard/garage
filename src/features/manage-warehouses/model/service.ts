@@ -2,11 +2,11 @@ import { Service, type WarehouseDto, type WarehouseCreateRequest, type Warehouse
 
 export class WarehouseService {
     async listByOrganization(orgId: string): Promise<WarehouseDto[]> {
-        return Service.listByOrganization(orgId)
+        return Service.listWarehousesByOrganization(orgId)
     }
 
     async list(): Promise<WarehouseDto[]> {
-        return Service.list()
+        return Service.listWarehousesByOrganization('')
     }
 
     async search(
@@ -15,22 +15,22 @@ export class WarehouseService {
         page?: number,
         size?: number
     ) {
-        return Service.search1(code, name, page, size)
+        return Service.searchWarehousesPage(code, name, page, size)
     }
 
     async get(id: string): Promise<WarehouseDto> {
-        return Service.get(id)
+        return Service.getWarehouseById(id)
     }
 
     async create(data: WarehouseCreateRequest): Promise<WarehouseDto> {
-        return Service.create1(data)
+        return Service.createWarehouse(data)
     }
 
     async update(id: string, data: WarehouseUpdateRequest): Promise<WarehouseDto> {
-        return Service.update(id, data)
+        return Service.updateWarehouse(id, data)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete(id)
+        return Service.deleteWarehouse(id)
     }
 }

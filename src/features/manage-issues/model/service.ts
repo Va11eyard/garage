@@ -9,7 +9,7 @@ export class IssueService {
         page?: number
         size?: number
     }): Promise<PageIssueDocumentDto> {
-        return Service.searchByWarehouse4(
+        return Service.searchIssueDocumentsByWarehousePage(
             params.warehouseId,
             params.from,
             params.to,
@@ -26,7 +26,7 @@ export class IssueService {
         page?: number
         size?: number
     }): Promise<PageIssueDocumentDto> {
-        return Service.searchByEmployee3(
+        return Service.searchIssueDocumentsByEmployeePage(
             params.employeeId,
             params.from,
             params.to,
@@ -36,26 +36,26 @@ export class IssueService {
     }
 
     async get(id: string): Promise<IssueDocumentDto> {
-        return Service.get20(id)
+        return Service.getIssueDocumentById(id)
     }
 
     async create(data: IssueCreateRequest): Promise<IssueDocumentDto> {
-        return Service.create23(data)
+        return Service.createIssueDocument(data)
     }
 
     async update(id: string, data: IssueUpdateRequest): Promise<IssueDocumentDto> {
-        return Service.update20(id, data)
+        return Service.updateIssueDocument(id, data)
     }
 
     async post(id: string): Promise<IssueDocumentDto> {
-        return Service.post10(id)
+        return Service.postIssueDocument(id)
     }
 
     async cancel(id: string): Promise<IssueDocumentDto> {
-        return Service.cancel6(id)
+        return Service.cancelIssueDocument(id)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete20(id)
+        return Service.deleteIssueDocument(id)
     }
 }

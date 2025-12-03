@@ -8,7 +8,7 @@ import {
 
 export class UserService {
     async list(): Promise<UserDto[]> {
-        return Service.list8()
+        return Service.adminListUsers()
     }
 
     async search(
@@ -17,26 +17,26 @@ export class UserService {
         page?: number,
         size?: number
     ): Promise<PageUserDto> {
-        return Service.search17(username, roles, page, size)
+        return Service.adminSearchUsersPage(username, roles, page, size)
     }
 
     async get(id: string): Promise<UserDto> {
-        return Service.get23(id)
+        return Service.adminGetUserById(id)
     }
 
     async create(data: CreateUserRequest): Promise<UserDto> {
-        return Service.create26(data)
+        return Service.adminCreateUser(data)
     }
 
     async update(id: string, data: UpdateUserRequest): Promise<UserDto> {
-        return Service.update23(id, data)
+        return Service.adminUpdateUser(id, data)
     }
 
     async restore(id: string): Promise<UserDto> {
-        return Service.restore(id)
+        return Service.adminRestoreUser(id)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete23(id)
+        return Service.adminSoftDeleteUser(id)
     }
 }

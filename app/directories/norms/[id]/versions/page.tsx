@@ -1,8 +1,9 @@
-export default function NormVersionsPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Norm Versions</h1>
-      <p>Norm ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { NormVersionsList } from '@/widgets/lists/NormVersionsList'
+
+export default function NormVersionsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <NormVersionsList normId={id} />
 }

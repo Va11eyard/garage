@@ -7,6 +7,6 @@ export function useDashboard() {
     return useQuery({
         queryKey: ['dashboard'],
         queryFn: () => service.getDashboard(),
-        refetchInterval: 60000, // Refresh every minute
+        refetchInterval: 60000,
     })
 }

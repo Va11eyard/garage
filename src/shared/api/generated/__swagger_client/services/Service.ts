@@ -134,7 +134,7 @@ export class Service {
      * @returns WarehouseDto OK
      * @throws ApiError
      */
-    public static get(
+    public static getWarehouseById(
         id: string,
     ): CancelablePromise<WarehouseDto> {
         return __request(OpenAPI, {
@@ -155,7 +155,7 @@ export class Service {
      * @returns WarehouseDto OK
      * @throws ApiError
      */
-    public static update(
+    public static updateWarehouse(
         id: string,
         requestBody: WarehouseUpdateRequest,
     ): CancelablePromise<WarehouseDto> {
@@ -178,7 +178,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete(
+    public static deleteWarehouse(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -196,7 +196,7 @@ export class Service {
      * @returns WarehouseZoneDto OK
      * @throws ApiError
      */
-    public static get1(
+    public static get(
         id: string,
     ): CancelablePromise<WarehouseZoneDto> {
         return __request(OpenAPI, {
@@ -217,7 +217,7 @@ export class Service {
      * @returns WarehouseZoneDto OK
      * @throws ApiError
      */
-    public static update1(
+    public static update(
         id: string,
         requestBody: WarehouseZoneUpdateRequest,
     ): CancelablePromise<WarehouseZoneDto> {
@@ -233,14 +233,14 @@ export class Service {
     }
     /**
      * Мягко удалить зону склада
-     * Выполняет soft delete зоны склада: запись остаётся в базе, но помечается как удалённая и неактивная.
+     * Выполняет soft delete зоны склада: запись остаётся в базе данных, но помечается как удалённая и неактивная.
      * В дальнейшем такая зона не должна использоваться для размещения новых товаров.
      *
      * @param id UUID зоны склада
      * @returns any OK
      * @throws ApiError
      */
-    public static delete1(
+    public static delete(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -258,7 +258,7 @@ export class Service {
      * @returns WarehouseCellDto OK
      * @throws ApiError
      */
-    public static get2(
+    public static getWarehouseCellById(
         id: string,
     ): CancelablePromise<WarehouseCellDto> {
         return __request(OpenAPI, {
@@ -279,7 +279,7 @@ export class Service {
      * @returns WarehouseCellDto OK
      * @throws ApiError
      */
-    public static update2(
+    public static updateWarehouseCell(
         id: string,
         requestBody: WarehouseCellUpdateRequest,
     ): CancelablePromise<WarehouseCellDto> {
@@ -302,7 +302,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete2(
+    public static deleteWarehouseCell(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -320,7 +320,7 @@ export class Service {
      * @returns UnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static get3(
+    public static getUnitOfMeasureById(
         id: string,
     ): CancelablePromise<UnitOfMeasureDto> {
         return __request(OpenAPI, {
@@ -339,7 +339,7 @@ export class Service {
      * @returns UnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static update3(
+    public static updateUnitOfMeasure(
         id: string,
         requestBody: UnitOfMeasureUpdateRequest,
     ): CancelablePromise<UnitOfMeasureDto> {
@@ -360,7 +360,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete3(
+    public static deleteUnitOfMeasure(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -378,7 +378,7 @@ export class Service {
      * @returns QualityCategoryDto OK
      * @throws ApiError
      */
-    public static get4(
+    public static getQualityCategoryById(
         id: string,
     ): CancelablePromise<QualityCategoryDto> {
         return __request(OpenAPI, {
@@ -397,7 +397,7 @@ export class Service {
      * @returns QualityCategoryDto OK
      * @throws ApiError
      */
-    public static update4(
+    public static updateQualityCategory(
         id: string,
         requestBody: QualityCategoryUpdateRequest,
     ): CancelablePromise<QualityCategoryDto> {
@@ -418,7 +418,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete4(
+    public static deleteQualityCategory(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -436,7 +436,7 @@ export class Service {
      * @returns OrganizationDto OK
      * @throws ApiError
      */
-    public static get5(
+    public static getOrganizationById(
         id: string,
     ): CancelablePromise<OrganizationDto> {
         return __request(OpenAPI, {
@@ -455,7 +455,7 @@ export class Service {
      * @returns OrganizationDto OK
      * @throws ApiError
      */
-    public static update5(
+    public static updateOrganization(
         id: string,
         requestBody: OrganizationUpdateRequest,
     ): CancelablePromise<OrganizationDto> {
@@ -476,7 +476,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete5(
+    public static deleteOrganization(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -494,7 +494,7 @@ export class Service {
      * @returns OrgUnitDto OK
      * @throws ApiError
      */
-    public static get6(
+    public static getOrgUnitById(
         id: string,
     ): CancelablePromise<OrgUnitDto> {
         return __request(OpenAPI, {
@@ -515,7 +515,7 @@ export class Service {
      * @returns OrgUnitDto OK
      * @throws ApiError
      */
-    public static update6(
+    public static updateOrgUnit(
         id: string,
         requestBody: OrgUnitUpdateRequest,
     ): CancelablePromise<OrgUnitDto> {
@@ -538,7 +538,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete6(
+    public static deleteOrgUnit(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -556,7 +556,7 @@ export class Service {
      * @returns ItemDto OK
      * @throws ApiError
      */
-    public static get7(
+    public static getItemById(
         id: string,
     ): CancelablePromise<ItemDto> {
         return __request(OpenAPI, {
@@ -578,7 +578,7 @@ export class Service {
      * @returns ItemDto OK
      * @throws ApiError
      */
-    public static update7(
+    public static updateItem(
         id: string,
         requestBody: ItemUpdateRequest,
     ): CancelablePromise<ItemDto> {
@@ -600,7 +600,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete7(
+    public static deleteItem(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -618,7 +618,7 @@ export class Service {
      * @returns ItemSupplyNormDto OK
      * @throws ApiError
      */
-    public static get8(
+    public static getItemSupplyNormById(
         id: string,
     ): CancelablePromise<ItemSupplyNormDto> {
         return __request(OpenAPI, {
@@ -637,7 +637,7 @@ export class Service {
      * @returns ItemSupplyNormDto OK
      * @throws ApiError
      */
-    public static update8(
+    public static updateItemSupplyNorm(
         id: string,
         requestBody: ItemSupplyNormUpdateRequest,
     ): CancelablePromise<ItemSupplyNormDto> {
@@ -658,7 +658,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete8(
+    public static deleteItemSupplyNorm(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -676,7 +676,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static get9(
+    public static getItemGroupById(
         id: string,
     ): CancelablePromise<ItemGroupDto> {
         return __request(OpenAPI, {
@@ -697,7 +697,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static update9(
+    public static updateItemGroup(
         id: string,
         requestBody: ItemGroupUpdateRequest,
     ): CancelablePromise<ItemGroupDto> {
@@ -719,7 +719,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete9(
+    public static deleteItemGroup(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -737,7 +737,7 @@ export class Service {
      * @returns EmployeeCategoryDto OK
      * @throws ApiError
      */
-    public static get10(
+    public static getEmployeeCategoryById(
         id: string,
     ): CancelablePromise<EmployeeCategoryDto> {
         return __request(OpenAPI, {
@@ -756,7 +756,7 @@ export class Service {
      * @returns EmployeeCategoryDto OK
      * @throws ApiError
      */
-    public static update10(
+    public static updateEmployeeCategory(
         id: string,
         requestBody: EmployeeCategoryUpdateRequest,
     ): CancelablePromise<EmployeeCategoryDto> {
@@ -777,7 +777,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete10(
+    public static deleteEmployeeCategory(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -795,7 +795,7 @@ export class Service {
      * @returns ProvisionNormDto OK
      * @throws ApiError
      */
-    public static get11(
+    public static getProvisionNormById(
         id: string,
     ): CancelablePromise<ProvisionNormDto> {
         return __request(OpenAPI, {
@@ -816,7 +816,7 @@ export class Service {
      * @returns ProvisionNormDto OK
      * @throws ApiError
      */
-    public static update11(
+    public static updateProvisionNorm(
         id: string,
         requestBody: ProvisionNormUpdateRequest,
     ): CancelablePromise<ProvisionNormDto> {
@@ -839,7 +839,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete11(
+    public static deleteProvisionNorm(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -857,7 +857,7 @@ export class Service {
      * @returns PersonDto OK
      * @throws ApiError
      */
-    public static get12(
+    public static getPersonById(
         id: string,
     ): CancelablePromise<PersonDto> {
         return __request(OpenAPI, {
@@ -876,7 +876,7 @@ export class Service {
      * @returns PersonDto OK
      * @throws ApiError
      */
-    public static update12(
+    public static updatePerson(
         id: string,
         requestBody: PersonUpdateRequest,
     ): CancelablePromise<PersonDto> {
@@ -897,7 +897,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete12(
+    public static deletePerson(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -915,7 +915,7 @@ export class Service {
      * @returns WriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static get13(
+    public static getWriteOffDocumentById(
         id: string,
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
@@ -934,7 +934,7 @@ export class Service {
      * @returns WriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static update13(
+    public static updateWriteOffDocument(
         id: string,
         requestBody: WriteOffUpdateRequest,
     ): CancelablePromise<WriteOffDocumentDto> {
@@ -955,7 +955,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete13(
+    public static deleteWriteOffDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -973,7 +973,7 @@ export class Service {
      * @returns TemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static get14(
+    public static getTemporaryIssueDocumentById(
         id: string,
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -992,7 +992,7 @@ export class Service {
      * @returns TemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static update14(
+    public static updateTemporaryIssueDocument(
         id: string,
         requestBody: TemporaryIssueUpdateRequest,
     ): CancelablePromise<TemporaryIssueDocumentDto> {
@@ -1013,7 +1013,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete14(
+    public static deleteTemporaryIssueDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1031,7 +1031,7 @@ export class Service {
      * @returns ReturnDocumentDto OK
      * @throws ApiError
      */
-    public static get15(
+    public static getReturnDocumentById(
         id: string,
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -1050,7 +1050,7 @@ export class Service {
      * @returns ReturnDocumentDto OK
      * @throws ApiError
      */
-    public static update15(
+    public static updateReturnDocument(
         id: string,
         requestBody: ReturnUpdateRequest,
     ): CancelablePromise<ReturnDocumentDto> {
@@ -1071,7 +1071,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete15(
+    public static deleteReturnDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1089,7 +1089,7 @@ export class Service {
      * @returns ReplacementOrderDto Приказ найден
      * @throws ApiError
      */
-    public static get16(
+    public static getReplacementOrderById(
         id: string,
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
@@ -1111,7 +1111,7 @@ export class Service {
      * @returns ReplacementOrderDto Приказ обновлён
      * @throws ApiError
      */
-    public static update16(
+    public static updateReplacementOrder(
         id: string,
         requestBody: ReplacementOrderUpdateRequest,
     ): CancelablePromise<ReplacementOrderDto> {
@@ -1138,7 +1138,7 @@ export class Service {
      * @returns void
      * @throws ApiError
      */
-    public static delete16(
+    public static deleteReplacementOrder(
         id: string,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
@@ -1160,7 +1160,7 @@ export class Service {
      * @returns ReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static get17(
+    public static getReceiptDocumentById(
         id: string,
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
@@ -1181,7 +1181,7 @@ export class Service {
      * @returns ReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static update17(
+    public static updateReceiptDocument(
         id: string,
         requestBody: ReceiptUpdateRequest,
     ): CancelablePromise<ReceiptDocumentDto> {
@@ -1204,7 +1204,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete17(
+    public static deleteReceiptDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1222,7 +1222,7 @@ export class Service {
      * @returns QualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static get18(
+    public static getQualityAcceptanceDocumentById(
         id: string,
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
@@ -1241,7 +1241,7 @@ export class Service {
      * @returns QualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static update18(
+    public static updateQualityAcceptanceDocument(
         id: string,
         requestBody: QualityAcceptanceUpdateRequest,
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
@@ -1262,7 +1262,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete18(
+    public static deleteQualityAcceptanceDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1280,7 +1280,7 @@ export class Service {
      * @returns MovementDocumentDto Документ найден
      * @throws ApiError
      */
-    public static get19(
+    public static getMovementDocumentById(
         id: string,
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
@@ -1302,7 +1302,7 @@ export class Service {
      * @returns MovementDocumentDto Документ обновлён
      * @throws ApiError
      */
-    public static update19(
+    public static updateMovementDocument(
         id: string,
         requestBody: MovementDocumentUpdateRequest,
     ): CancelablePromise<MovementDocumentDto> {
@@ -1329,7 +1329,7 @@ export class Service {
      * @returns void
      * @throws ApiError
      */
-    public static delete19(
+    public static deleteMovementDocument(
         id: string,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
@@ -1351,7 +1351,7 @@ export class Service {
      * @returns IssueDocumentDto OK
      * @throws ApiError
      */
-    public static get20(
+    public static getIssueDocumentById(
         id: string,
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
@@ -1370,7 +1370,7 @@ export class Service {
      * @returns IssueDocumentDto OK
      * @throws ApiError
      */
-    public static update20(
+    public static updateIssueDocument(
         id: string,
         requestBody: IssueUpdateRequest,
     ): CancelablePromise<IssueDocumentDto> {
@@ -1391,7 +1391,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete20(
+    public static deleteIssueDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1409,7 +1409,7 @@ export class Service {
      * @returns InventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static get21(
+    public static getInventorySurplusDocumentById(
         id: string,
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
@@ -1428,7 +1428,7 @@ export class Service {
      * @returns InventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static update21(
+    public static updateInventorySurplusDocument(
         id: string,
         requestBody: InventorySurplusUpdateRequest,
     ): CancelablePromise<InventorySurplusDocumentDto> {
@@ -1449,7 +1449,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete21(
+    public static deleteInventorySurplusDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1467,7 +1467,7 @@ export class Service {
      * @returns InventoryDocumentDto Документ найден
      * @throws ApiError
      */
-    public static get22(
+    public static getInventoryDocumentById(
         id: string,
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
@@ -1489,7 +1489,7 @@ export class Service {
      * @returns InventoryDocumentDto Документ обновлён
      * @throws ApiError
      */
-    public static update22(
+    public static updateInventoryDocument(
         id: string,
         requestBody: InventoryDocumentUpdateRequest,
     ): CancelablePromise<InventoryDocumentDto> {
@@ -1516,7 +1516,7 @@ export class Service {
      * @returns void
      * @throws ApiError
      */
-    public static delete22(
+    public static deleteInventoryDocument(
         id: string,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
@@ -1538,7 +1538,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static get23(
+    public static adminGetUserById(
         id: string,
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
@@ -1557,7 +1557,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static update23(
+    public static adminUpdateUser(
         id: string,
         requestBody: UpdateUserRequest,
     ): CancelablePromise<UserDto> {
@@ -1578,7 +1578,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete23(
+    public static adminSoftDeleteUser(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1591,8 +1591,16 @@ export class Service {
     }
     /**
      * Сменить статус плана закупок
-     * @param id
-     * @param status
+     * Изменяет статус плана закупок (например, DRAFT → APPROVED или DRAFT → REJECTED).
+     * Логика допустимых переходов статусов определяется в доменной логике сервиса.
+     *
+     * Типичные сценарии:
+     * - утверждение плана к исполнению,
+     * - возврат плана на доработку,
+     * - пометка плана как отменённого/закрытого.
+     *
+     * @param id UUID плана закупок
+     * @param status Целевой статус плана закупок
      * @returns PurchasePlanDto OK
      * @throws ApiError
      */
@@ -1613,6 +1621,16 @@ export class Service {
     }
     /**
      * Сформировать план закупок по истекающим срокам носки ВИ
+     * Формирует новый план закупок ВИ на заданный период на основе:
+     * - норм обеспечения,
+     * - текущих закреплений ВИ за сотрудниками,
+     * - сроков носки и дат окончания носки.
+     *
+     * В результате создаётся сущность плана закупок, содержащая:
+     * - заголовок (организация, период планирования, статус),
+     * - строки плана по номенклатуре (что и в каком количестве требуется закупить).
+     * План создаётся, как правило, в статусе DRAFT.
+     *
      * @param requestBody
      * @returns PurchasePlanDto OK
      * @throws ApiError
@@ -1630,7 +1648,9 @@ export class Service {
     /**
      * Создать черновик документа изменения категории ВИ
      * Создаёт новый документ изменения категории ВИ в статусе DRAFT.
-     * Фактическое изменение категорий остатков выполняется при проведении документа.
+     * В документе фиксируются текущие категории остатков и желаемые новые категории.
+     * Фактическое изменение категорий записей остатков (StockBalance) выполняется
+     * только при проведении документа (операция POST).
      *
      * @param requestBody
      * @returns CategoryChangeDocumentDto OK
@@ -1648,10 +1668,12 @@ export class Service {
     }
     /**
      * Провести документ изменения категории ВИ
-     * Переводит документ в статус POSTED и обновляет категории соответствующих
-     * записей остатков (StockBalance) без изменения количества.
+     * Переводит документ изменения категории ВИ в статус POSTED и обновляет категории
+     * соответствующих записей складских остатков (StockBalance), не изменяя количества.
      *
-     * @param id UUID документа
+     * Повторное проведение уже проведённого документа не допускается.
+     *
+     * @param id UUID документа изменения категории ВИ
      * @returns CategoryChangeDocumentDto OK
      * @throws ApiError
      */
@@ -1672,7 +1694,7 @@ export class Service {
      * @returns WarehouseDto OK
      * @throws ApiError
      */
-    public static list(): CancelablePromise<Array<WarehouseDto>> {
+    public static getList(): CancelablePromise<Array<WarehouseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/warehouses',
@@ -1688,7 +1710,7 @@ export class Service {
      * @returns WarehouseDto OK
      * @throws ApiError
      */
-    public static create1(
+    public static createWarehouse(
         requestBody: WarehouseCreateRequest,
     ): CancelablePromise<WarehouseDto> {
         return __request(OpenAPI, {
@@ -1708,7 +1730,7 @@ export class Service {
      * @returns WarehouseZoneDto OK
      * @throws ApiError
      */
-    public static create2(
+    public static create1(
         requestBody: WarehouseZoneCreateRequest,
     ): CancelablePromise<WarehouseZoneDto> {
         return __request(OpenAPI, {
@@ -1727,7 +1749,7 @@ export class Service {
      * @returns WarehouseCellDto OK
      * @throws ApiError
      */
-    public static create3(
+    public static createWarehouseCell(
         requestBody: WarehouseCellCreateRequest,
     ): CancelablePromise<WarehouseCellDto> {
         return __request(OpenAPI, {
@@ -1743,7 +1765,7 @@ export class Service {
      * @returns UnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static list1(): CancelablePromise<Array<UnitOfMeasureDto>> {
+    public static listUnitsOfMeasure(): CancelablePromise<Array<UnitOfMeasureDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/units',
@@ -1756,7 +1778,7 @@ export class Service {
      * @returns UnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static create4(
+    public static createUnitOfMeasure(
         requestBody: UnitOfMeasureCreateRequest,
     ): CancelablePromise<UnitOfMeasureDto> {
         return __request(OpenAPI, {
@@ -1772,7 +1794,7 @@ export class Service {
      * @returns QualityCategoryDto OK
      * @throws ApiError
      */
-    public static list2(): CancelablePromise<Array<QualityCategoryDto>> {
+    public static listQualityCategories(): CancelablePromise<Array<QualityCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/quality-categories',
@@ -1785,7 +1807,7 @@ export class Service {
      * @returns QualityCategoryDto OK
      * @throws ApiError
      */
-    public static create5(
+    public static createQualityCategory(
         requestBody: QualityCategoryCreateRequest,
     ): CancelablePromise<QualityCategoryDto> {
         return __request(OpenAPI, {
@@ -1801,7 +1823,7 @@ export class Service {
      * @returns OrganizationDto OK
      * @throws ApiError
      */
-    public static list3(): CancelablePromise<Array<OrganizationDto>> {
+    public static listOrganizations(): CancelablePromise<Array<OrganizationDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/organizations',
@@ -1814,7 +1836,7 @@ export class Service {
      * @returns OrganizationDto OK
      * @throws ApiError
      */
-    public static create6(
+    public static createOrganization(
         requestBody: OrganizationCreateRequest,
     ): CancelablePromise<OrganizationDto> {
         return __request(OpenAPI, {
@@ -1833,7 +1855,7 @@ export class Service {
      * @returns OrgUnitDto OK
      * @throws ApiError
      */
-    public static create7(
+    public static createOrgUnit(
         requestBody: OrgUnitCreateRequest,
     ): CancelablePromise<OrgUnitDto> {
         return __request(OpenAPI, {
@@ -1849,7 +1871,7 @@ export class Service {
      * @returns ItemDto OK
      * @throws ApiError
      */
-    public static list4(): CancelablePromise<Array<ItemDto>> {
+    public static listItems(): CancelablePromise<Array<ItemDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/items',
@@ -1864,7 +1886,7 @@ export class Service {
      * @returns ItemDto OK
      * @throws ApiError
      */
-    public static create8(
+    public static createItem(
         requestBody: ItemCreateRequest,
     ): CancelablePromise<ItemDto> {
         return __request(OpenAPI, {
@@ -1883,7 +1905,7 @@ export class Service {
      * @returns ItemSupplyNormDto OK
      * @throws ApiError
      */
-    public static create9(
+    public static createItemSupplyNorm(
         requestBody: ItemSupplyNormCreateRequest,
     ): CancelablePromise<ItemSupplyNormDto> {
         return __request(OpenAPI, {
@@ -1899,7 +1921,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static listAll(): CancelablePromise<Array<ItemGroupDto>> {
+    public static listItemGroups(): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/item-groups',
@@ -1914,7 +1936,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static create10(
+    public static createItemGroup(
         requestBody: ItemGroupCreateRequest,
     ): CancelablePromise<ItemGroupDto> {
         return __request(OpenAPI, {
@@ -1930,7 +1952,7 @@ export class Service {
      * @returns EmployeeCategoryDto OK
      * @throws ApiError
      */
-    public static list5(): CancelablePromise<Array<EmployeeCategoryDto>> {
+    public static listEmployeeCategories(): CancelablePromise<Array<EmployeeCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/employee-categories',
@@ -1943,7 +1965,7 @@ export class Service {
      * @returns EmployeeCategoryDto OK
      * @throws ApiError
      */
-    public static create11(
+    public static createEmployeeCategory(
         requestBody: EmployeeCategoryCreateRequest,
     ): CancelablePromise<EmployeeCategoryDto> {
         return __request(OpenAPI, {
@@ -1958,7 +1980,7 @@ export class Service {
      * @returns IntegrationEndpoint OK
      * @throws ApiError
      */
-    public static listEndpoints(): CancelablePromise<Array<IntegrationEndpoint>> {
+    public static listIntegrationEndpoints(): CancelablePromise<Array<IntegrationEndpoint>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/integration/endpoints',
@@ -1973,7 +1995,7 @@ export class Service {
      * @returns IntegrationEndpoint OK
      * @throws ApiError
      */
-    public static createEndpoint(
+    public static createIntegrationEndpoint(
         code: string,
         name: string,
         system: 'HR_SYSTEM' | 'ERP' | 'ACCOUNTING' | 'SECURITY_SYSTEM',
@@ -1996,7 +2018,7 @@ export class Service {
      * @returns IntegrationEndpoint OK
      * @throws ApiError
      */
-    public static test(
+    public static testIntegrationEndpointConnection(
         code: string,
     ): CancelablePromise<IntegrationEndpoint> {
         return __request(OpenAPI, {
@@ -2015,7 +2037,7 @@ export class Service {
      * @returns IntegrationMessage OK
      * @throws ApiError
      */
-    public static send(
+    public static sendTestIntegrationMessage(
         code: string,
         messageType: string,
         requestBody?: string,
@@ -2042,7 +2064,7 @@ export class Service {
      * @returns ProvisionNormDto OK
      * @throws ApiError
      */
-    public static create12(
+    public static createProvisionNorm(
         requestBody: ProvisionNormCreateRequest,
     ): CancelablePromise<ProvisionNormDto> {
         return __request(OpenAPI, {
@@ -2058,7 +2080,7 @@ export class Service {
      * @returns PersonDto OK
      * @throws ApiError
      */
-    public static list6(): CancelablePromise<Array<PersonDto>> {
+    public static listPersons(): CancelablePromise<Array<PersonDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/hr/persons',
@@ -2071,7 +2093,7 @@ export class Service {
      * @returns PersonDto OK
      * @throws ApiError
      */
-    public static create13(
+    public static createPerson(
         requestBody: PersonCreateRequest,
     ): CancelablePromise<PersonDto> {
         return __request(OpenAPI, {
@@ -2091,7 +2113,7 @@ export class Service {
      * @returns EmployeeDto OK
      * @throws ApiError
      */
-    public static transfer(
+    public static transferEmployee(
         id: string,
         requestBody: EmployeeTransferRequest,
     ): CancelablePromise<EmployeeDto> {
@@ -2114,7 +2136,7 @@ export class Service {
      * @returns EmployeeDto OK
      * @throws ApiError
      */
-    public static dismiss(
+    public static dismissEmployee(
         id: string,
         requestBody: EmployeeDismissRequest,
     ): CancelablePromise<EmployeeDto> {
@@ -2137,7 +2159,7 @@ export class Service {
      * @returns EmployeeDto OK
      * @throws ApiError
      */
-    public static hire(
+    public static hireEmployee(
         requestBody: EmployeeHireRequest,
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
@@ -2156,7 +2178,7 @@ export class Service {
      * @returns EmployeeReturnDocumentDto OK
      * @throws ApiError
      */
-    public static create14(
+    public static createEmployeeReturnDocumentDraft(
         requestBody: EmployeeReturnDocumentCreateRequest,
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -2175,7 +2197,7 @@ export class Service {
      * @returns EmployeeReturnDocumentDto OK
      * @throws ApiError
      */
-    public static post1(
+    public static postEmployeeReturnDocument(
         id: string,
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -2195,7 +2217,7 @@ export class Service {
      * @returns EmployeeIssueDocumentDto OK
      * @throws ApiError
      */
-    public static create15(
+    public static createEmployeeIssueDocumentDraft(
         requestBody: EmployeeIssueDocumentCreateRequest,
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2214,7 +2236,7 @@ export class Service {
      * @returns EmployeeIssueDocumentDto OK
      * @throws ApiError
      */
-    public static post2(
+    public static postEmployeeIssueDocument(
         id: string,
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2230,7 +2252,7 @@ export class Service {
      * @returns Device OK
      * @throws ApiError
      */
-    public static list7(): CancelablePromise<Array<Device>> {
+    public static listDevices(): CancelablePromise<Array<Device>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/equipment/devices',
@@ -2245,7 +2267,7 @@ export class Service {
      * @returns Device OK
      * @throws ApiError
      */
-    public static register(
+    public static registerDevice(
         code: string,
         name: string,
         type: string,
@@ -2269,7 +2291,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static heartbeat(
+    public static sendDeviceHeartbeat(
         code: string,
         requestBody?: string,
     ): CancelablePromise<any> {
@@ -2290,7 +2312,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static error(
+    public static reportDeviceError(
         code: string,
         requestBody: string,
     ): CancelablePromise<any> {
@@ -2313,7 +2335,7 @@ export class Service {
      * @returns WriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static create16(
+    public static createWriteOffDocument(
         requestBody: WriteOffCreateRequest,
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
@@ -2332,7 +2354,7 @@ export class Service {
      * @returns WriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static post3(
+    public static postWriteOffDocument(
         id: string,
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
@@ -2352,7 +2374,7 @@ export class Service {
      * @returns WriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static cancel(
+    public static cancelWriteOffDocument(
         id: string,
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
@@ -2372,7 +2394,7 @@ export class Service {
      * @returns TemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static create17(
+    public static createTemporaryIssueDocument(
         requestBody: TemporaryIssueCreateRequest,
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2391,7 +2413,7 @@ export class Service {
      * @returns TemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static post4(
+    public static postTemporaryIssueDocument(
         id: string,
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2411,7 +2433,7 @@ export class Service {
      * @returns TemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static cancel1(
+    public static cancelTemporaryIssueDocument(
         id: string,
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2431,7 +2453,7 @@ export class Service {
      * @returns ReturnDocumentDto OK
      * @throws ApiError
      */
-    public static create18(
+    public static createReturnDocument(
         requestBody: ReturnCreateRequest,
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -2450,7 +2472,7 @@ export class Service {
      * @returns ReturnDocumentDto OK
      * @throws ApiError
      */
-    public static post5(
+    public static postReturnDocument(
         id: string,
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -2470,7 +2492,7 @@ export class Service {
      * @returns ReturnDocumentDto OK
      * @throws ApiError
      */
-    public static cancel2(
+    public static cancelReturnDocument(
         id: string,
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -2490,7 +2512,7 @@ export class Service {
      * @returns ReplacementOrderDto Приказ создан
      * @throws ApiError
      */
-    public static create19(
+    public static createReplacementOrder(
         requestBody: ReplacementOrderCreateRequest,
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
@@ -2512,7 +2534,7 @@ export class Service {
      * @returns ReplacementOrderDto Приказ проведён
      * @throws ApiError
      */
-    public static post6(
+    public static postReplacementOrder(
         id: string,
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
@@ -2536,7 +2558,7 @@ export class Service {
      * @returns ReplacementOrderDto Приказ отменён
      * @throws ApiError
      */
-    public static cancel3(
+    public static cancelReplacementOrder(
         id: string,
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
@@ -2559,7 +2581,7 @@ export class Service {
      * @returns ReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static create20(
+    public static createReceiptDocument(
         requestBody: ReceiptCreateRequest,
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
@@ -2578,7 +2600,7 @@ export class Service {
      * @returns ReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static unpost(
+    public static unpostReceiptDocument(
         id: string,
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
@@ -2598,7 +2620,7 @@ export class Service {
      * @returns ReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static post7(
+    public static postReceiptDocument(
         id: string,
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
@@ -2618,7 +2640,7 @@ export class Service {
      * @returns QualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static create21(
+    public static createQualityAcceptanceDocument(
         requestBody: QualityAcceptanceCreateRequest,
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
@@ -2637,7 +2659,7 @@ export class Service {
      * @returns QualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static post8(
+    public static postQualityAcceptanceDocument(
         id: string,
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
@@ -2655,7 +2677,7 @@ export class Service {
      * @returns QualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static cancel4(
+    public static cancelQualityAcceptanceDocument(
         id: string,
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
@@ -2675,7 +2697,7 @@ export class Service {
      * @returns MovementDocumentDto Документ создан
      * @throws ApiError
      */
-    public static create22(
+    public static createMovementDocument(
         requestBody: MovementDocumentCreateRequest,
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
@@ -2697,7 +2719,7 @@ export class Service {
      * @returns MovementDocumentDto Документ проведён
      * @throws ApiError
      */
-    public static post9(
+    public static postMovementDocument(
         id: string,
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
@@ -2721,7 +2743,7 @@ export class Service {
      * @returns MovementDocumentDto Документ отменён
      * @throws ApiError
      */
-    public static cancel5(
+    public static cancelMovementDocument(
         id: string,
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
@@ -2744,7 +2766,7 @@ export class Service {
      * @returns IssueDocumentDto OK
      * @throws ApiError
      */
-    public static create23(
+    public static createIssueDocument(
         requestBody: IssueCreateRequest,
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2763,7 +2785,7 @@ export class Service {
      * @returns IssueDocumentDto OK
      * @throws ApiError
      */
-    public static post10(
+    public static postIssueDocument(
         id: string,
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2783,7 +2805,7 @@ export class Service {
      * @returns IssueDocumentDto OK
      * @throws ApiError
      */
-    public static cancel6(
+    public static cancelIssueDocument(
         id: string,
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
@@ -2803,7 +2825,7 @@ export class Service {
      * @returns InventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static create24(
+    public static createInventorySurplusDocument(
         requestBody: InventorySurplusCreateRequest,
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
@@ -2822,7 +2844,7 @@ export class Service {
      * @returns InventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static post11(
+    public static postInventorySurplusDocument(
         id: string,
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
@@ -2842,7 +2864,7 @@ export class Service {
      * @returns InventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static cancel7(
+    public static cancelInventorySurplusDocument(
         id: string,
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
@@ -2862,7 +2884,7 @@ export class Service {
      * @returns InventoryDocumentDto Документ создан
      * @throws ApiError
      */
-    public static create25(
+    public static createInventoryDocument(
         requestBody: InventoryDocumentCreateRequest,
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
@@ -2884,7 +2906,7 @@ export class Service {
      * @returns InventoryDocumentDto Документ проведён
      * @throws ApiError
      */
-    public static post12(
+    public static postInventoryDocument(
         id: string,
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
@@ -2908,7 +2930,7 @@ export class Service {
      * @returns InventoryDocumentDto Документ отменён
      * @throws ApiError
      */
-    public static cancel8(
+    public static cancelInventoryDocument(
         id: string,
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
@@ -2928,7 +2950,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static list8(): CancelablePromise<Array<UserDto>> {
+    public static adminListUsers(): CancelablePromise<Array<UserDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/users',
@@ -2941,7 +2963,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static create26(
+    public static adminCreateUser(
         requestBody: CreateUserRequest,
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
@@ -2958,7 +2980,7 @@ export class Service {
      * @returns UserDto OK
      * @throws ApiError
      */
-    public static restore(
+    public static adminRestoreUser(
         id: string,
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
@@ -2974,7 +2996,7 @@ export class Service {
      * @returns SystemSettingDto OK
      * @throws ApiError
      */
-    public static list9(): CancelablePromise<Array<SystemSettingDto>> {
+    public static adminListSystemSettings(): CancelablePromise<Array<SystemSettingDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/settings',
@@ -2986,7 +3008,7 @@ export class Service {
      * @returns SystemSettingDto OK
      * @throws ApiError
      */
-    public static upsert(
+    public static adminUpsertSystemSetting(
         requestBody: SystemSettingUpsertRequest,
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
@@ -3002,7 +3024,7 @@ export class Service {
      * @returns RoleDto OK
      * @throws ApiError
      */
-    public static list10(): CancelablePromise<Array<RoleDto>> {
+    public static adminListRoles(): CancelablePromise<Array<RoleDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/roles',
@@ -3015,7 +3037,7 @@ export class Service {
      * @returns RoleDto OK
      * @throws ApiError
      */
-    public static create27(
+    public static adminCreateRole(
         code: string,
     ): CancelablePromise<RoleDto> {
         return __request(OpenAPI, {
@@ -3028,11 +3050,19 @@ export class Service {
     }
     /**
      * Список планов закупок (по организации, если указана)
-     * @param organizationId
+     * Возвращает список планов закупок ВИ.
+     * Если передан organizationId — отбираются планы только по указанной организации.
+     * В противном случае возвращаются планы по всем доступным организациям.
+     *
+     * Эндпоинт может использоваться для:
+     * - обзора активных и исторических планов,
+     * - перехода к деталям конкретного плана.
+     *
+     * @param organizationId UUID организации для фильтрации планов (опционально)
      * @returns PurchasePlanDto OK
      * @throws ApiError
      */
-    public static list11(
+    public static list(
         organizationId?: string,
     ): CancelablePromise<Array<PurchasePlanDto>> {
         return __request(OpenAPI, {
@@ -3044,12 +3074,15 @@ export class Service {
         });
     }
     /**
-     * Получить план закупок по ID
-     * @param id
+     * Получить план закупок по идентификатору
+     * Возвращает детализированный план закупок ВИ по его UUID:
+     * заголовок и строки плана (номенклатура, количество, период, приоритет и т.п.).
+     *
+     * @param id UUID плана закупок
      * @returns PurchasePlanDto OK
      * @throws ApiError
      */
-    public static get24(
+    public static get1(
         id: string,
     ): CancelablePromise<PurchasePlanDto> {
         return __request(OpenAPI, {
@@ -3061,13 +3094,15 @@ export class Service {
         });
     }
     /**
-     * Получить документ изменения категории ВИ
-     * Возвращает основные реквизиты документа изменения категории ВИ.
-     * @param id UUID документа
+     * Получить документ изменения категории ВИ по идентификатору
+     * Возвращает карточку документа изменения категории ВИ по UUID:
+     * основные реквизиты документа и перечень строк с изменяемыми остатками.
+     *
+     * @param id UUID документа изменения категории ВИ
      * @returns CategoryChangeDocumentDto OK
      * @throws ApiError
      */
-    public static get25(
+    public static get2(
         id: string,
     ): CancelablePromise<CategoryChangeDocumentDto> {
         return __request(OpenAPI, {
@@ -3080,14 +3115,15 @@ export class Service {
     }
     /**
      * Мягко удалить документ изменения категории ВИ
+     * Логическое (soft) удаление документа изменения категории ВИ.
      * Допускается только для документов в статусе DRAFT.
-     * Выполняется логическое удаление (soft delete) с сохранением истории в БД.
+     * Историческая информация о документе сохраняется в базе данных.
      *
-     * @param id UUID документа
+     * @param id UUID документа изменения категории ВИ
      * @returns any OK
      * @throws ApiError
      */
-    public static delete24(
+    public static delete1(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -3100,12 +3136,15 @@ export class Service {
     }
     /**
      * Пагинированный список документов изменения категории ВИ
-     * Возвращает список документов изменения категории ВИ с фильтром по организации и периоду.
-     * Показываются документы в статусах DRAFT и POSTED.
+     * Возвращает страницу документов изменения категории ВИ с возможностью фильтрации
+     * по организации и периоду дат документа.
      *
-     * @param organizationId UUID организации
-     * @param from Дата с (включительно)
-     * @param to Дата по (включительно)
+     * Как правило, в выборку попадают документы в статусах DRAFT и POSTED, пригодные
+     * для анализа истории изменения качественного состояния ВИ.
+     *
+     * @param organizationId UUID организации, по которой отбираются документы
+     * @param from Дата документа с (включительно)
+     * @param to Дата документа по (включительно)
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -3146,7 +3185,7 @@ export class Service {
      * @returns PageWarehouseDto OK
      * @throws ApiError
      */
-    public static search1(
+    public static searchWarehousesPage(
         code?: string,
         name?: string,
         page?: any,
@@ -3174,7 +3213,7 @@ export class Service {
      * @returns WarehouseDto OK
      * @throws ApiError
      */
-    public static listByOrganization(
+    public static listWarehousesByOrganization(
         orgId: string,
     ): CancelablePromise<Array<WarehouseDto>> {
         return __request(OpenAPI, {
@@ -3214,7 +3253,7 @@ export class Service {
      * @returns WarehouseCellDto OK
      * @throws ApiError
      */
-    public static listByZone(
+    public static listWarehouseCellsByZone(
         zoneId: string,
     ): CancelablePromise<Array<WarehouseCellDto>> {
         return __request(OpenAPI, {
@@ -3234,7 +3273,7 @@ export class Service {
      * @returns WarehouseCellDto OK
      * @throws ApiError
      */
-    public static listByWarehouse1(
+    public static listWarehouseCellsByWarehouse(
         warehouseId: string,
     ): CancelablePromise<Array<WarehouseCellDto>> {
         return __request(OpenAPI, {
@@ -3258,7 +3297,7 @@ export class Service {
      * @returns PageUnitOfMeasureDto OK
      * @throws ApiError
      */
-    public static search2(
+    public static searchUnitsOfMeasure(
         code?: string,
         name?: string,
         page?: any,
@@ -3287,7 +3326,7 @@ export class Service {
      * @returns PageQualityCategoryDto OK
      * @throws ApiError
      */
-    public static search3(
+    public static searchQualityCategories(
         q?: string,
         page?: any,
         size?: any,
@@ -3317,7 +3356,7 @@ export class Service {
      * @returns PageOrganizationDto OK
      * @throws ApiError
      */
-    public static search4(
+    public static searchOrganizationsPage(
         code?: string,
         name?: string,
         page?: any,
@@ -3345,7 +3384,7 @@ export class Service {
      * @returns OrgUnitDto OK
      * @throws ApiError
      */
-    public static listByOrganization1(
+    public static listOrgUnitsByOrganization(
         orgId: string,
     ): CancelablePromise<Array<OrgUnitDto>> {
         return __request(OpenAPI, {
@@ -3370,7 +3409,7 @@ export class Service {
      * @returns PageItemDto OK
      * @throws ApiError
      */
-    public static search5(
+    public static searchItemsPage(
         code?: string,
         name?: string,
         groupId?: string,
@@ -3404,7 +3443,7 @@ export class Service {
      * @returns PageItemSupplyNormDto OK
      * @throws ApiError
      */
-    public static search6(
+    public static searchItemSupplyNormsPage(
         employeeCategoryId?: string,
         itemId?: string,
         page?: any,
@@ -3429,7 +3468,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static listRootGroups(): CancelablePromise<Array<ItemGroupDto>> {
+    public static listRootItemGroups(): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/nsi/item-groups/roots',
@@ -3442,7 +3481,7 @@ export class Service {
      * @returns ItemGroupDto OK
      * @throws ApiError
      */
-    public static listByParent(
+    public static listItemGroupsByParent(
         parentId: string,
     ): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
@@ -3474,7 +3513,7 @@ export class Service {
      * @returns PageEmployeeWearReportRowDto OK
      * @throws ApiError
      */
-    public static search7(
+    public static searchEmployeeWearReportPage(
         organizationId: string,
         orgUnitId?: string,
         itemId?: string,
@@ -3517,7 +3556,7 @@ export class Service {
      * @returns PageProvisionNormDto OK
      * @throws ApiError
      */
-    public static search8(
+    public static searchProvisionNormsPage(
         organizationId?: string,
         employeeCategory?: string,
         season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON',
@@ -3555,7 +3594,7 @@ export class Service {
      * @returns EmployeeProvisionReportDto OK
      * @throws ApiError
      */
-    public static analyzeEmployee(
+    public static analyzeEmployeeProvision(
         employeeId: string,
         employeeCategory?: string,
         season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON',
@@ -3583,7 +3622,7 @@ export class Service {
      * @returns PagePersonDto OK
      * @throws ApiError
      */
-    public static search9(
+    public static searchPersonsPage(
         lastName?: string,
         firstName?: string,
         page?: any,
@@ -3609,7 +3648,7 @@ export class Service {
      * @returns EmployeeDto OK
      * @throws ApiError
      */
-    public static get26(
+    public static getEmployeeById(
         id: string,
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
@@ -3629,7 +3668,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete25(
+    public static deleteEmployee(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -3657,7 +3696,7 @@ export class Service {
      * @returns EmployeeProvisionCardDto OK
      * @throws ApiError
      */
-    public static getProvisionCard(
+    public static getEmployeeProvisionCard(
         id: string,
         normId?: string,
         season?: 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON',
@@ -3685,7 +3724,7 @@ export class Service {
      * @returns EmployeeStatusEventDto OK
      * @throws ApiError
      */
-    public static history(
+    public static getEmployeeHistory(
         id: string,
     ): CancelablePromise<Array<EmployeeStatusEventDto>> {
         return __request(OpenAPI, {
@@ -3710,7 +3749,7 @@ export class Service {
      * @returns PageEmployeeDto OK
      * @throws ApiError
      */
-    public static search10(
+    public static searchEmployeesPage(
         organizationId?: string,
         orgUnitId?: string,
         personnelNumber?: string,
@@ -3738,7 +3777,7 @@ export class Service {
      * @returns EmployeeReturnDocumentDto OK
      * @throws ApiError
      */
-    public static get27(
+    public static getEmployeeReturnDocumentById(
         id: string,
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
@@ -3758,7 +3797,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete26(
+    public static deleteEmployeeReturnDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -3783,7 +3822,7 @@ export class Service {
      * @returns PageEmployeeReturnDocumentDto OK
      * @throws ApiError
      */
-    public static search11(
+    public static searchEmployeeReturnDocumentsPage(
         organizationId: string,
         from?: string,
         to?: string,
@@ -3811,7 +3850,7 @@ export class Service {
      * @returns EmployeeIssueDocumentDto OK
      * @throws ApiError
      */
-    public static get28(
+    public static getEmployeeIssueDocumentById(
         id: string,
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
@@ -3831,7 +3870,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete27(
+    public static deleteEmployeeIssueDocument(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -3856,7 +3895,7 @@ export class Service {
      * @returns PageEmployeeIssueDocumentDto OK
      * @throws ApiError
      */
-    public static search12(
+    public static searchEmployeeIssueDocumentsPage(
         organizationId: string,
         from?: string,
         to?: string,
@@ -3884,7 +3923,7 @@ export class Service {
      * @returns EmployeeItemAssignmentDto OK
      * @throws ApiError
      */
-    public static get29(
+    public static getEmployeeItemAssignmentById(
         id: string,
     ): CancelablePromise<EmployeeItemAssignmentDto> {
         return __request(OpenAPI, {
@@ -3911,7 +3950,7 @@ export class Service {
      * @returns PageEmployeeItemAssignmentDto OK
      * @throws ApiError
      */
-    public static search13(
+    public static searchEmployeeItemAssignmentsPage(
         organizationId: string,
         orgUnitId?: string,
         itemId?: string,
@@ -3943,7 +3982,7 @@ export class Service {
      * @returns EmployeeItemAssignmentDto OK
      * @throws ApiError
      */
-    public static getByEmployee(
+    public static getEmployeeItemAssignmentsByEmployee(
         employeeId: string,
     ): CancelablePromise<Array<EmployeeItemAssignmentDto>> {
         return __request(OpenAPI, {
@@ -3969,7 +4008,7 @@ export class Service {
      * @returns PageWriteOffDocumentDto OK
      * @throws ApiError
      */
-    public static searchByWarehouse(
+    public static searchWriteOffDocumentsByWarehousePage(
         warehouseId: string,
         from?: string,
         to?: string,
@@ -4007,7 +4046,7 @@ export class Service {
      * @returns PageTemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static searchByWarehouse1(
+    public static searchTemporaryIssueDocumentsByWarehousePage(
         warehouseId: string,
         from?: string,
         to?: string,
@@ -4042,7 +4081,7 @@ export class Service {
      * @returns PageTemporaryIssueDocumentDto OK
      * @throws ApiError
      */
-    public static searchByEmployee(
+    public static searchTemporaryIssueDocumentsByEmployeePage(
         employeeId: string,
         from?: string,
         to?: string,
@@ -4078,7 +4117,7 @@ export class Service {
      * @returns PageReturnDocumentDto OK
      * @throws ApiError
      */
-    public static searchByWarehouse2(
+    public static searchReturnDocumentsByWarehousePage(
         warehouseId: string,
         from?: string,
         to?: string,
@@ -4115,7 +4154,7 @@ export class Service {
      * @returns PageReturnDocumentDto OK
      * @throws ApiError
      */
-    public static searchByEmployee1(
+    public static searchReturnDocumentsByEmployeePage(
         employeeId: string,
         from?: string,
         to?: string,
@@ -4149,7 +4188,7 @@ export class Service {
      * @returns Page Список приказов найден
      * @throws ApiError
      */
-    public static searchByWarehouse3(
+    public static searchReplacementOrdersByWarehouse(
         warehouseId: string,
         pageable: Pageable,
         fromDate?: string,
@@ -4180,7 +4219,7 @@ export class Service {
      * @returns Page Список приказов найден
      * @throws ApiError
      */
-    public static searchByEmployee2(
+    public static searchReplacementOrdersByEmployee(
         employeeId: string,
         pageable: Pageable,
         fromDate?: string,
@@ -4214,7 +4253,7 @@ export class Service {
      * @returns PageReceiptDocumentDto OK
      * @throws ApiError
      */
-    public static search14(
+    public static searchReceiptDocumentsPage(
         warehouseId?: string,
         status?: 'DRAFT' | 'POSTED' | 'CANCELLED',
         fromDate?: string,
@@ -4253,7 +4292,7 @@ export class Service {
      * @returns PageQualityAcceptanceDocumentDto OK
      * @throws ApiError
      */
-    public static search15(
+    public static searchQualityAcceptanceDocumentsPage(
         warehouseId?: string,
         from?: string,
         to?: string,
@@ -4291,7 +4330,7 @@ export class Service {
      * @returns Page Список документов найден
      * @throws ApiError
      */
-    public static searchByToWarehouse(
+    public static searchMovementDocumentsByToWarehouse(
         warehouseId: string,
         pageable: Pageable,
         fromDate?: string,
@@ -4325,7 +4364,7 @@ export class Service {
      * @returns Page Список документов найден
      * @throws ApiError
      */
-    public static searchByFromWarehouse(
+    public static searchMovementDocumentsByFromWarehouse(
         warehouseId: string,
         pageable: Pageable,
         fromDate?: string,
@@ -4361,7 +4400,7 @@ export class Service {
      * @returns PageIssueDocumentDto OK
      * @throws ApiError
      */
-    public static searchByWarehouse4(
+    public static searchIssueDocumentsByWarehousePage(
         warehouseId: string,
         from?: string,
         to?: string,
@@ -4398,7 +4437,7 @@ export class Service {
      * @returns PageIssueDocumentDto OK
      * @throws ApiError
      */
-    public static searchByEmployee3(
+    public static searchIssueDocumentsByEmployeePage(
         employeeId: string,
         from?: string,
         to?: string,
@@ -4435,7 +4474,7 @@ export class Service {
      * @returns PageInventorySurplusDocumentDto OK
      * @throws ApiError
      */
-    public static search16(
+    public static searchInventorySurplusDocumentsPage(
         warehouseId?: string,
         from?: string,
         to?: string,
@@ -4473,7 +4512,7 @@ export class Service {
      * @returns Page Список документов найден
      * @throws ApiError
      */
-    public static searchByWarehouse5(
+    public static searchInventoryDocumentsByWarehouse(
         warehouseId: string,
         pageable: Pageable,
         fromDate?: string,
@@ -4499,7 +4538,7 @@ export class Service {
      * @returns ConsolidatedDashboardDto OK
      * @throws ApiError
      */
-    public static dashboard(): CancelablePromise<ConsolidatedDashboardDto> {
+    public static getConsolidationDashboard(): CancelablePromise<ConsolidatedDashboardDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/consolidation/dashboard',
@@ -4519,7 +4558,7 @@ export class Service {
      * @returns PageUserDto OK
      * @throws ApiError
      */
-    public static search17(
+    public static adminSearchUsersPage(
         username?: string,
         roles?: Array<string>,
         page?: any,
@@ -4544,7 +4583,7 @@ export class Service {
      * @returns SystemSettingDto OK
      * @throws ApiError
      */
-    public static getById(
+    public static adminGetSystemSettingById(
         id: string,
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
@@ -4561,7 +4600,7 @@ export class Service {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete28(
+    public static adminDeleteSystemSetting(
         id: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -4578,7 +4617,7 @@ export class Service {
      * @returns SystemSettingDto OK
      * @throws ApiError
      */
-    public static getByKey(
+    public static adminGetSystemSettingByKey(
         key: string,
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
@@ -4596,7 +4635,7 @@ export class Service {
      * @returns AdminSearchResultDto OK
      * @throws ApiError
      */
-    public static search18(
+    public static adminGlobalSearch(
         q: string,
         limitPerType: number = 10,
     ): CancelablePromise<Array<AdminSearchResultDto>> {
@@ -4626,7 +4665,7 @@ export class Service {
      * @returns PageAuditLogDto OK
      * @throws ApiError
      */
-    public static search19(
+    public static adminSearchAuditLogs(
         userId?: string,
         username?: string,
         action?: string,

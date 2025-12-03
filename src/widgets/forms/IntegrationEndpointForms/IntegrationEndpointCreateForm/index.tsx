@@ -3,7 +3,8 @@
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -68,16 +69,21 @@ export function IntegrationEndpointCreateForm() {
 
                 <div>
                     <GovLabel required>{t('integrationEndpoints.system')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.system}
-                        onChange={(e) => setFormData({ ...formData, system: e.target.value })}
+                        onValueChange={(value) => setFormData({ ...formData, system: value })}
                         required
                     >
-                        <option value="">{t('common.select')}</option>
-                        <option value="ERP">ERP</option>
-                        <option value="WMS">WMS</option>
-                        <option value="EXTERNAL_API">External API</option>
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="hrSystem">{t('integrationEndpoints.systems.hrSystem')}</SelectItem>
+                            <SelectItem value="erp">{t('integrationEndpoints.systems.erp')}</SelectItem>
+                            <SelectItem value="accounting">{t('integrationEndpoints.systems.accounting')}</SelectItem>
+                            <SelectItem value="securitySystem">{t('integrationEndpoints.systems.securitySystem')}</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div>

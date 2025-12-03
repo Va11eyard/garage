@@ -1,8 +1,9 @@
-export default function EditIssuePage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Issue</h1>
-      <p>Issue ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { IssueEditForm } from '@/widgets/forms/DocumentForms/IssueEditForm'
+
+export default function IssueEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <IssueEditForm id={id} />
 }

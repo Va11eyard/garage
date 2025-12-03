@@ -13,7 +13,7 @@ export class StubService {
      * @returns any OK
      * @throws ApiError
      */
-    public static runJob(
+    public static adminRunSystemJob(
         code: string,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -30,7 +30,7 @@ export class StubService {
      * @returns string OK
      * @throws ApiError
      */
-    public static restore1(
+    public static adminRequestBackupImport(
         requestBody?: {
             file: Blob;
         },
@@ -47,7 +47,7 @@ export class StubService {
      * @returns string OK
      * @throws ApiError
      */
-    public static backup(): CancelablePromise<string> {
+    public static adminRequestBackupExport(): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/admin/system/backup/export',
@@ -58,7 +58,7 @@ export class StubService {
      * @returns SystemJobInfoDto OK
      * @throws ApiError
      */
-    public static listJobs(): CancelablePromise<Array<SystemJobInfoDto>> {
+    public static adminListSystemJobs(): CancelablePromise<Array<SystemJobInfoDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/admin/system/jobs',

@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovTextarea } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useCreateProvisionNorm } from '@/features/manage-norms/model/useCreateProvisionNorm'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
-import { Service } from '@/shared/api/generated/__swagger_client'
 import { Spinner } from '@/shared/ui/spinner'
+import { EmployeeCategoryService } from '@/features/manage-employee-categories/model/service'
 
 export default function NormCreatePage() {
     const router = useRouter()
@@ -22,17 +23,17 @@ export default function NormCreatePage() {
         code: '',
         name: '',
         description: '',
-        categoryId: '',
-        validFrom: '',
-        validTo: '',
+        employeeCategory: '',
+        season: 'ALL' as 'ALL' | 'SUMMER' | 'WINTER' | 'DEMISEASON',
+        organizationId: '',
     })
 
-    // Load employee categories
     useState(() => {
         const loadData = async () => {
             setIsLoading(true)
             try {
-                const data = await Service.list4()
+                const service = new EmployeeCategoryService()
+                const data = await service.list()
                 setCategories(data)
             } catch (error) {
                 toast.error(t('common.error'))
@@ -46,17 +47,19 @@ export default function NormCreatePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.code || !formData.name || !formData.categoryId) {
+        if (!formData.code || !formData.name) {
             toast.error(t('common.required'))
             return
         }
 
         try {
             await createMutation.mutateAsync({
-                ...formData,
+                code: formData.code,
+                name: formData.name,
                 description: formData.description || undefined,
-                validFrom: formData.validFrom || undefined,
-                validTo: formData.validTo || undefined,
+                employeeCategory: formData.employeeCategory || undefined,
+                season: formData.season,
+                organizationId: formData.organizationId || undefined,
                 lines: [],
             })
             toast.success(t('common.success'))
@@ -78,22 +81,6 @@ export default function NormCreatePage() {
 
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
                         <div>
-                            <GovLabel required>{t('norm.category')}</GovLabel>
-                            <GovSelect
-                                value={formData.categoryId}
-                                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                                required
-                            >
-                                <option value="">{t('common.select')}</option>
-                                {categories.map((cat) => (
-                                    <option key={cat.id} value={cat.id!}>
-                                        {cat.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
-                        </div>
-
-                        <div>
                             <GovLabel required>Код</GovLabel>
                             <GovInput
                                 value={formData.code}
@@ -114,6 +101,44 @@ export default function NormCreatePage() {
                         </div>
 
                         <div>
+                            <GovLabel>{t('norm.category')}</GovLabel>
+                            <Select
+                                value={formData.employeeCategory}
+                                onValueChange={(value) => setFormData({ ...formData, employeeCategory: value })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('common.select')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {categories.map((cat: any) => (
+                                        <SelectItem key={cat.id} value={cat.id!}>
+                                            {cat.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <GovLabel required>Сезон</GovLabel>
+                            <Select
+                                value={formData.season}
+                                onValueChange={(value) => setFormData({ ...formData, season: value as any })}
+                                required
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Выберите сезон" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="ALL">Все сезоны</SelectItem>
+                                    <SelectItem value="SUMMER">Лето</SelectItem>
+                                    <SelectItem value="WINTER">Зима</SelectItem>
+                                    <SelectItem value="DEMISEASON">Демисезон</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
                             <GovLabel>Описание</GovLabel>
                             <GovTextarea
                                 value={formData.description}
@@ -121,25 +146,6 @@ export default function NormCreatePage() {
                                 placeholder="Описание"
                                 rows={3}
                             />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <GovLabel>Действует с</GovLabel>
-                                <GovInput
-                                    type="date"
-                                    value={formData.validFrom}
-                                    onChange={(e) => setFormData({ ...formData, validFrom: e.target.value })}
-                                />
-                            </div>
-                            <div>
-                                <GovLabel>Действует по</GovLabel>
-                                <GovInput
-                                    type="date"
-                                    value={formData.validTo}
-                                    onChange={(e) => setFormData({ ...formData, validTo: e.target.value })}
-                                />
-                            </div>
                         </div>
 
                         <div className="flex gap-3 pt-4">

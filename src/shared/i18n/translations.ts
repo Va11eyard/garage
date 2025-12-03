@@ -29,6 +29,7 @@ export const translations = {
             required: 'Обязательное поле',
             notFound: 'Не найдено',
             dateFormat: 'дд.мм.гггг',
+            description: 'Описание',
             lastName: 'Фамилия',
             firstName: 'Имя',
             middleName: 'Отчество',
@@ -53,6 +54,7 @@ export const translations = {
             week: 'Неделя',
             custom: 'Настраиваемый',
             vsLastPeriod: 'к пред. периоду',
+            status: 'Статус',
         },
         auth: {
             login: 'Вход в систему',
@@ -332,6 +334,7 @@ export const translations = {
             edit: 'Редактировать ячейку',
             editCell: 'Редактировать ячейку',
             deleteConfirm: 'Удалить ячейку?',
+            noZones: 'Нет зон для выбранного склада',
         },
         items: {
             title: 'Номенклатура',
@@ -340,6 +343,7 @@ export const translations = {
             description: 'Описание',
             itemGroup: 'Группа номенклатуры',
             unitOfMeasure: 'Единица измерения',
+            barcode: 'Штрих-код',
             create: 'Создать номенклатуру',
             createItem: 'Создать номенклатуру',
             edit: 'Редактировать номенклатуру',
@@ -398,6 +402,11 @@ export const translations = {
             createInventory: 'Создать инвентаризацию',
             editInventory: 'Редактировать инвентаризацию',
             deleteConfirm: 'Удалить документ инвентаризации?',
+            status: {
+                DRAFT: 'Черновик',
+                POSTED: 'Проведен',
+                CANCELLED: 'Отменен',
+            },
         },
         movements: {
             title: 'Перемещения',
@@ -476,6 +485,8 @@ export const translations = {
             description: 'Описание',
             createCategory: 'Создать категорию',
             editCategory: 'Редактировать категорию',
+            edit: 'Редактировать категорию качества',
+            details: 'Детали категории качества',
             deleteConfirm: 'Удалить категорию?',
         },
         employeeCategories: {
@@ -512,6 +523,8 @@ export const translations = {
             title: 'Физические лица',
             iin: 'ИИН',
             fullName: 'ФИО',
+            lastName: 'Фамилия',
+            firstName: 'Имя',
             birthDate: 'Дата рождения',
             createPerson: 'Создать физическое лицо',
             editPerson: 'Редактировать',
@@ -647,6 +660,9 @@ export const translations = {
                 active: 'Активно',
                 inactive: 'Неактивно',
                 error: 'Ошибка',
+                online: 'Онлайн',
+                offline: 'Оффлайн',
+                notConfigured: 'Не настроено',
             },
         },
         integrationEndpoints: {
@@ -655,7 +671,7 @@ export const translations = {
             name: 'Наименование',
             system: 'Система',
             baseUrl: 'Базовый URL',
-            status: 'Статус',
+            statusLabel: 'Статус',
             lastTest: 'Последняя проверка',
             createEndpoint: 'Создать точку интеграции',
             testEndpoint: 'Проверить соединение',
@@ -665,6 +681,12 @@ export const translations = {
                 erp: 'ERP система',
                 accounting: 'Бухгалтерия',
                 securitySystem: 'Система безопасности',
+            },
+            status: {
+                active: 'Активна',
+                inactive: 'Неактивна',
+                error: 'Ошибка',
+                notConfigured: 'Не настроена',
             },
         },
         purchasePlans: {
@@ -731,6 +753,24 @@ export const translations = {
                 partial: 'Частично',
             },
         },
+        warehouse: {
+            warehouse: 'Склад',
+            warehouses: 'Склады',
+            main: 'Основной склад',
+            secondary: 'Дополнительный склад',
+        },
+        category: {
+            category: 'Категория',
+            clothing: 'Одежда',
+            equipment: 'Оборудование',
+            supplies: 'Расходные материалы',
+        },
+        department: {
+            department: 'Подразделение',
+            it: 'IT отдел',
+            hr: 'HR отдел',
+            finance: 'Финансовый отдел',
+        },
     },
     kk: {
         common: {
@@ -760,6 +800,7 @@ export const translations = {
             required: 'Міндетті өріс',
             notFound: 'Табылмады',
             dateFormat: 'кк.аа.жжжж',
+            description: 'Сипаттамасы',
             lastName: 'Тегі',
             firstName: 'Аты',
             middleName: 'Әкесінің аты',
@@ -777,6 +818,7 @@ export const translations = {
             dateFrom: 'Бастап',
             dateTo: 'Дейін',
             all: 'Барлығы',
+            status: 'Мәртебе',
         },
         auth: {
             login: 'Жүйеге кіру',
@@ -1033,6 +1075,7 @@ export const translations = {
             edit: 'Ұяшықты өңдеу',
             editCell: 'Ұяшықты өңдеу',
             deleteConfirm: 'Ұяшықты жою керек пе?',
+            noZones: 'Таңдалған қойма үшін аймақтар жоқ',
         },
         items: {
             title: 'Номенклатура',
@@ -1041,6 +1084,7 @@ export const translations = {
             description: 'Сипаттамасы',
             itemGroup: 'Номенклатура тобы',
             unitOfMeasure: 'Өлшем бірлігі',
+            barcode: 'Штрих-код',
             create: 'Номенклатура жасау',
             createItem: 'Номенклатура жасау',
             edit: 'Номенклатураны өңдеу',
@@ -1099,6 +1143,11 @@ export const translations = {
             createInventory: 'Инвентаризация жасау',
             editInventory: 'Инвентаризацияны өңдеу',
             deleteConfirm: 'Инвентаризация құжатын жою керек пе?',
+            status: {
+                DRAFT: 'Жоба',
+                POSTED: 'Өткізілген',
+                CANCELLED: 'Болдырылмаған',
+            },
         },
         movements: {
             title: 'Орын ауыстыру',
@@ -1177,6 +1226,8 @@ export const translations = {
             description: 'Сипаттамасы',
             createCategory: 'Санат жасау',
             editCategory: 'Санатты өңдеу',
+            edit: 'Сапа санатын өңдеу',
+            details: 'Сапа санатының мәліметтері',
             deleteConfirm: 'Санатты жою керек пе?',
         },
         employeeCategories: {
@@ -1213,6 +1264,8 @@ export const translations = {
             title: 'Жеке тұлғалар',
             iin: 'ЖСН',
             fullName: 'ТАӘ',
+            lastName: 'Тегі',
+            firstName: 'Аты',
             birthDate: 'Туған күні',
             createPerson: 'Жеке тұлға жасау',
             editPerson: 'Өңдеу',
@@ -1348,6 +1401,9 @@ export const translations = {
                 active: 'Белсенді',
                 inactive: 'Белсенді емес',
                 error: 'Қате',
+                online: 'Онлайн',
+                offline: 'Оффлайн',
+                notConfigured: 'Баптаулар жоқ',
             },
         },
         integrationEndpoints: {
@@ -1356,7 +1412,7 @@ export const translations = {
             name: 'Атауы',
             system: 'Жүйе',
             baseUrl: 'Негізгі URL',
-            status: 'Мәртебесі',
+            statusLabel: 'Мәртебесі',
             lastTest: 'Соңғы тексеру',
             createEndpoint: 'Интеграция нүктесін жасау',
             testEndpoint: 'Қосылымды тексеру',
@@ -1366,6 +1422,12 @@ export const translations = {
                 erp: 'ERP жүйесі',
                 accounting: 'Бухгалтерия',
                 securitySystem: 'Қауіпсіздік жүйесі',
+            },
+            status: {
+                active: 'Белсенді',
+                inactive: 'Белсенді емес',
+                error: 'Қате',
+                notConfigured: 'Баптаулар жоқ',
             },
         },
         purchasePlans: {

@@ -1,8 +1,9 @@
-export default function WriteOffActPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Write-Off Act</h1>
-      <p>Write-Off ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { WriteOffAct } from '@/widgets/documents/WriteOffAct'
+
+export default function WriteOffActPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <WriteOffAct id={id} />
 }

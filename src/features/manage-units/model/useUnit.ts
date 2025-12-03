@@ -1,8 +1,9 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type UnitOfMeasureDto } from '@/shared/api/generated/__swagger_client'
-import { UnitOfMeasureService } from "@/features/manage-units/model/service";
+import { type UnitOfMeasureDto } from '@/shared/api/generated/__swagger_client'
+import { UnitOfMeasureService } from './service'
+
 const service = new UnitOfMeasureService()
 
 export function useUnit(id: string) {

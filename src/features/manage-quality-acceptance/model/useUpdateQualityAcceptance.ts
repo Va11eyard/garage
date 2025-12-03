@@ -1,16 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type QualityAcceptanceUpdateRequest, type QualityAcceptanceDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { Service } from '@/shared/api/generated/__swagger_client'
 
 export function useUpdateQualityAcceptance(id: string) {
     const queryClient = useQueryClient()
 
-    return useMutation<QualityAcceptanceDocumentDto, Error, QualityAcceptanceUpdateRequest>({
-        mutationFn: (data: any) => Service.update18(id, data),
+    return useMutation({
+        mutationFn: (data: any) => Service.updateQualityAcceptanceDocument(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptance', id] })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'] })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance', id] })
         },
     })
 }

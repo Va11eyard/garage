@@ -1,9 +1,11 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageWriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
-import { WriteOffService} from "@/features/manage-write-offs/model/service";
-const service = new WriteOffService();
+import { type PageWriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { WriteOffService } from './service'
+
+const service = new WriteOffService()
+
 export function useWriteOffs(params: {
     warehouseId?: string
     documentNumber?: string

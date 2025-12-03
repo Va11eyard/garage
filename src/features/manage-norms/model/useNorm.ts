@@ -6,7 +6,7 @@ import { Service, type ItemSupplyNormDto } from '@/shared/api/generated/__swagge
 export function useNorm(id: string) {
     return useQuery<ItemSupplyNormDto, Error>({
         queryKey: ['norms', id],
-        queryFn: () => Service.get8(id),
+        queryFn: () => Service.getItemSupplyNormById(id),
         enabled: !!id,
     })
 }

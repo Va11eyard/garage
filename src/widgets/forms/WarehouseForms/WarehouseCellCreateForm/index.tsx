@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovTextarea } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useWarehouseZonesByWarehouse } from '@/features/manage-warehouse-zones/model/useWarehouseZonesByWarehouse'
 import { useTranslation } from '@/shared/i18n/use-translation'
@@ -39,7 +40,7 @@ export function WarehouseCellCreateForm() {
 
         setIsSubmitting(true)
         try {
-            await Service.create3({
+            await Service.createWarehouseCell({
                 warehouseId: formData.warehouseId,
                 zoneId: formData.zoneId || undefined,
                 code: formData.code,
@@ -73,34 +74,42 @@ export function WarehouseCellCreateForm() {
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
                             <GovLabel required>{t('warehouseCells.warehouse')}</GovLabel>
-                            <GovSelect
+                            <Select
                                 value={formData.warehouseId}
-                                onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value, zoneId: '' })}
+                                onValueChange={(value) => setFormData({ ...formData, warehouseId: value, zoneId: '' })}
                                 required
                             >
-                                <option value="">{t('warehouseCells.selectWarehouse')}</option>
-                                {warehouses?.content?.map((warehouse: any) => (
-                                    <option key={warehouse.id} value={warehouse.id!}>
-                                        {warehouse.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('warehouseCells.selectWarehouse')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {warehouses?.content?.map((warehouse: any) => (
+                                        <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                            {warehouse.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         {formData.warehouseId && zones && zones.length > 0 && (
                             <div>
                                 <GovLabel>{t('warehouseCells.zone')}</GovLabel>
-                                <GovSelect
+                                <Select
                                     value={formData.zoneId}
-                                    onChange={(e) => setFormData({ ...formData, zoneId: e.target.value })}
+                                    onValueChange={(value) => setFormData({ ...formData, zoneId: value })}
                                 >
-                                    <option value="">{t('warehouseCells.selectZone')}</option>
-                                    {zones.map((zone: any) => (
-                                        <option key={zone.id} value={zone.id!}>
-                                            {zone.name}
-                                        </option>
-                                    ))}
-                                </GovSelect>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder={t('warehouseCells.selectZone')} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {zones.map((zone: any) => (
+                                            <SelectItem key={zone.id} value={zone.id!}>
+                                                {zone.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
                         )}
 

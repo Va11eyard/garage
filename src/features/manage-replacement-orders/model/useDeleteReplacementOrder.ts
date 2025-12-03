@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { ReplacementOrderService } from './service'
+
+const service = new ReplacementOrderService()
 
 export function useDeleteReplacementOrder() {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, string>({
-        mutationFn: (id: string) => Service.delete16(id),
+        mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['replacement-orders'] })
         },

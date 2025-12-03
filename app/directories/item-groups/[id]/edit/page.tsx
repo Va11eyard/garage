@@ -1,8 +1,9 @@
-export default function EditItemGroupPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Item Group</h1>
-      <p>Group ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { ItemGroupEditForm } from '@/widgets/forms/ItemGroupForms/ItemGroupEditForm'
+
+export default function ItemGroupEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <ItemGroupEditForm id={id} />
 }

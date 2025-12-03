@@ -16,7 +16,7 @@ export function useInventories(params: {
         queryFn: () => {
             if (!params.warehouseId) return { content: [], totalPages: 0, totalElements: 0 }
 
-            return Service.searchByWarehouse5(
+            return Service.searchInventoryDocumentsByWarehouse(
                 params.warehouseId,
                 {
                     page: params.page,

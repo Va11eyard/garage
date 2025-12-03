@@ -1,8 +1,9 @@
-export default function ReturnDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Return Details</h1>
-      <p>Return ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { ReturnDetails } from '@/widgets/details/ReturnDetails'
+
+export default function ReturnDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <ReturnDetails id={id} />
 }

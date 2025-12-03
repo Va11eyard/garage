@@ -1,13 +1,13 @@
+'use client'
+
+import { use } from 'react'
+import { NormVersionDetails } from '@/widgets/details/NormVersionDetails'
+
 export default function NormVersionDetailPage({ 
   params 
 }: { 
-  params: { id: string; versionId: string } 
+  params: Promise<{ id: string; versionId: string }> 
 }) {
-  return (
-    <div>
-      <h1>Norm Version Details</h1>
-      <p>Norm ID: {params.id}</p>
-      <p>Version ID: {params.versionId}</p>
-    </div>
-  );
+  const { id, versionId } = use(params)
+  return <NormVersionDetails normId={id} versionId={versionId} />
 }

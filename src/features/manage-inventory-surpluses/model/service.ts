@@ -16,7 +16,7 @@ export class InventorySurplusService {
         page?: number
         size?: number
     }): Promise<PageInventorySurplusDocumentDto> {
-        return Service.search16(
+        return Service.searchInventorySurplusDocumentsPage(
             params.warehouseId,
             params.from,
             params.to,
@@ -28,26 +28,26 @@ export class InventorySurplusService {
     }
 
     async get(id: string): Promise<InventorySurplusDocumentDto> {
-        return Service.get21(id)
+        return Service.getInventorySurplusDocumentById(id)
     }
 
     async create(data: InventorySurplusCreateRequest): Promise<InventorySurplusDocumentDto> {
-        return Service.create24(data)
+        return Service.createInventorySurplusDocument(data)
     }
 
     async update(id: string, data: InventorySurplusUpdateRequest): Promise<InventorySurplusDocumentDto> {
-        return Service.update21(id, data)
+        return Service.updateInventorySurplusDocument(id, data)
     }
 
     async post(id: string): Promise<InventorySurplusDocumentDto> {
-        return Service.post11(id)
+        return Service.postInventorySurplusDocument(id)
     }
 
     async cancel(id: string): Promise<InventorySurplusDocumentDto> {
-        return Service.cancel7(id)
+        return Service.cancelInventorySurplusDocument(id)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete21(id)
+        return Service.deleteInventorySurplusDocument(id)
     }
 }

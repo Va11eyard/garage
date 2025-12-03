@@ -1,8 +1,9 @@
-export default function QualityAcceptanceDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Quality Acceptance Details</h1>
-      <p>Acceptance ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { QualityAcceptanceDetails } from '@/widgets/details/QualityAcceptanceDetails'
+
+export default function QualityAcceptanceDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <QualityAcceptanceDetails id={id} />
 }

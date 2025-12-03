@@ -1,8 +1,9 @@
-export default function EditUnitPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Unit</h1>
-      <p>Unit ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { UnitEditForm } from '@/widgets/forms/UnitForms/UnitEditForm'
+
+export default function UnitEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <UnitEditForm id={id} />
 }

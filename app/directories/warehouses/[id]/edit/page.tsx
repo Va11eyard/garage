@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovTextarea } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouse } from '@/features/manage-warehouses/model/useWarehouse'
 import { useUpdateWarehouse } from '@/features/manage-warehouses/model/useUpdateWarehouse'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
@@ -99,34 +100,42 @@ export default function WarehouseEditPage({ params }: { params: Promise<{ id: st
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
                             <GovLabel required>{t('warehouses.organization')}</GovLabel>
-                            <GovSelect
+                            <Select
                                 value={formData.organizationId}
-                                onChange={(e) => handleOrganizationChange(e.target.value)}
+                                onValueChange={handleOrganizationChange}
                                 required
                             >
-                                <option value="">{t('warehouses.selectOrganization')}</option>
-                                {organizations?.content?.map((org: OrganizationDto) => (
-                                    <option key={org.id} value={org.id!}>
-                                        {org.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('warehouses.selectOrganization')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {organizations?.content?.map((org: OrganizationDto) => (
+                                        <SelectItem key={org.id} value={org.id!}>
+                                            {org.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         {formData.organizationId && orgUnits && orgUnits.length > 0 && (
                             <div>
                                 <GovLabel>{t('warehouses.orgUnit')}</GovLabel>
-                                <GovSelect
+                                <Select
                                     value={formData.orgUnitId}
-                                    onChange={(e) => setFormData({ ...formData, orgUnitId: e.target.value })}
+                                    onValueChange={(value) => setFormData({ ...formData, orgUnitId: value })}
                                 >
-                                    <option value="">Не выбрано</option>
-                                    {orgUnits.map((unit: OrgUnitDto) => (
-                                        <option key={unit.id} value={unit.id!}>
-                                            {unit.name}
-                                        </option>
-                                    ))}
-                                </GovSelect>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Не выбрано" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {orgUnits.map((unit: OrgUnitDto) => (
+                                            <SelectItem key={unit.id} value={unit.id!}>
+                                                {unit.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
                         )}
 

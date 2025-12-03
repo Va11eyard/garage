@@ -7,22 +7,22 @@ import {
 
 export class EmployeeCategoryService {
     async list(): Promise<EmployeeCategoryDto[]> {
-        return Service.list5()
+        return Service.listEmployeeCategories()
     }
 
     async get(id: string): Promise<EmployeeCategoryDto> {
-        return Service.get10(id)
+        return Service.getEmployeeCategoryById(id)
     }
 
     async create(data: EmployeeCategoryCreateRequest): Promise<EmployeeCategoryDto> {
-        return Service.create11(data)
+        return Service.createEmployeeCategory(data)
     }
 
     async update(id: string, data: EmployeeCategoryUpdateRequest): Promise<EmployeeCategoryDto> {
-        return Service.update10(id, data)
+        return Service.updateEmployeeCategory(id, data)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete10(id)
+        return Service.deleteEmployeeCategory(id)
     }
 }

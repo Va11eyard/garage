@@ -10,6 +10,7 @@ import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
@@ -43,8 +44,8 @@ export function WarehousesTable() {
         )
     }
 
-    const handleOrganizationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const orgId = e.target.value
+    const handleOrganizationChange = (value: string) => {
+        const orgId = value === '__ALL__' ? '' : value
         setFilters({ ...filters, organizationId: orgId })
     }
 
@@ -56,18 +57,19 @@ export function WarehousesTable() {
                 <div className="flex gap-4 flex-1">
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('warehouses.organization')}</label>
-                        <select
-                            className="border rounded px-3 py-2 w-full min-w-[200px]"
-                            value={filters.organizationId}
-                            onChange={handleOrganizationChange}
-                        >
-                            <option value="">{t('warehouses.selectOrganization')}</option>
-                            {organizations?.content?.map((org: any) => (
-                                <option key={org.id} value={org.id!}>
-                                    {org.name}
-                                </option>
-                            ))}
-                        </select>
+                        <Select value={filters.organizationId || '__ALL__'} onValueChange={handleOrganizationChange}>
+                            <SelectTrigger className="w-[200px]">
+                                <SelectValue placeholder={t('common.all')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                                {organizations?.content?.map((org: any) => (
+                                    <SelectItem key={org.id} value={org.id!}>
+                                        {org.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('warehouses.code')}</label>

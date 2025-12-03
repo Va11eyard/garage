@@ -1,64 +1,80 @@
 'use client'
 
-import { useEmployee } from '@/features/manage-employees/model/useEmployee'
 import { useDismissEmployee } from '@/features/manage-employees/model/useDismissEmployee'
-import { useForm } from 'react-hook-form'
-import { EmployeeDismissRequest } from '@/shared/api/generated/__swagger_client'
+import { useEmployee } from '@/features/manage-employees/model/useEmployee'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Button } from '@/shared/ui/button'
-import { Label } from '@/shared/ui/label'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input'
-import { Textarea } from '@/shared/ui/textarea'
-import { toast } from 'sonner'
+import { Label } from '@/shared/ui/label'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export function EmployeeDismissForm({ id }: { id: string }) {
     const { t } = useTranslation()
-    const { data: employee, isLoading } = useEmployee(id)
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<EmployeeDismissRequest>()
-    const { mutateAsync } = useDismissEmployee(id)
     const router = useRouter()
+    const { data: employee, isLoading } = useEmployee(id)
+    const dismissEmployee = useDismissEmployee(id)
+    const [dismissalDate, setDismissalDate] = useState('')
+    const [reason, setReason] = useState('')
 
-    const onSubmit = async (data: EmployeeDismissRequest) => {
-        if (!confirm(t('employees.dismissEmployee') + '?')) return
-        
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
         try {
-            await mutateAsync(data)
-            toast.success(t('common.success'))
+            await dismissEmployee.mutateAsync({
+                dismissalDate,
+                reason,
+            })
             router.push(`/staff/employees/${id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            console.error('Failed to dismiss employee:', error)
         }
     }
 
-    if (isLoading) return <div>{t('common.loading')}</div>
-    if (employee?.status !== 'ACTIVE') {
-        return <div className="p-6">Можно уволить только активного сотрудника</div>
-    }
+    if (isLoading) return <div className="p-6">{t('common.loading')}</div>
+    if (!employee) return <div className="p-6">{t('common.noData')}</div>
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-xl mx-auto p-6">
-            <h2 className="text-2xl font-bold">{t('employees.dismissEmployee')}</h2>
-            
-            <div>
-                <Label>{t('employees.dismissDate')}</Label>
-                <Input type="date" {...register('dismissalDate', { required: true })} />
-                {errors.dismissalDate && <span className="text-red-600 text-sm">{t('common.error')}</span>}
-            </div>
-
-            <div>
-                <Label>Комментарий</Label>
-                <Textarea {...register('comment')} />
-            </div>
-
-            <div className="flex gap-2">
-                <Button type="submit" variant="destructive" disabled={isSubmitting}>
-                    {isSubmitting ? t('common.loading') : t('employees.dismissEmployee')}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => router.back()}>
-                    {t('common.cancel')}
-                </Button>
-            </div>
-        </form>
+        <div className="container mx-auto py-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle>{t('employees.dismiss')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <Label htmlFor="dismissalDate">{t('employees.dismissalDate')}</Label>
+                            <Input
+                                id="dismissalDate"
+                                type="date"
+                                value={dismissalDate}
+                                onChange={(e) => setDismissalDate(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <Label htmlFor="reason">{t('employees.dismissalReason')}</Label>
+                            <Input
+                                id="reason"
+                                value={reason}
+                                onChange={(e) => setReason(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex gap-2">
+                            <Button type="submit" disabled={dismissEmployee.isPending}>
+                                {dismissEmployee.isPending ? t('common.saving') : t('employees.dismiss')}
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => router.back()}
+                            >
+                                {t('common.cancel')}
+                            </Button>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
     )
 }

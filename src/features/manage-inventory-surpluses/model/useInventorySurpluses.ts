@@ -1,7 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageInventorySurplusDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { type PageInventorySurplusDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { InventorySurplusService } from './service'
+
+const service = new InventorySurplusService()
 
 export function useInventorySurpluses(params: {
     warehouseId?: string
@@ -13,14 +16,13 @@ export function useInventorySurpluses(params: {
 }) {
     return useQuery<PageInventorySurplusDocumentDto, Error>({
         queryKey: ['inventorySurpluses', params],
-        queryFn: () => Service.search16(
-            params.warehouseId,
-            params.dateFrom,
-            params.dateTo,
-            undefined,
-            params.documentNumber,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.search({
+            warehouseId: params.warehouseId,
+            from: params.dateFrom,
+            to: params.dateTo,
+            docNumber: params.documentNumber,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

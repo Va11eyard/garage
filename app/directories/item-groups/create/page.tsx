@@ -4,40 +4,24 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useCreateItemGroup } from '@/features/manage-item-groups/model/useCreateItemGroup'
+import { useItemGroups } from '@/features/manage-item-groups/model/useItemGroups'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
-import { Service } from '@/shared/api/generated/__swagger_client'
 import { Spinner } from '@/shared/ui/spinner'
 
 export default function ItemGroupCreatePage() {
     const router = useRouter()
     const { t } = useTranslation()
     const createMutation = useCreateItemGroup()
-    const [isLoading, setIsLoading] = useState(false)
-    const [itemGroups, setItemGroups] = useState<any[]>([])
+    const { data: itemGroups = [], isLoading } = useItemGroups()
     
     const [formData, setFormData] = useState({
         code: '',
         name: '',
         parentId: '',
-    })
-
-    // Load item groups for parent selection
-    useState(() => {
-        const loadData = async () => {
-            setIsLoading(true)
-            try {
-                const data = await Service.listAll()
-                setItemGroups(data)
-            } catch (error) {
-                toast.error(t('common.error'))
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        loadData()
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -93,17 +77,21 @@ export default function ItemGroupCreatePage() {
 
                         <div>
                             <GovLabel>{t('itemGroup.parentGroup')}</GovLabel>
-                            <GovSelect
+                            <Select
                                 value={formData.parentId}
-                                onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                                onValueChange={(value) => setFormData({ ...formData, parentId: value })}
                             >
-                                <option value="">{t('common.select')}</option>
-                                {itemGroups.map((group) => (
-                                    <option key={group.id} value={group.id!}>
-                                        {group.name}
-                                    </option>
-                                ))}
-                            </GovSelect>
+                                <SelectTrigger>
+                                    <SelectValue placeholder={t('common.select')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {itemGroups.map((group: any) => (
+                                        <SelectItem key={group.id} value={group.id!}>
+                                            {group.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         <div className="flex gap-3 pt-4">

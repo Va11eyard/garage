@@ -31,7 +31,7 @@ export function QualityCategoryCreateForm() {
 
         setIsSubmitting(true)
         try {
-            await Service.create5({
+            await Service.createQualityCategory({
                 ...formData,
                 description: formData.description || undefined,
             })

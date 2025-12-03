@@ -10,7 +10,7 @@ export function useMovementsSearch(params: {
 }) {
     return useQuery({
         queryKey: ['movements', 'search', params],
-        queryFn: () => Service.searchByToWarehouse(
+        queryFn: () => Service.searchMovementDocumentsByToWarehouse(
             params.warehouseId || '',
             { page: params.page, size: params.size }
         ),

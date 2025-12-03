@@ -6,7 +6,7 @@ export function useCreateProvisionNorm() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (data: ProvisionNormCreateRequest) => Service.create12(data),
+        mutationFn: (data: ProvisionNormCreateRequest) => Service.createProvisionNorm(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['provision-norms'] })
         },

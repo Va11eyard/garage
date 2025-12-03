@@ -5,7 +5,8 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovDatePicker } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovDatePicker } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -69,34 +70,42 @@ export function MovementCreateForm() {
 
                 <div>
                     <GovLabel required>{t('movements.fromWarehouse')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.fromWarehouseId}
-                        onChange={(e) => setFormData({ ...formData, fromWarehouseId: e.target.value })}
+                        onValueChange={(value) => setFormData({ ...formData, fromWarehouseId: value })}
                         required
                     >
-                        <option value="">{t('common.select')}</option>
-                        {warehouses?.content?.map((wh: any) => (
-                            <option key={wh.id} value={wh.id!}>
-                                {wh.name}
-                            </option>
-                        ))}
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {warehouses?.content?.map((wh: any) => (
+                                <SelectItem key={wh.id} value={wh.id!}>
+                                    {wh.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div>
                     <GovLabel required>{t('movements.toWarehouse')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.toWarehouseId}
-                        onChange={(e) => setFormData({ ...formData, toWarehouseId: e.target.value })}
+                        onValueChange={(value) => setFormData({ ...formData, toWarehouseId: value })}
                         required
                     >
-                        <option value="">{t('common.select')}</option>
-                        {warehouses?.content?.map((wh: any) => (
-                            <option key={wh.id} value={wh.id!}>
-                                {wh.name}
-                            </option>
-                        ))}
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {warehouses?.content?.map((wh: any) => (
+                                <SelectItem key={wh.id} value={wh.id!}>
+                                    {wh.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className="flex gap-3 pt-4">

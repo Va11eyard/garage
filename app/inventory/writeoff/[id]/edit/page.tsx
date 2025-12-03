@@ -1,8 +1,9 @@
-export default function EditWriteOffPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Write-Off</h1>
-      <p>Write-Off ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { WriteOffEditForm } from '@/widgets/forms/DocumentForms/WriteOffEditForm'
+
+export default function WriteOffEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <WriteOffEditForm id={id} />
 }

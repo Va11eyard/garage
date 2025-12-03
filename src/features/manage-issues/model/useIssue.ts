@@ -1,12 +1,15 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type IssueDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { type IssueDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { IssueService } from './service'
+
+const service = new IssueService()
 
 export function useIssue(id: string) {
     return useQuery<IssueDocumentDto, Error>({
         queryKey: ['issues', id],
-        queryFn: () => Service.get20(id),
+        queryFn: () => service.get(id),
         enabled: !!id,
     })
 }

@@ -1,7 +1,7 @@
+'use client'
+
+import { MovementCreateForm } from '@/widgets/forms/DocumentForms/MovementCreateForm'
+
 export default function CreateInternalMovementPage() {
-  return (
-    <div>
-      <h1>Create Internal Movement</h1>
-    </div>
-  );
+  return <MovementCreateForm />
 }

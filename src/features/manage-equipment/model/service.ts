@@ -5,7 +5,7 @@ import {
 
 export class EquipmentService {
     async list(): Promise<Device[]> {
-        return Service.list7()
+        return Service.listDevices()
     }
 
     async register(params: {
@@ -14,14 +14,14 @@ export class EquipmentService {
         type: string
         warehouseId?: string
     }): Promise<Device> {
-        return Service.register(params.code, params.name, params.type, params.warehouseId)
+        return Service.registerDevice(params.code, params.name, params.type, params.warehouseId)
     }
 
     async heartbeat(code: string, data?: string): Promise<any> {
-        return Service.heartbeat(code, data)
+        return Service.sendDeviceHeartbeat(code, data)
     }
 
     async reportError(code: string, error: string): Promise<any> {
-        return Service.error(code, error)
+        return Service.reportDeviceError(code, error)
     }
 }

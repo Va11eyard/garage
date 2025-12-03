@@ -13,9 +13,9 @@ export type PageReceiptDocumentDto = {
     content?: Array<ReceiptDocumentDto>;
     number?: number;
     sort?: Sortnull;
-    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
+    numberOfElements?: number;
     empty?: boolean;
 };
 

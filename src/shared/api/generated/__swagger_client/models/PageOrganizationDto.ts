@@ -13,9 +13,9 @@ export type PageOrganizationDto = {
     content?: Array<OrganizationDto>;
     number?: number;
     sort?: Sortnull;
-    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
+    numberOfElements?: number;
     empty?: boolean;
 };
 

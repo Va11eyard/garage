@@ -1,8 +1,9 @@
-export default function OrganizationDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Organization Details</h1>
-      <p>Organization ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { OrganizationDetails } from '@/widgets/details/OrganizationDetails'
+
+export default function OrganizationDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <OrganizationDetails id={id} />
 }

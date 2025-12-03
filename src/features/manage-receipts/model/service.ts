@@ -9,7 +9,7 @@ export class ReceiptService {
         page?: number,
         size?: number
     ): Promise<PageReceiptDocumentDto> {
-        return Service.search14(
+        return Service.searchReceiptDocumentsPage(
             warehouseId,
             status,
             fromDate,
@@ -20,26 +20,26 @@ export class ReceiptService {
     }
 
     async get(id: string): Promise<ReceiptDocumentDto> {
-        return Service.get17(id)
+        return Service.getReceiptDocumentById(id)
     }
 
     async create(data: ReceiptCreateRequest): Promise<ReceiptDocumentDto> {
-        return Service.create20(data)
+        return Service.createReceiptDocument(data)
     }
 
     async update(id: string, data: ReceiptUpdateRequest): Promise<ReceiptDocumentDto> {
-        return Service.update17(id, data)
+        return Service.updateReceiptDocument(id, data)
     }
 
     async post(id: string): Promise<ReceiptDocumentDto> {
-        return Service.post7(id)
+        return Service.postReceiptDocument(id)
     }
 
     async unpost(id: string): Promise<ReceiptDocumentDto> {
-        return Service.unpost(id)
+        return Service.unpostReceiptDocument(id)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete17(id)
+        return Service.deleteReceiptDocument(id)
     }
 }

@@ -1,8 +1,9 @@
-export default function SurplusDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Surplus Details</h1>
-      <p>Surplus ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { SurplusDetails } from '@/widgets/details/SurplusDetails'
+
+export default function SurplusDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <SurplusDetails id={id} />
 }

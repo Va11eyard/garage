@@ -1,7 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageIssueDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { type PageIssueDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { IssueService } from './service'
+
+const service = new IssueService()
 
 export function useIssues(params: {
     warehouseId?: string
@@ -13,13 +16,12 @@ export function useIssues(params: {
 }) {
     return useQuery<PageIssueDocumentDto, Error>({
         queryKey: ['issues', params],
-        queryFn: () => Service.searchByWarehouse4(
-            params.warehouseId!,
-            params.dateFrom,
-            params.dateTo,
-            undefined,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.searchByWarehouse({
+            warehouseId: params.warehouseId!,
+            from: params.dateFrom,
+            to: params.dateTo,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

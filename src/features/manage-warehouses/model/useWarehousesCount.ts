@@ -1,9 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
-import { WarehouseService } from "./service";
-const service = new WarehouseService();
+import { WarehouseService } from './service'
+
+const service = new WarehouseService()
+
 export function useWarehousesCount() {
     return useQuery({
         queryKey: ['warehouses', 'count'],

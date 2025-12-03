@@ -1,8 +1,9 @@
-export default function EditReceiptPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Receipt</h1>
-      <p>Receipt ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { ReceiptEditForm } from '@/widgets/forms/DocumentForms/ReceiptEditForm'
+
+export default function ReceiptEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <ReceiptEditForm id={id} />
 }

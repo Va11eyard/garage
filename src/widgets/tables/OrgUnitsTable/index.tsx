@@ -29,7 +29,7 @@ export function OrgUnitsTable() {
     const { data: orgUnitsData, isLoading } = useOrgUnits({
         code: debouncedFilters.code,
         name: debouncedFilters.name,
-        organizationId: selectedOrgId || undefined,
+        organizationId: selectedOrgId && selectedOrgId !== '__ALL__' ? selectedOrgId : undefined,
     })
     
     const deleteMutation = useDeleteOrgUnit()
@@ -108,42 +108,34 @@ export function OrgUnitsTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {orgUnits.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={isMobile ? 3 : 5} className="text-center py-8">
-                                    {t('common.noData')}
+                        {orgUnits.map((unit: any) => (
+                            <TableRow key={unit.id}>
+                                <TableCell>{unit.code}</TableCell>
+                                <TableCell>{unit.name}</TableCell>
+                                {!isMobile && <TableCell>{unit.organizationName || '-'}</TableCell>}
+                                {!isMobile && <TableCell>{unit.type || '-'}</TableCell>}
+                                <TableCell>
+                                    <Link href={`/directories/org-units/${unit.id}` as Route}>
+                                        <Button variant="ghost" size="sm">
+                                            {t('common.view')}
+                                        </Button>
+                                    </Link>
+                                    <Link href={`/directories/org-units/${unit.id}/edit` as Route}>
+                                        <Button variant="ghost" size="sm">
+                                            {t('common.edit')}
+                                        </Button>
+                                    </Link>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="text-red-600"
+                                        onClick={() => handleDelete(unit.id!)}
+                                    >
+                                        {t('common.delete')}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
-                        ) : (
-                            orgUnits.map((unit: any) => (
-                                <TableRow key={unit.id}>
-                                    <TableCell>{unit.code}</TableCell>
-                                    <TableCell>{unit.name}</TableCell>
-                                    {!isMobile && <TableCell>{unit.organizationName || '-'}</TableCell>}
-                                    {!isMobile && <TableCell>{unit.type || '-'}</TableCell>}
-                                    <TableCell>
-                                        <Link href={`/directories/org-units/${unit.id}` as Route}>
-                                            <Button variant="ghost" size="sm">
-                                                {t('common.view')}
-                                            </Button>
-                                        </Link>
-                                        <Link href={`/directories/org-units/${unit.id}/edit` as Route}>
-                                            <Button variant="ghost" size="sm">
-                                                {t('common.edit')}
-                                            </Button>
-                                        </Link>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-red-600"
-                                            onClick={() => handleDelete(unit.id!)}
-                                        >
-                                            {t('common.delete')}
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        )}
+                        ))}
                     </TableBody>
                 </Table>
             )}

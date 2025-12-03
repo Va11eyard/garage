@@ -15,7 +15,7 @@ export class WriteOffService {
         page?: number
         size?: number
     }): Promise<PageWriteOffDocumentDto> {
-        return Service.searchByWarehouse(
+        return Service.searchWriteOffDocumentsByWarehousePage(
             params.warehouseId,
             params.from,
             params.to,
@@ -26,26 +26,26 @@ export class WriteOffService {
     }
 
     async get(id: string): Promise<WriteOffDocumentDto> {
-        return Service.get13(id)
+        return Service.getWriteOffDocumentById(id)
     }
 
     async create(data: WriteOffCreateRequest): Promise<WriteOffDocumentDto> {
-        return Service.create16(data)
+        return Service.createWriteOffDocument(data)
     }
 
     async update(id: string, data: WriteOffUpdateRequest): Promise<WriteOffDocumentDto> {
-        return Service.update13(id, data)
+        return Service.updateWriteOffDocument(id, data)
     }
 
     async post(id: string): Promise<WriteOffDocumentDto> {
-        return Service.post3(id)
+        return Service.postWriteOffDocument(id)
     }
 
     async cancel(id: string): Promise<WriteOffDocumentDto> {
-        return Service.cancel(id)
+        return Service.cancelWriteOffDocument(id)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete13(id)
+        return Service.deleteWriteOffDocument(id)
     }
 }

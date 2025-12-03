@@ -6,7 +6,7 @@ import {
 
 export class IntegrationEndpointService {
     async list(): Promise<IntegrationEndpoint[]> {
-        return Service.listEndpoints()
+        return Service.listIntegrationEndpoints()
     }
 
     async create(params: {
@@ -15,14 +15,14 @@ export class IntegrationEndpointService {
         system: 'HR_SYSTEM' | 'ERP' | 'ACCOUNTING' | 'SECURITY_SYSTEM'
         baseUrl?: string
     }): Promise<IntegrationEndpoint> {
-        return Service.createEndpoint(params.code, params.name, params.system, params.baseUrl)
+        return Service.createIntegrationEndpoint(params.code, params.name, params.system, params.baseUrl)
     }
 
     async test(code: string): Promise<IntegrationEndpoint> {
-        return Service.test(code)
+        return Service.testIntegrationEndpointConnection(code)
     }
 
     async send(code: string, messageType: string, payload?: string): Promise<IntegrationMessage> {
-        return Service.send(code, messageType, payload)
+        return Service.sendTestIntegrationMessage(code, messageType, payload)
     }
 }

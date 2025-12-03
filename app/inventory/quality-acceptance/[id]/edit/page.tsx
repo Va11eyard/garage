@@ -1,8 +1,9 @@
-export default function EditQualityAcceptancePage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Edit Quality Acceptance</h1>
-      <p>Acceptance ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { QualityAcceptanceEditForm } from '@/widgets/forms/DocumentForms/QualityAcceptanceEditForm'
+
+export default function QualityAcceptanceEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <QualityAcceptanceEditForm id={id} />
 }

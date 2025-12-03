@@ -1,35 +1,36 @@
 'use client'
 
-import { useStockBalanceByWarehouse } from '@/features/manage-stock-balances/model/useStockBalanceByWarehouse'
+import { useStockBalances } from '@/features/manage-stock-balances/model/useStockBalances'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
-import { Label } from '@/shared/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { Spinner } from '@/shared/ui/spinner'
 import { useState } from 'react'
 
 export function StockBalancesTable() {
     const { t } = useTranslation()
-    const [selectedWarehouse, setSelectedWarehouse] = useState<string>('')
+    const [selectedWarehouse, setSelectedWarehouse] = useState<string>('__ALL__')
     const { data: warehouses } = useWarehouses({})
-    const { data: balances, isLoading } = useStockBalanceByWarehouse(selectedWarehouse || undefined)
+    const { data: balances, isLoading } = useStockBalances(selectedWarehouse === '__ALL__' ? undefined : selectedWarehouse)
 
     return (
         <div className="space-y-4">
             <div className="w-full max-w-md">
-                <Label>{t('stockBalances.warehouse')}</Label>
-                <select
-                    className="w-full border rounded px-3 py-2"
-                    value={selectedWarehouse}
-                    onChange={(e) => setSelectedWarehouse(e.target.value)}
-                >
-                    <option value="">{t('stockBalances.viewByWarehouse')}</option>
-                    {warehouses?.content?.map((warehouse: any) => (
-                        <option key={warehouse.id} value={warehouse.id!}>
-                            {warehouse.name}
-                        </option>
-                    ))}
-                </select>
+                <label className="block text-sm font-medium mb-1">{t('stockBalances.warehouse')}</label>
+                <Select value={selectedWarehouse} onValueChange={setSelectedWarehouse}>
+                    <SelectTrigger className="w-[200px]">
+                        <SelectValue placeholder={t('common.all')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                        {warehouses?.content?.map((warehouse: any) => (
+                            <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                {warehouse.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
 
             {isLoading && <Spinner />}
@@ -48,12 +49,17 @@ export function StockBalancesTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {/* Note: StockBalanceDto structure needs to be checked */}
-                        <TableRow>
-                            <TableCell colSpan={7} className="text-center text-muted-foreground">
-                                {t('common.noData')}
-                            </TableCell>
-                        </TableRow>
+                        {balances?.map((balance: any) => (
+                            <TableRow key={`${balance.itemId}-${balance.warehouseId}`}>
+                                <TableCell>{balance.itemName}</TableCell>
+                                <TableCell>{balance.zoneName || '—'}</TableCell>
+                                <TableCell>{balance.cellCode || '—'}</TableCell>
+                                <TableCell className="text-right">{balance.quantity}</TableCell>
+                                <TableCell className="text-right">{balance.reserved || 0}</TableCell>
+                                <TableCell className="text-right">{(balance.quantity || 0) - (balance.reserved || 0)}</TableCell>
+                                <TableCell>{balance.qualityCategory || '—'}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             )}

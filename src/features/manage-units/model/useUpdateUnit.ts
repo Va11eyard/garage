@@ -1,9 +1,11 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type UnitOfMeasureUpdateRequest, type UnitOfMeasureDto } from '@/shared/api/generated/__swagger_client'
+import { type UnitOfMeasureUpdateRequest, type UnitOfMeasureDto } from '@/shared/api/generated/__swagger_client'
 import { UnitOfMeasureService } from './service'
+
 const service = new UnitOfMeasureService()
+
 export function useUpdateUnit() {
     const queryClient = useQueryClient()
 

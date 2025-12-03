@@ -13,9 +13,9 @@ export type PageUserDto = {
     content?: Array<UserDto>;
     number?: number;
     sort?: Sortnull;
-    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
+    numberOfElements?: number;
     empty?: boolean;
 };
 

@@ -32,7 +32,7 @@ export function PersonCreateForm() {
 
         setIsSubmitting(true)
         try {
-            await Service.create13({
+            await Service.createPerson({
                 ...formData,
                 middleName: formData.middleName || undefined,
                 birthDate: formData.birthDate || undefined,

@@ -80,7 +80,7 @@ export function IntegrationEndpointsTable() {
                         </Select>
                     </div>
                     <div className="min-w-[150px]">
-                        <label className="block text-sm font-medium mb-1">{t('integrationEndpoints.status')}</label>
+                        <label className="block text-sm font-medium mb-1">{t('integrationEndpoints.statusLabel')}</label>
                         <Select value={filters.status} onValueChange={(value) => updateFilter('status', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder={t('common.all')} />
@@ -107,7 +107,7 @@ export function IntegrationEndpointsTable() {
                         <TableHead>{t('integrationEndpoints.name')}</TableHead>
                         <TableHead>{t('integrationEndpoints.system')}</TableHead>
                         <TableHead>{t('integrationEndpoints.baseUrl')}</TableHead>
-                        <TableHead>{t('integrationEndpoints.status')}</TableHead>
+                        <TableHead>{t('integrationEndpoints.statusLabel')}</TableHead>
                         <TableHead>{t('integrationEndpoints.lastTest')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
@@ -123,7 +123,15 @@ export function IntegrationEndpointsTable() {
                             <TableCell className="font-mono text-xs">{endpoint.baseUrl || '—'}</TableCell>
                             <TableCell>
                                 <Badge variant={getStatusBadge(endpoint.status)}>
-                                    {endpoint.status ? t(`integrationEndpoints.status.${endpoint.status.toLowerCase()}`) : '—'}
+                                    {endpoint.status ? (() => {
+                                        const statusMap: Record<string, string> = {
+                                            'ACTIVE': 'status.active',
+                                            'INACTIVE': 'status.inactive',
+                                            'ERROR': 'status.error',
+                                            'NOT_CONFIGURED': 'status.notConfigured'
+                                        }
+                                        return t(`integrationEndpoints.${statusMap[endpoint.status] || 'status.notConfigured'}`)
+                                    })() : '—'}
                                 </Badge>
                             </TableCell>
                             <TableCell>
@@ -141,13 +149,6 @@ export function IntegrationEndpointsTable() {
                             </TableCell>
                         </TableRow>
                     ))}
-                    {filteredData.length === 0 && (
-                        <TableRow>
-                            <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                                {t('common.noData')}
-                            </TableCell>
-                        </TableRow>
-                    )}
                 </TableBody>
             </Table>
         </div>

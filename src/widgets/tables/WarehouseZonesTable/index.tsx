@@ -1,110 +1,125 @@
 'use client'
 
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
-import { useWarehouseZones } from '@/features/manage-warehouse-zones/model/useWarehouseZones'
+import { useWarehouseZonesSearch } from '@/features/manage-warehouse-zones/model/useWarehouseZonesSearch'
 import { useDeleteWarehouseZone } from '@/features/manage-warehouse-zones/model/useDeleteWarehouseZone'
+import { usePagination } from '@/shared/hooks/use-pagination'
 import { useTranslation } from '@/shared/i18n/use-translation'
-import { useState } from 'react'
-import { GovTable, GovTableBody, GovTableCell, GovTableHead, GovTableHeader, GovTableRow } from '@/gov-design/components/Table'
-import { GovButton } from '@/gov-design/components/Button'
-import { GovLabel, GovSelect } from '@/gov-design/components/Form'
-import { GovConfirmModal } from '@/gov-design/patterns'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
+import { Button } from '@/shared/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
-import { Edit, Trash2 } from 'lucide-react'
+import Link from 'next/link'
+import { useState } from 'react'
+import { Route } from 'next'
 
 export function WarehouseZonesTable() {
     const { t } = useTranslation()
+    const { page, size, nextPage, previousPage } = usePagination()
     const [selectedWarehouseId, setSelectedWarehouseId] = useState('')
-    const [deleteId, setDeleteId] = useState<string | null>(null)
     const { data: warehouses } = useWarehouses({ page: 0, size: 100 })
-    const { data: zones, isLoading } = useWarehouseZones(selectedWarehouseId)
+    const { data: zonesData, isLoading } = useWarehouseZonesSearch({ 
+        warehouseId: selectedWarehouseId || undefined,
+        page,
+        size
+    })
     const deleteMutation = useDeleteWarehouseZone()
+    const confirmDialog = useConfirmDialog()
 
-    const handleDelete = () => {
-        if (deleteId) {
-            deleteMutation.mutate(deleteId, {
-                onSuccess: () => {
-                    toast.success(t('common.success'))
-                    setDeleteId(null)
-                },
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+    const handleDelete = (id: string) => {
+        confirmDialog.showConfirm(
+            t('warehouseZones.deleteConfirm'),
+            t('warehouseZones.deleteMessage') || 'Вы уверены, что хотите удалить эту зону склада?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: () => toast.error(t('common.error')),
+                })
+            }
+        )
     }
 
+    if (isLoading) return <div>{t('common.loading')}</div>
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             <div className="flex justify-between items-end gap-4">
-                <div className="max-w-md flex-1">
-                    <GovLabel>{t('warehouseZones.selectWarehouse')}</GovLabel>
-                    <GovSelect
-                        value={selectedWarehouseId}
-                        onChange={(e) => setSelectedWarehouseId(e.target.value)}
-                    >
-                        <option value="">{t('warehouseZones.selectWarehouse')}</option>
-                        {warehouses?.content?.map((w: any) => (
-                            <option key={w.id} value={w.id}>{w.name}</option>
-                        ))}
-                    </GovSelect>
+                <div className="flex gap-4 flex-1">
+                    <div>
+                        <label className="block text-sm font-medium mb-1">{t('warehouseZones.warehouse')}</label>
+                        <Select value={selectedWarehouseId || '__ALL__'} onValueChange={(value) => setSelectedWarehouseId(value === '__ALL__' ? '' : value)}>
+                            <SelectTrigger className="w-[200px]">
+                                <SelectValue placeholder={t('common.all')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
+                                {warehouses?.content?.map((w: any) => (
+                                    <SelectItem key={w.id} value={w.id!}>
+                                        {w.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
-                <GovButton asChild className="shrink-0">
-                    <a href="/directories/warehouse-zones/create">{t('warehouseZones.createZone')}</a>
-                </GovButton>
+                <Link href="/directories/warehouse-zones/create">
+                    <Button variant="default" className="shrink-0">{t('warehouseZones.createZone')}</Button>
+                </Link>
+            </div>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>{t('warehouseZones.code')}</TableHead>
+                        <TableHead>{t('warehouseZones.name')}</TableHead>
+                        <TableHead>{t('warehouseZones.warehouse')}</TableHead>
+                        <TableHead>{t('warehouseZones.sortOrder')}</TableHead>
+                        <TableHead>{t('common.actions')}</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {zonesData?.content?.map((zone: any) => (
+                        <TableRow key={zone.id}>
+                            <TableCell>{zone.code}</TableCell>
+                            <TableCell>{zone.name}</TableCell>
+                            <TableCell>{zone.warehouseName || '—'}</TableCell>
+                            <TableCell>{zone.sortOrder}</TableCell>
+                            <TableCell>
+                                <Button variant="ghost" size="sm" asChild>
+                                    <Link href={`/directories/warehouse-zones/${zone.id}/edit` as Route}>{t('common.edit')}</Link>
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-red-600"
+                                    onClick={() => handleDelete(zone.id!)}
+                                >
+                                    {t('common.delete')}
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            <div className="flex justify-between items-center">
+                <Button onClick={previousPage} disabled={page === 0}>
+                    {t('pagination.prev')}
+                </Button>
+                <span className="text-sm text-gov-text-secondary">
+                    {t('pagination.page')} {page + 1} {t('pagination.of')} {zonesData?.totalPages ?? 1}
+                </span>
+                <Button onClick={nextPage} disabled={zonesData?.last || page >= (zonesData?.totalPages ?? 1) - 1}>
+                    {t('pagination.next')}
+                </Button>
             </div>
 
-            {isLoading && <div className="text-center py-8 text-gov-gray-600">{t('common.loading')}</div>}
-
-            {zones && zones.length > 0 && (
-                <GovTable>
-                    <GovTableHeader>
-                        <GovTableRow>
-                            <GovTableHead>{t('warehouseZones.code')}</GovTableHead>
-                            <GovTableHead>{t('warehouseZones.name')}</GovTableHead>
-                            <GovTableHead>{t('warehouseZones.sortOrder')}</GovTableHead>
-                            <GovTableHead>{t('common.actions')}</GovTableHead>
-                        </GovTableRow>
-                    </GovTableHeader>
-                    <GovTableBody>
-                        {zones.map((z: any) => (
-                            <GovTableRow key={z.id}>
-                                <GovTableCell className="font-medium">{z.code}</GovTableCell>
-                                <GovTableCell>{z.name}</GovTableCell>
-                                <GovTableCell>{z.sortOrder}</GovTableCell>
-                                <GovTableCell>
-                                    <div className="flex gap-2">
-                                        <GovButton variant="ghost" size="sm">
-                                            <Edit className="w-4 h-4 mr-1" />
-                                            {t('common.edit')}
-                                        </GovButton>
-                                        <GovButton
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-gov-red-500 hover:text-gov-red-600"
-                                            onClick={() => setDeleteId(z.id!)}
-                                        >
-                                            <Trash2 className="w-4 h-4 mr-1" />
-                                            {t('common.delete')}
-                                        </GovButton>
-                                    </div>
-                                </GovTableCell>
-                            </GovTableRow>
-                        ))}
-                    </GovTableBody>
-                </GovTable>
-            )}
-
-            {zones && zones.length === 0 && selectedWarehouseId && (
-                <div className="text-center py-12 text-gov-gray-500">
-                    {t('common.noData')}
-                </div>
-            )}
-
             <GovConfirmModal
-                isOpen={deleteId !== null}
-                onClose={() => setDeleteId(null)}
-                onConfirm={handleDelete}
-                title={t('warehouseZones.deleteConfirm')}
-                message="Вы уверены, что хотите удалить эту зону склада?"
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
                 confirmText={t('common.delete')}
                 cancelText={t('common.cancel')}
                 variant="danger"

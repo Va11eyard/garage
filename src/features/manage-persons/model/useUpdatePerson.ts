@@ -1,16 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type PersonUpdateRequest, type PersonDto } from '@/shared/api/generated/__swagger_client'
+import { Service } from '@/shared/api/generated/__swagger_client'
 
-export function useUpdatePerson() {
+export function useUpdatePerson(id: string) {
     const queryClient = useQueryClient()
 
-    return useMutation<PersonDto, Error, { id: string; data: PersonUpdateRequest }>({
-        mutationFn: ({ id, data }: { id: string; data: PersonUpdateRequest }) => Service.update12(id, data),
+    return useMutation({
+        mutationFn: (data: any) => Service.updatePerson(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['persons'] })
-            queryClient.invalidateQueries({ queryKey: ['person'] })
+            queryClient.invalidateQueries({ queryKey: ['persons', id] })
         },
     })
 }

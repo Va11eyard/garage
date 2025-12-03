@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { QualityCategoryService } from './service'
+
+const service = new QualityCategoryService()
 
 export function useDeleteQualityCategory() {
     const queryClient = useQueryClient()
 
     return useMutation<void, Error, string>({
-        mutationFn: (id: string) => Service.delete4(id),
+        mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['qualityCategories'] })
         },

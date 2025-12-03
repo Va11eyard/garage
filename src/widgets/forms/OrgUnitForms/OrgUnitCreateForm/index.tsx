@@ -6,7 +6,8 @@ import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/use
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -84,34 +85,42 @@ export function OrgUnitCreateForm() {
 
                 <div>
                     <GovLabel required>{t('orgUnits.organization')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.organizationId}
-                        onChange={(e) => handleOrganizationChange(e.target.value)}
+                        onValueChange={handleOrganizationChange}
                         required
                     >
-                        <option value="">{t('organizations.selectOrganization')}</option>
-                        {organizations?.content?.map((org: any) => (
-                            <option key={org.id} value={org.id!}>
-                                {org.name}
-                            </option>
-                        ))}
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('organizations.selectOrganization')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {organizations?.content?.map((org: any) => (
+                                <SelectItem key={org.id} value={org.id!}>
+                                    {org.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 {selectedOrgId && orgUnits && orgUnits.length > 0 && (
                     <div>
                         <GovLabel>{t('orgUnits.parentUnit')}</GovLabel>
-                        <GovSelect
+                        <Select
                             value={formData.parentId}
-                            onChange={(e) => setFormData({ ...formData, parentId: e.target.value })}
+                            onValueChange={(value) => setFormData({ ...formData, parentId: value })}
                         >
-                            <option value="">{t('common.select')}</option>
-                            {orgUnits.map((unit: any) => (
-                                <option key={unit.id} value={unit.id!}>
-                                    {unit.name}
-                                </option>
-                            ))}
-                        </GovSelect>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.select')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {orgUnits.map((unit: any) => (
+                                    <SelectItem key={unit.id} value={unit.id!}>
+                                        {unit.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 )}
 

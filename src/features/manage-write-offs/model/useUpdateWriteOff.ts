@@ -1,17 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type WriteOffUpdateRequest, type WriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
-import { WriteOffService} from "@/features/manage-write-offs/model/service";
-const service = new WriteOffService();
+import { Service } from '@/shared/api/generated/__swagger_client'
+
 export function useUpdateWriteOff(id: string) {
     const queryClient = useQueryClient()
 
-    return useMutation<WriteOffDocumentDto, Error, WriteOffUpdateRequest>({
-        mutationFn: (data: any) => service.update(id, data),
+    return useMutation({
+        mutationFn: (data: any) => Service.updateWriteOffDocument(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['write-offs'] })
-            queryClient.invalidateQueries({ queryKey: ['write-offs', id] })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs', id] })
         },
     })
 }

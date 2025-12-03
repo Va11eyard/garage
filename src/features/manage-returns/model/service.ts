@@ -9,7 +9,7 @@ export class ReturnService {
         page?: number
         size?: number
     }): Promise<PageReturnDocumentDto> {
-        return Service.searchByWarehouse2(
+        return Service.searchReturnDocumentsByWarehousePage(
             params.warehouseId,
             params.from,
             params.to,
@@ -26,7 +26,7 @@ export class ReturnService {
         page?: number
         size?: number
     }): Promise<PageReturnDocumentDto> {
-        return Service.searchByEmployee1(
+        return Service.searchReturnDocumentsByEmployeePage(
             params.employeeId,
             params.from,
             params.to,
@@ -36,26 +36,26 @@ export class ReturnService {
     }
 
     async get(id: string): Promise<ReturnDocumentDto> {
-        return Service.get15(id)
+        return Service.getReturnDocumentById(id)
     }
 
     async create(data: ReturnCreateRequest): Promise<ReturnDocumentDto> {
-        return Service.create18(data)
+        return Service.createReturnDocument(data)
     }
 
     async update(id: string, data: ReturnUpdateRequest): Promise<ReturnDocumentDto> {
-        return Service.update15(id, data)
+        return Service.updateReturnDocument(id, data)
     }
 
     async post(id: string): Promise<ReturnDocumentDto> {
-        return Service.post5(id)
+        return Service.postReturnDocument(id)
     }
 
     async cancel(id: string): Promise<ReturnDocumentDto> {
-        return Service.cancel2(id)
+        return Service.cancelReturnDocument(id)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete15(id)
+        return Service.deleteReturnDocument(id)
     }
 }

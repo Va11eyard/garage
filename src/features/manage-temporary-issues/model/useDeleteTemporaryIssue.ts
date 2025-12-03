@@ -1,13 +1,15 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { TemporaryIssueService } from './service'
+
+const service = new TemporaryIssueService()
 
 export function useDeleteTemporaryIssue() {
     const queryClient = useQueryClient()
 
     return useMutation<any, Error, string>({
-        mutationFn: (id: string) => Service.delete14(id),
+        mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
         },

@@ -6,7 +6,7 @@ import { useTranslation } from '@/shared/i18n/use-translation'
 
 export default function ItemsPage() {
     const { t } = useTranslation()
-    
+
     return (
         <div className="space-y-6">
             <GovBreadcrumb items={[

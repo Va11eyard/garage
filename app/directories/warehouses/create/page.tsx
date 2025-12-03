@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect, GovTextarea } from '@/gov-design/components/Form'
+import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useCreateWarehouse } from '@/features/manage-warehouses/model/useCreateWarehouse'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/useOrgUnitsByOrganization'
@@ -69,34 +70,42 @@ export default function WarehouseCreatePage() {
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
                 <div>
                     <GovLabel required>{t('warehouses.organization')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.organizationId}
-                        onChange={(e) => handleOrganizationChange(e.target.value)}
+                        onValueChange={handleOrganizationChange}
                         required
                     >
-                        <option value="">{t('warehouses.selectOrganization')}</option>
-                        {organizations?.content?.map((org: any) => (
-                            <option key={org.id} value={org.id!}>
-                                {org.name}
-                            </option>
-                        ))}
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('warehouses.selectOrganization')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {organizations?.content?.map((org: any) => (
+                                <SelectItem key={org.id} value={org.id!}>
+                                    {org.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 {formData.organizationId && orgUnits && orgUnits.length > 0 && (
                     <div>
                         <GovLabel>{t('warehouses.orgUnit')}</GovLabel>
-                        <GovSelect
+                        <Select
                             value={formData.orgUnitId}
-                            onChange={(e) => setFormData({ ...formData, orgUnitId: e.target.value })}
+                            onValueChange={(value) => setFormData({ ...formData, orgUnitId: value })}
                         >
-                            <option value="">{t('common.select')}</option>
-                            {orgUnits.map((unit: any) => (
-                                <option key={unit.id} value={unit.id!}>
-                                    {unit.name}
-                                </option>
-                            ))}
-                        </GovSelect>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.select')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {orgUnits.map((unit: any) => (
+                                    <SelectItem key={unit.id} value={unit.id!}>
+                                        {unit.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 )}
 

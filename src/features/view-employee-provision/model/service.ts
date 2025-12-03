@@ -6,10 +6,10 @@ import {
 
 export class EmployeeProvisionService {
     async getProvisionCard(employeeId: string): Promise<EmployeeProvisionCardDto> {
-        return Service.getProvisionCard(employeeId)
+        return Service.getEmployeeProvisionCard(employeeId)
     }
 
     async analyzeEmployee(employeeId: string): Promise<EmployeeProvisionReportDto> {
-        return Service.analyzeEmployee(employeeId)
+        return Service.analyzeEmployeeProvision(employeeId)
     }
 }

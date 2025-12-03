@@ -1,13 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type QualityCategoryUpdateRequest, type QualityCategoryDto } from '@/shared/api/generated/__swagger_client'
+import { type QualityCategoryUpdateRequest, type QualityCategoryDto } from '@/shared/api/generated/__swagger_client'
+import { QualityCategoryService } from './service'
+
+const service = new QualityCategoryService()
 
 export function useUpdateQualityCategory() {
     const queryClient = useQueryClient()
 
     return useMutation<QualityCategoryDto, Error, { id: string; data: QualityCategoryUpdateRequest }>({
-        mutationFn: ({ id, data }: { id: string; data: QualityCategoryUpdateRequest }) => Service.update4(id, data),
+        mutationFn: ({ id, data }: { id: string; data: QualityCategoryUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['qualityCategories'] })
         },

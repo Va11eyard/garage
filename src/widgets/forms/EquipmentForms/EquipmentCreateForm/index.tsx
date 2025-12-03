@@ -4,7 +4,8 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovSelect } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -69,31 +70,39 @@ export function EquipmentCreateForm() {
 
                 <div>
                     <GovLabel required>{t('equipment.type')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.type}
-                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                        onValueChange={(value) => setFormData({ ...formData, type: value })}
                         required
                     >
-                        <option value="">{t('common.select')}</option>
-                        <option value="SCANNER">Сканер</option>
-                        <option value="PRINTER">Принтер</option>
-                        <option value="TERMINAL">Терминал</option>
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="SCANNER">Сканер</SelectItem>
+                            <SelectItem value="PRINTER">Принтер</SelectItem>
+                            <SelectItem value="TERMINAL">Терминал</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div>
                     <GovLabel>{t('equipment.warehouse')}</GovLabel>
-                    <GovSelect
+                    <Select
                         value={formData.warehouseId}
-                        onChange={(e) => setFormData({ ...formData, warehouseId: e.target.value })}
+                        onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
                     >
-                        <option value="">{t('common.select')}</option>
-                        {warehouses?.content?.map((wh: any) => (
-                            <option key={wh.id} value={wh.id!}>
-                                {wh.name}
-                            </option>
-                        ))}
-                    </GovSelect>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {warehouses?.content?.map((wh: any) => (
+                                <SelectItem key={wh.id} value={wh.id!}>
+                                    {wh.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className="flex gap-3 pt-4">

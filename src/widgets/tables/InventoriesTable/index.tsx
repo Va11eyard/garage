@@ -7,8 +7,8 @@ import { useFilters } from '@/shared/hooks/use-filters'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { GovDatePicker } from '@/gov-design/components/Form'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -62,18 +62,16 @@ export function InventoriesTable() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
-                        <Input
-                            type="date"
+                        <GovDatePicker
                             value={filters.fromDate}
-                            onChange={(e) => updateFilter('fromDate', e.target.value)}
+                            onChange={(date) => updateFilter('fromDate', date)}
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
-                        <Input
-                            type="date"
+                        <GovDatePicker
                             value={filters.toDate}
-                            onChange={(e) => updateFilter('toDate', e.target.value)}
+                            onChange={(date) => updateFilter('toDate', date)}
                         />
                     </div>
                     <div className="min-w-[150px]">
@@ -109,13 +107,6 @@ export function InventoriesTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.length === 0 && (
-                        <TableRow>
-                            <TableCell colSpan={isMobile ? 3 : 4} className="text-center py-8 text-muted-foreground">
-                                {filters.warehouseId ? t('common.noData') : 'Выберите склад для просмотра документов'}
-                            </TableCell>
-                        </TableRow>
-                    )}
                     {data?.content?.map((doc: any) => (
                         <TableRow key={doc.id}>
                             <TableCell>{doc.docNumber}</TableCell>

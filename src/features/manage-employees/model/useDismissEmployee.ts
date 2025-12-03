@@ -7,7 +7,7 @@ export function useDismissEmployee(id: string) {
     const queryClient = useQueryClient()
 
     return useMutation<EmployeeDto, Error, EmployeeDismissRequest>({
-        mutationFn: (data: EmployeeDismissRequest) => Service.dismiss(id, data),
+        mutationFn: (data: EmployeeDismissRequest) => Service.dismissEmployee(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['employees'] })
             queryClient.invalidateQueries({ queryKey: ['employees', id] })

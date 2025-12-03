@@ -1,13 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type InventorySurplusDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { type InventorySurplusDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { InventorySurplusService } from './service'
+
+const service = new InventorySurplusService()
 
 export function usePostInventorySurplus() {
     const queryClient = useQueryClient()
 
     return useMutation<InventorySurplusDocumentDto, Error, string>({
-        mutationFn: (id: string) => Service.post11(id),
+        mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['inventorySurpluses'] })
         },

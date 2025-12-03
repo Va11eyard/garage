@@ -1,8 +1,13 @@
-import {AuthControllerService} from "@/shared//api/generated/__swagger_client";
-import type { LoginRequest, JwtResponse} from "@/shared//api/generated/__swagger_client";
+import type { LoginRequest, JwtResponse} from "@/shared/api/generated/__swagger_client";
 
 export class AuthLoginService {
     async login(credentials: LoginRequest): Promise<JwtResponse> {
-        return AuthControllerService.login(credentials)
+        // TODO: Replace with actual API call when authentication endpoint is available
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credentials)
+        })
+        return response.json()
     }
 }

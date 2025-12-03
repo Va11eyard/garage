@@ -1,8 +1,9 @@
 'use client'
-import { UnitOfMeasureService } from './service'
-const service = new UnitOfMeasureService()
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { UnitOfMeasureService } from './service'
+
+const service = new UnitOfMeasureService()
 
 export function useDeleteUnit() {
     const queryClient = useQueryClient()

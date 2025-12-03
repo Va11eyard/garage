@@ -7,15 +7,15 @@ import {
 
 export class ItemGroupService {
     async listAll(): Promise<ItemGroupDto[]> {
-        return Service.listAll()
+        return Service.listItemGroups()
     }
 
     async listRootGroups(): Promise<ItemGroupDto[]> {
-        return Service.listRootGroups()
+        return Service.listRootItemGroups()
     }
 
     async listByParent(parentId: string): Promise<ItemGroupDto[]> {
-        return Service.listByParent(parentId)
+        return Service.listItemGroupsByParent(parentId)
     }
 
     async search(params: {
@@ -27,24 +27,24 @@ export class ItemGroupService {
     }) {
         // No paginated search endpoint for item-groups - use list methods
         if (params.parentId) {
-            return Service.listByParent(params.parentId)
+            return Service.listItemGroupsByParent(params.parentId)
         }
-        return Service.listAll()
+        return Service.listItemGroups()
     }
 
     async get(id: string): Promise<ItemGroupDto> {
-        return Service.get9(id)
+        return Service.getItemGroupById(id)
     }
 
     async create(data: ItemGroupCreateRequest): Promise<ItemGroupDto> {
-        return Service.create10(data)
+        return Service.createItemGroup(data)
     }
 
     async update(id: string, data: ItemGroupUpdateRequest): Promise<ItemGroupDto> {
-        return Service.update9(id, data)
+        return Service.updateItemGroup(id, data)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete9(id)
+        return Service.deleteItemGroup(id)
     }
 }

@@ -8,7 +8,6 @@ import { useMobile } from '@/shared/hooks/use-mobile'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { Button } from '@/shared/ui/button'
 import Link from 'next/link'
-import { Edit } from 'lucide-react'
 
 export function RolesTable() {
     const { t } = useTranslation()
@@ -38,7 +37,6 @@ export function RolesTable() {
                     <GovTableRow>
                         <GovTableHead>{t('roles.code')}</GovTableHead>
                         {!isMobile && <GovTableHead>{t('roles.description')}</GovTableHead>}
-                        <GovTableHead>{t('common.actions')}</GovTableHead>
                     </GovTableRow>
                 </GovTableHeader>
                 <GovTableBody>
@@ -46,14 +44,6 @@ export function RolesTable() {
                         <GovTableRow key={role.code}>
                             <GovTableCell className="font-medium">{role.code}</GovTableCell>
                             {!isMobile && <GovTableCell>{role.description || '-'}</GovTableCell>}
-                            <GovTableCell>
-                                <GovButton variant="ghost" size="sm" asChild>
-                                    <Link href={`/admin/roles/${role.code}/edit`} className="inline-flex items-center gap-2">
-                                        <Edit className="w-4 h-4" />
-                                        {t('common.edit')}
-                                    </Link>
-                                </GovButton>
-                            </GovTableCell>
                         </GovTableRow>
                     ))}
                 </GovTableBody>

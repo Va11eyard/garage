@@ -3,8 +3,8 @@ import {
     type EmployeeDto,
     type EmployeeStatusEventDto,
     type PageEmployeeDto,
-    type PageEmployeeItemAssignmentDto,
-    type PageEmployeeWearReportRowDto,
+    type EmployeeHireRequest,
+    type EmployeeDismissRequest,
 } from '@/shared/api/generated/__swagger_client'
 
 export class EmployeeService {
@@ -15,7 +15,7 @@ export class EmployeeService {
         page?: number
         size?: number
     }): Promise<PageEmployeeDto> {
-        return Service.search10(
+        return Service.searchEmployeesPage(
             params.organizationId,
             params.orgUnitId,
             params.personnelNumber,
@@ -25,11 +25,19 @@ export class EmployeeService {
     }
 
     async get(id: string): Promise<EmployeeDto> {
-        return Service.get26(id)
+        return Service.getEmployeeById(id)
+    }
+
+    async hire(data: EmployeeHireRequest): Promise<EmployeeDto> {
+        return Service.hireEmployee(data)
+    }
+
+    async dismiss(id: string, data: EmployeeDismissRequest): Promise<EmployeeDto> {
+        return Service.dismissEmployee(id, data)
     }
 
     async getHistory(employeeId: string): Promise<EmployeeStatusEventDto[]> {
-        return Service.history(employeeId)
+        return Service.getEmployeeHistory(employeeId)
     }
 
     async getAssignments(params: {
@@ -37,8 +45,8 @@ export class EmployeeService {
         itemId?: string
         page?: number
         size?: number
-    }): Promise<PageEmployeeItemAssignmentDto> {
-        return Service.searchByEmployee(params.employeeId, params.itemId as any, params.page as any, params.size as any)
+    }): Promise<any> {
+        return Service.getEmployeeItemAssignmentsByEmployee(params.employeeId)
     }
 
     async getWearReport(params: {
@@ -47,10 +55,10 @@ export class EmployeeService {
         page?: number
         size?: number
     }): Promise<any> {
-        return Service.getByEmployee(params.employeeId as any)
+        return Service.getEmployeeItemAssignmentsByEmployee(params.employeeId as any)
     }
 
     async remove(id: string): Promise<void> {
-        return Service.delete25(id)
+        return Service.deleteEmployee(id)
     }
 }

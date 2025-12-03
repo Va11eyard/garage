@@ -1,8 +1,9 @@
-export default function ItemGroupDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Item Group Details</h1>
-      <p>Group ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { ItemGroupDetails } from '@/widgets/details/ItemGroupDetails'
+
+export default function ItemGroupDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <ItemGroupDetails id={id} />
 }

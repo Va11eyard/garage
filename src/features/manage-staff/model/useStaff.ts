@@ -1,7 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type PageEmployeeDto } from '@/shared/api/generated/__swagger_client'
+import { type PageEmployeeDto } from '@/shared/api/generated/__swagger_client'
+import { EmployeeService } from '@/features/manage-employees/model/service'
+
+const service = new EmployeeService()
 
 export function useStaff(params: {
     organizationId?: string
@@ -12,12 +15,12 @@ export function useStaff(params: {
 }) {
     return useQuery<PageEmployeeDto, Error>({
         queryKey: ['staff', params],
-        queryFn: () => Service.search10(
-            params.organizationId,
-            params.orgUnitId,
-            params.personnelNumber,
-            params.page,
-            params.size
-        ),
+        queryFn: () => service.search({
+            organizationId: params.organizationId,
+            orgUnitId: params.orgUnitId,
+            personnelNumber: params.personnelNumber,
+            page: params.page,
+            size: params.size
+        }),
     })
 }

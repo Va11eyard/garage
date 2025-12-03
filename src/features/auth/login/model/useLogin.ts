@@ -1,14 +1,14 @@
 'use client'
 
 import {useMutation} from "@tanstack/react-query";
-import {AuthControllerService, type LoginRequest, type JwtResponse} from "@/shared/api/generated/__swagger_client";
+import {JwtService, type LoginRequest, type JwtResponse} from "@/shared/api/generated/__swagger_client";
 import {setAuthToken} from "@/shared/api/config";
 
 export function useLogin() {
     return useMutation<JwtResponse, Error, LoginRequest>({
         mutationFn: async (credentials: LoginRequest) => {
             try {
-                const response = await AuthControllerService.login(credentials)
+                const response = await JwtService.login(credentials)
 
                 if (response.token != null) {
                     localStorage.setItem('auth_token', response.token)

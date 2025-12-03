@@ -7,11 +7,11 @@ import {
 
 export class WarehouseCellService {
     async listByWarehouse(warehouseId: string): Promise<WarehouseCellDto[]> {
-        return Service.listByWarehouse1(warehouseId)
+        return Service.listWarehouseCellsByWarehouse(warehouseId)
     }
 
     async listByZone(zoneId: string): Promise<WarehouseCellDto[]> {
-        return Service.listByZone(zoneId)
+        return Service.listWarehouseCellsByZone(zoneId)
     }
 
     async search(params: {
@@ -23,28 +23,28 @@ export class WarehouseCellService {
     }) {
         // No paginated search endpoint for warehouse cells - use list methods
         if (params.zoneId) {
-            return Service.listByZone(params.zoneId)
+            return Service.listWarehouseCellsByZone(params.zoneId)
         }
         if (params.warehouseId) {
-            return Service.listByWarehouse1(params.warehouseId)
+            return Service.listWarehouseCellsByWarehouse(params.warehouseId)
         }
         // Return empty array if no filter provided
         return []
     }
 
     async get(id: string): Promise<WarehouseCellDto> {
-        return Service.get2(id)
+        return Service.getWarehouseCellById(id)
     }
 
     async create(data: WarehouseCellCreateRequest): Promise<WarehouseCellDto> {
-        return Service.create3(data)
+        return Service.createWarehouseCell(data)
     }
 
     async update(id: string, data: WarehouseCellUpdateRequest): Promise<WarehouseCellDto> {
-        return Service.update2(id, data)
+        return Service.updateWarehouseCell(id, data)
     }
 
     async delete(id: string): Promise<void> {
-        return Service.delete2(id)
+        return Service.deleteWarehouseCell(id)
     }
 }

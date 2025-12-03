@@ -1,8 +1,9 @@
-export default function WarehouseDetailPage({ params }: { params: { id: string } }) {
-  return (
-    <div>
-      <h1>Warehouse Details</h1>
-      <p>Warehouse ID: {params.id}</p>
-    </div>
-  );
+'use client'
+
+import { use } from 'react'
+import { WarehouseDetails } from '@/widgets/details/WarehouseDetails'
+
+export default function WarehouseDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  return <WarehouseDetails id={id} />
 }

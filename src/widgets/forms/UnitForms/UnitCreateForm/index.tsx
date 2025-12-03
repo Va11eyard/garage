@@ -30,7 +30,7 @@ export function UnitCreateForm() {
 
         setIsSubmitting(true)
         try {
-            await Service.create4({
+            await Service.createUnitOfMeasure({
                 ...formData,
                 shortName: formData.shortName || '',
             })

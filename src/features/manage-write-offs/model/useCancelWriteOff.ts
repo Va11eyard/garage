@@ -1,10 +1,11 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Service, type WriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { type WriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
+import { WriteOffService } from './service'
 
-import { WriteOffService} from "@/features/manage-write-offs/model/service";
-const service = new WriteOffService();
+const service = new WriteOffService()
+
 export function useCancelWriteOff() {
     const queryClient = useQueryClient()
 

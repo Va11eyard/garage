@@ -7,8 +7,8 @@ import { useFilters } from '@/shared/hooks/use-filters'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { GovDatePicker } from '@/gov-design/components/Form'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -66,18 +66,16 @@ export function ReturnsTable() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
-                        <Input
-                            type="date"
+                        <GovDatePicker
                             value={filters.from}
-                            onChange={(e) => updateFilter('from', e.target.value)}
+                            onChange={(date) => updateFilter('from', date)}
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
-                        <Input
-                            type="date"
+                        <GovDatePicker
                             value={filters.to}
-                            onChange={(e) => updateFilter('to', e.target.value)}
+                            onChange={(date) => updateFilter('to', date)}
                         />
                     </div>
                 </div>

@@ -4,6 +4,6 @@ import { Service } from '@/shared/api/generated/__swagger_client'
 export function usePurchasePlans() {
     return useQuery({
         queryKey: ['purchase-plans'],
-        queryFn: () => Service.list10(),
+        queryFn: () => Service.list(),
     })
 }

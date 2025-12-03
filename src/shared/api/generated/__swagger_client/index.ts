@@ -169,6 +169,6 @@ export type { WriteOffLineDto } from './models/WriteOffLineDto';
 export type { WriteOffUpdateRequest } from './models/WriteOffUpdateRequest';
 
 export { Service } from './services/Service';
-export { AuthControllerService } from './services/AuthControllerService';
+export { JwtService } from './services/JwtService';
 export { StockBalanceService } from './services/StockBalanceService';
 export { StubService } from './services/StubService';

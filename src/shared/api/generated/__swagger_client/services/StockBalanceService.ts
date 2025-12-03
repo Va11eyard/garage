@@ -9,17 +9,25 @@ import { request as __request } from '../core/request';
 export class StockBalanceService {
     /**
      * Список остатков по складу
-     * Возвращает список текущих остатков по выбранному складу.
-     * В ответе для каждой строки указаны склад, зона (если есть),
-     * ячейка (если есть), номенклатура, количество и зарезервированное количество.
+     * Возвращает список текущих остатков ВИ по выбранному складу.
+     * Может использоваться для:
+     * - обзора общей обеспеченности склада;
+     * - подготовки инвентаризации;
+     * - анализа свободных и зарезервированных остатков.
      *
-     * @param warehouseId Идентификатор склада
-     * @returns StockBalanceDto Остатки найдены
+     * В каждой строке отчёта указываются:
+     * - склад и (при наличии) зона/ячейка;
+     * - номенклатура;
+     * - общее количество;
+     * - зарезервированное количество.
+     *
+     * @param warehouseId UUID склада, для которого требуется получить остатки
+     * @returns StockBalanceDto Остатки по складу успешно получены
      * @throws ApiError
      */
     public static getByWarehouse(
         warehouseId: string,
-    ): CancelablePromise<StockBalanceDto> {
+    ): CancelablePromise<Array<StockBalanceDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/stock/balances/by-warehouse/{warehouseId}',
@@ -27,22 +35,28 @@ export class StockBalanceService {
                 'warehouseId': warehouseId,
             },
             errors: {
-                403: `Нет прав доступа`,
+                403: `Нет прав доступа к просмотру остатков склада`,
             },
         });
     }
     /**
      * Список остатков по ячейке склада
-     * Возвращает список текущих остатков по конкретной ячейке склада.
-     * Удобно использовать для детального просмотра содержимого ячейки.
+     * Возвращает список текущих остатков ВИ по конкретной ячейке склада.
+     * Удобно использовать для:
+     * - детального просмотра содержимого ячейки;
+     * - настройки адресного хранения;
+     * - анализа правильности размещения номенклатуры.
      *
-     * @param cellId Идентификатор ячейки склада
-     * @returns StockBalanceDto Остатки найдены
+     * В каждой записи содержится информация о номенклатуре и количестве,
+     * размещённом в указанной ячейке.
+     *
+     * @param cellId UUID ячейки склада, по которой запрашиваются остатки
+     * @returns StockBalanceDto Остатки по ячейке успешно получены
      * @throws ApiError
      */
     public static getByCell(
         cellId: string,
-    ): CancelablePromise<StockBalanceDto> {
+    ): CancelablePromise<Array<StockBalanceDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/stock/balances/by-cell/{cellId}',
@@ -50,7 +64,7 @@ export class StockBalanceService {
                 'cellId': cellId,
             },
             errors: {
-                403: `Нет прав доступа`,
+                403: `Нет прав доступа к просмотру остатков по ячейке`,
             },
         });
     }

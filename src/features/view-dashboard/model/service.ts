@@ -5,6 +5,6 @@ import {
 
 export class DashboardService {
     async getDashboard(): Promise<ConsolidatedDashboardDto> {
-        return Service.dashboard()
+        return Service.getConsolidationDashboard()
     }
 }
