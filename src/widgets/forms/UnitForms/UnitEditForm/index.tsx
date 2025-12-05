@@ -31,18 +31,23 @@ export function UnitEditForm({ id }: { id: string }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-xl mx-auto">
-            <h2 className="text-xl font-bold">{t('units.editUnit')}</h2>
+            <h2 className="text-xl font-bold">{t('unitOfMeasure.editUnit')}</h2>
             <div>
-                <Label>{t('units.name')}</Label>
+                <Label>{t('unitOfMeasure.name')}</Label>
                 <Input {...register('name', { required: true })} defaultValue={data?.name} />
             </div>
             <div>
-                <Label>{t('units.shortName')}</Label>
+                <Label>{t('unitOfMeasure.shortName')}</Label>
                 <Input {...register('shortName')} defaultValue={data?.shortName} />
             </div>
-            <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? <Spinner /> : t('common.save')}
-            </Button>
+            <div className="flex gap-2">
+                <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? <Spinner /> : t('common.save')}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => router.push('/directories/units')}>
+                    {t('common.cancel')}
+                </Button>
+            </div>
         </form>
     )
 }

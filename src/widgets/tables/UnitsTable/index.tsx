@@ -2,7 +2,6 @@
 
 import { useUnits } from '@/features/manage-units/model/useUnits'
 import { useDeleteUnit } from '@/features/manage-units/model/useDeleteUnit'
-import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Input } from '@/shared/ui/input'
@@ -15,8 +14,7 @@ import Link from 'next/link'
 export function UnitsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
-    const { page, size, nextPage, previousPage } = usePagination()
-    const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
+    const { filters, updateFilter } = useFilters({ code: '', name: '' })
     const { data, isLoading } = useUnits()
     const deleteMutation = useDeleteUnit()
 
@@ -69,7 +67,7 @@ export function UnitsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((unit: any) => (
+                    {data?.map((unit: any) => (
                         <TableRow key={unit.id}>
                             <TableCell>{unit.code}</TableCell>
                             <TableCell>{unit.name}</TableCell>
@@ -94,16 +92,10 @@ export function UnitsTable() {
                 </TableBody>
             </Table>
 
-            <div className="flex justify-between items-center">
-                <Button onClick={previousPage} disabled={page === 0}>
-                    {t('pagination.prev')}
-                </Button>
+            <div className="flex justify-end items-center">
                 <span className="text-sm text-gov-text-secondary">
-                    {t('pagination.page')} {page + 1} {t('pagination.of')} {data?.totalPages ?? 1}
+                    {t('common.all')}: {data?.length ?? 0}
                 </span>
-                <Button onClick={nextPage} disabled={data?.last || page >= (data?.totalPages ?? 1) - 1}>
-                    {t('pagination.next')}
-                </Button>
             </div>
         </div>
     )

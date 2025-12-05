@@ -18,7 +18,7 @@ export class PersonService {
         page?: number
         size?: number
     }): Promise<PagePersonDto> {
-        return Service.searchPersonsPage(params.lastName, params.firstName, params.middleName, params.page, params.size as any)
+        return Service.searchPersonsPage(params.lastName, params.firstName, params.page, params.size)
     }
 
     async get(id: string): Promise<PersonDto> {
