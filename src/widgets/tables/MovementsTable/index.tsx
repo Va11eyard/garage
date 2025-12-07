@@ -23,15 +23,13 @@ export function MovementsTable() {
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({
-        fromWarehouseId: '',
+        warehouseId: '',
         dateFrom: '',
         dateTo: ''
     })
     const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
     const { data, isLoading } = useMovementsSearch({ 
-        fromWarehouseId: debouncedFilters.fromWarehouseId || undefined,
-        dateFrom: debouncedFilters.dateFrom || undefined,
-        dateTo: debouncedFilters.dateTo || undefined,
+        warehouseId: debouncedFilters.warehouseId || undefined,
         page, 
         size 
     })
@@ -59,7 +57,7 @@ export function MovementsTable() {
                 <div className="flex gap-4 flex-1 flex-wrap">
                     <div className="min-w-[200px]">
                         <label className="block text-sm font-medium mb-1">{t('movements.fromWarehouse')}</label>
-                        <Select value={filters.fromWarehouseId || undefined} onValueChange={(value) => updateFilter('fromWarehouseId', value)}>
+                        <Select value={filters.warehouseId || undefined} onValueChange={(value) => updateFilter('warehouseId', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                             </SelectTrigger>
@@ -71,20 +69,6 @@ export function MovementsTable() {
                                 ))}
                             </SelectContent>
                         </Select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
-                        <GovDatePicker
-                            value={filters.dateFrom}
-                            onChange={(date) => updateFilter('dateFrom', date)}
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
-                        <GovDatePicker
-                            value={filters.dateTo}
-                            onChange={(date) => updateFilter('dateTo', date)}
-                        />
                     </div>
                 </div>
                 <Button asChild className="shrink-0 text-black">

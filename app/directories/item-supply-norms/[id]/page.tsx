@@ -2,6 +2,7 @@
 
 import { use } from 'react'
 import { useRouter } from 'next/navigation'
+import { Route } from 'next'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
@@ -29,10 +30,10 @@ export default function ItemSupplyNormDetailPage({ params }: { params: Promise<{
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">{norm.employeeCategoryName} - {norm.itemName}</h1>
         <div className="flex gap-2">
-          <GovButton variant="outline" onClick={() => router.push('/directories/item-supply-norms')}>
+          <GovButton variant="outline" onClick={() => router.push('/directories/item-supply-norms' as Route)}>
             {t('common.back')}
           </GovButton>
-          <GovButton onClick={() => router.push(`/directories/item-supply-norms/${id}/edit`)}>
+          <GovButton onClick={() => router.push(`/directories/item-supply-norms/${id}/edit` as Route)}>
             {t('common.edit')}
           </GovButton>
         </div>

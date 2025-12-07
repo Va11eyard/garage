@@ -2,6 +2,7 @@
 
 import { use, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { Route } from 'next'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { GovButton } from '@/gov-design/components/Button'
@@ -102,7 +103,7 @@ export default function ItemSupplyNormEditPage({ params }: { params: Promise<{ i
                 active: formData.active,
             })
             toast.success(t('common.success'))
-            router.push('/directories/item-supply-norms')
+            router.push('/directories/item-supply-norms' as Route)
         } catch (error: any) {
             if (error?.body?.errors) {
                 const apiErrors: Record<string, string> = {}

@@ -1370,8 +1370,6 @@ export const translations = {
             editTemporaryIssue: 'Уақытша беруді өңдеу',
             deleteConfirm: 'Уақытша беру құжатын жою керек пе?',
             plannedReturnDate: 'Жоспарланған қайтару күні',
-            editTemporaryIssue: 'Уақытша беруді өңдеу',
-            deleteConfirm: 'Уақытша беру құжатын жою керек пе?',
         },
         pagination: {
             page: 'Бет',

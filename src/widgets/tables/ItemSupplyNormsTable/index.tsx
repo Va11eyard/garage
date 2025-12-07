@@ -119,9 +119,9 @@ export function ItemSupplyNormsTable() {
                         </Select>
                     </div>
                 </div>
-                <Link href="/directories/item-supply-norms/create">
-                    <Button variant="default" className="shrink-0">{t('itemSupplyNorm.create')}</Button>
-                </Link>
+                <Button variant="default" className="shrink-0" asChild>
+                    <Link href={"/directories/item-supply-norms/create" as Route}>{t('itemSupplyNorm.create')}</Link>
+                </Button>
             </div>
             <Table>
                 <TableHeader>

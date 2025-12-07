@@ -17,7 +17,7 @@ export function PersonEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
     const router = useRouter()
     const { data: person, isLoading } = usePerson(id)
-    const updateMutation = useUpdatePerson(id)
+    const updateMutation = useUpdatePerson()
     
     const [formData, setFormData] = useState({
         fullName: '',
@@ -45,9 +45,12 @@ export function PersonEditForm({ id }: { id: string }) {
 
         try {
             await updateMutation.mutateAsync({
-                fullName: formData.fullName,
-                email: formData.email || undefined,
-                phone: formData.phone || undefined,
+                id,
+                data: {
+                    fullName: formData.fullName,
+                    email: formData.email || undefined,
+                    phone: formData.phone || undefined,
+                }
             })
             toast.success(t('common.success'))
             router.push('/directories/persons')

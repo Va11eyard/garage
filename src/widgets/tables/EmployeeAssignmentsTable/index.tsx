@@ -28,6 +28,7 @@ export function EmployeeAssignmentsTable() {
             debouncedFilters.organizationId,
             undefined,
             undefined,
+            undefined,
             page,
             size
         ),

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { Route } from 'next'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel } from '@/gov-design/components/Form'
@@ -74,7 +75,7 @@ export default function ItemSupplyNormCreatePage() {
                 active: formData.active,
             })
             toast.success(t('common.success'))
-            router.push('/directories/item-supply-norms')
+            router.push('/directories/item-supply-norms' as Route)
         } catch (error) {
             toast.error(getErrorMessage(error))
         }

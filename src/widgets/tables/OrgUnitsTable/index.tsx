@@ -124,7 +124,7 @@ export function OrgUnitsTable() {
                             <TableRow key={unit.id}>
                                 <TableCell>{unit.code}</TableCell>
                                 <TableCell>{unit.name}</TableCell>
-                                {!isMobile && <TableCell>{orgMap.get(unit.organizationId) || '-'}</TableCell>}
+                                {!isMobile && <TableCell>{String(orgMap.get(unit.organizationId) || '-')}</TableCell>}
                                 {!isMobile && <TableCell>{unit.unitType || '-'}</TableCell>}
                                 {!isMobile && (
                                     <TableCell>

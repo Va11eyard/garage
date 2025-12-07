@@ -24,14 +24,14 @@ export function TemporaryIssuesTable() {
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({
         warehouseId: '',
-        dateFrom: '',
-        dateTo: ''
+        from: '',
+        to: ''
     })
     const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
     const { data, isLoading } = useTemporaryIssuesSearch({ 
         warehouseId: debouncedFilters.warehouseId || undefined,
-        dateFrom: debouncedFilters.dateFrom || undefined,
-        dateTo: debouncedFilters.dateTo || undefined,
+        from: debouncedFilters.from || undefined,
+        to: debouncedFilters.to || undefined,
         page, 
         size 
     })
@@ -75,15 +75,15 @@ export function TemporaryIssuesTable() {
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
                         <GovDatePicker
-                            value={filters.dateFrom}
-                            onChange={(date) => updateFilter('dateFrom', date)}
+                            value={filters.from}
+                            onChange={(date) => updateFilter('from', date)}
                         />
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
                         <GovDatePicker
-                            value={filters.dateTo}
-                            onChange={(date) => updateFilter('dateTo', date)}
+                            value={filters.to}
+                            onChange={(date) => updateFilter('to', date)}
                         />
                     </div>
                 </div>
