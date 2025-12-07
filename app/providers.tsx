@@ -1,13 +1,12 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider, MutationCache } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React, { useState } from 'react'
 import { Toaster } from '@/shared//ui/sonner'
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import "@/shared//api/config"
-
 
 import { OrganizationService } from '@/features/manage-organizations/model/service'
 import { WarehouseService } from '@/features/manage-warehouses/model/service'
@@ -26,19 +25,28 @@ container.register('AuthLoginService', { useClass: AuthLoginService })
 container.register('AuthLogoutService', { useClass: AuthLogoutService })
 
 export function Providers({ children }: { children: React.ReactNode }) {
-    const [queryClient] = useState(
-        () =>
-            new QueryClient({
-                defaultOptions: {
-                    queries: {
-                        staleTime: 0, 
-                        refetchOnWindowFocus: true,
-                        refetchOnMount: true,
-                        retry: 1,
-                    },
+    const [queryClient] = useState(() => {
+        const client = new QueryClient({
+            defaultOptions: {
+                queries: {
+                    staleTime: 0, 
+                    refetchOnWindowFocus: true,
+                    refetchOnMount: true,
+                    retry: 1,
                 },
+            },
+        })
+        
+        // Configure mutation cache AFTER queryClient is created
+        client.getMutationCache().config.onSuccess = async () => {
+            await client.invalidateQueries({
+                refetchType: 'active'
             })
-    )
+        }
+        
+        return client
+    })
+    
     return (
         <QueryClientProvider client={queryClient}>
             {children}

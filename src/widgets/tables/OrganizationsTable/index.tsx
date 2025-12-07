@@ -12,6 +12,7 @@ import { Button } from '@/shared/ui/button'
 import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function OrganizationsTable() {
     const { t } = useTranslation()
@@ -28,7 +29,7 @@ export function OrganizationsTable() {
             () => {
                 deleteMutation.mutate(id, {
                     onSuccess: () => toast.success(t('organizations.deleteSuccess')),
-                    onError: () => toast.error(t('organizations.deleteError')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
                 })
             }
         )
@@ -85,6 +86,9 @@ export function OrganizationsTable() {
                                 </span>
                             </TableCell>
                             <TableCell>
+                                <Link href={`/directories/organizations/${org.id}`}>
+                                    <Button variant="ghost" size="sm">{t('common.view')}</Button>
+                                </Link>
                                 <Link href={`/directories/organizations/${org.id}/edit`}>
                                     <Button variant="ghost" size="sm">{t('common.edit')}</Button>
                                 </Link>

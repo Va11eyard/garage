@@ -5,15 +5,18 @@ import { useDeleteMovement } from '@/features/manage-movements/model/useDeleteMo
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
-import { GovDatePicker } from '@/gov-design/components/Form'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
+import { GovDatePicker } from '@/gov-design'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function MovementsTable() {
     const { t } = useTranslation()
@@ -25,16 +28,27 @@ export function MovementsTable() {
         dateTo: ''
     })
     const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
-    const { data, isLoading } = useMovementsSearch({ ...debouncedFilters, page, size })
+    const { data, isLoading } = useMovementsSearch({ 
+        fromWarehouseId: debouncedFilters.fromWarehouseId || undefined,
+        dateFrom: debouncedFilters.dateFrom || undefined,
+        dateTo: debouncedFilters.dateTo || undefined,
+        page, 
+        size 
+    })
     const deleteMutation = useDeleteMovement()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm('Удалить документ перемещения?')) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('movements.deleteConfirm'),
+            t('common.confirmDelete') || 'Вы уверены, что хотите удалить этот документ?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -45,12 +59,11 @@ export function MovementsTable() {
                 <div className="flex gap-4 flex-1 flex-wrap">
                     <div className="min-w-[200px]">
                         <label className="block text-sm font-medium mb-1">{t('movements.fromWarehouse')}</label>
-                        <Select value={filters.fromWarehouseId || 'ALL'} onValueChange={(value) => updateFilter('fromWarehouseId', value === 'ALL' ? '' : value)}>
+                        <Select value={filters.fromWarehouseId || undefined} onValueChange={(value) => updateFilter('fromWarehouseId', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
                                 {warehousesData?.content?.map((warehouse: any) => (
                                     <SelectItem key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
@@ -91,12 +104,12 @@ export function MovementsTable() {
                 <TableBody>
                     {data?.content?.map((doc: any) => (
                         <TableRow key={doc.id}>
-                            <TableCell>{doc.documentNumber}</TableCell>
-                            <TableCell>{new Date(doc.documentDate).toLocaleDateString()}</TableCell>
+                            <TableCell>{doc.docNumber || '-'}</TableCell>
+                            <TableCell>{doc.docDate ? new Date(doc.docDate).toLocaleDateString() : '-'}</TableCell>
                             {!isMobile && (
                                 <TableCell>
-                                    <span className={`gov-badge gov-badge-${doc.status?.toLowerCase()}`}>
-                                        {doc.status}
+                                    <span className={doc.status === 'DRAFT' ? 'text-gray-600' : doc.status === 'POSTED' ? 'text-green-600' : 'text-red-600'}>
+                                        {doc.status ? t(`documents.${doc.status}`) : t('documents.DRAFT')}
                                     </span>
                                 </TableCell>
                             )}
@@ -142,6 +155,18 @@ export function MovementsTable() {
                     {t('pagination.next')}
                 </Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

@@ -17,7 +17,7 @@ export function ReceiptDetails({ id }: { id: string }) {
     return (
         <div className="container mx-auto py-6 space-y-4">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Документ поступления #{receipt.documentNumber}</h1>
+                <h1 className="text-2xl font-bold">Документ поступления #{receipt.docNumber}</h1>
                 {receipt.status === 'DRAFT' && (
                     <Link href={`/inventory/receipts/${id}/edit`}>
                         <Button>{t('common.edit')}</Button>
@@ -32,11 +32,11 @@ export function ReceiptDetails({ id }: { id: string }) {
                 <CardContent className="space-y-2">
                     <div>
                         <span className="font-semibold">{t('documents.documentNumber')}: </span>
-                        <span>{receipt.documentNumber}</span>
+                        <span>{receipt.docNumber}</span>
                     </div>
                     <div>
                         <span className="font-semibold">{t('documents.documentDate')}: </span>
-                        <span>{new Date(receipt.documentDate).toLocaleDateString()}</span>
+                        <span>{receipt.docDate ? new Date(receipt.docDate).toLocaleDateString() : '-'}</span>
                     </div>
                     <div>
                         <span className="font-semibold">Статус: </span>

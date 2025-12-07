@@ -8,6 +8,7 @@ import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
 import { useCreateEmployeeCategory } from '@/features/manage-employee-categories/model/useCreateEmployeeCategory'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EmployeeCategoryCreateForm() {
     const router = useRouter()
@@ -36,7 +37,7 @@ export function EmployeeCategoryCreateForm() {
             toast.success(t('common.success'))
             router.push('/directories/employee-categories')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -11,6 +11,7 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ItemGroupCreateForm() {
     const { t } = useTranslation()
@@ -24,8 +25,8 @@ export function ItemGroupCreateForm() {
             const created = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push(`/directories/item-groups/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -47,12 +48,15 @@ export function ItemGroupCreateForm() {
 
             <div>
                 <Label>{t('itemGroup.parentGroup')}</Label>
-                <Select onValueChange={(value) => setValue('parentId', value || undefined)}>
+                <Select 
+                    defaultValue="__NONE__"
+                    onValueChange={(value) => setValue('parentId', value === '__NONE__' ? undefined : value)}
+                >
                     <SelectTrigger>
-                        <SelectValue placeholder={t('itemGroup.parentGroup')} />
+                        <SelectValue placeholder={t('itemGroup.noParent')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="">Нет (корневая группа)</SelectItem>
+                        <SelectItem value="__NONE__">{t('itemGroup.noParent')}</SelectItem>
                         {itemGroups?.map((group: any) => (
                             <SelectItem key={group.id} value={group.id!}>
                                 {group.name}
@@ -60,6 +64,17 @@ export function ItemGroupCreateForm() {
                         ))}
                     </SelectContent>
                 </Select>
+            </div>
+
+            <div className="flex items-center gap-2">
+                <input
+                    type="checkbox"
+                    id="active"
+                    defaultChecked={true}
+                    {...register('active')}
+                    className="w-4 h-4"
+                />
+                <Label htmlFor="active" className="mb-0">{t('common.active')}</Label>
             </div>
 
             <div className="flex gap-2">

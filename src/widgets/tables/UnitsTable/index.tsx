@@ -63,6 +63,7 @@ export function UnitsTable() {
                         <TableHead>{t('unitOfMeasure.code')}</TableHead>
                         <TableHead>{t('unitOfMeasure.name')}</TableHead>
                         {!isMobile && <TableHead>{t('unitOfMeasure.shortName')}</TableHead>}
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -73,6 +74,16 @@ export function UnitsTable() {
                             <TableCell>{unit.name}</TableCell>
                             {!isMobile && <TableCell>{unit.shortName || '-'}</TableCell>}
                             <TableCell>
+                                <span className={unit.active ? 'text-green-600' : 'text-red-600'}>
+                                    {unit.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <Link href={`/directories/units/${unit.id}`}>
+                                    <Button variant="ghost" size="sm">
+                                        {t('common.view')}
+                                    </Button>
+                                </Link>
                                 <Link href={`/directories/units/${unit.id}/edit`}>
                                     <Button variant="ghost" size="sm">
                                         {t('common.edit')}

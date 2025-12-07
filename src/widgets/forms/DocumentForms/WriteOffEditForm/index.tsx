@@ -9,6 +9,8 @@ import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function WriteOffEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -32,9 +34,10 @@ export function WriteOffEditForm({ id }: { id: string }) {
                 documentNumber,
                 documentDate,
             })
+            toast.success(t('common.success'))
             router.push(`/inventory/writeoff/${id}`)
         } catch (error) {
-            console.error('Failed to update write-off:', error)
+            toast.error(getErrorMessage(error))
         }
     }
 

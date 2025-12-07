@@ -20,12 +20,29 @@ export function Sidebar() {
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [userRoles, setUserRoles] = useState<string[]>([])
     const [username, setUsername] = useState<string>('Пользователь')
-    const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-        directories: true,
-        inventory: false,
-        staff: false,
-        admin: true,
-    })
+    
+    // Determine which section should be expanded based on current route
+    const getInitialExpandedSections = () => {
+        if (pathname.startsWith('/directories')) {
+            return { directories: true, inventory: false, staff: false, reports: false, admin: false }
+        } else if (pathname.startsWith('/inventory')) {
+            return { directories: false, inventory: true, staff: false, reports: false, admin: false }
+        } else if (pathname.startsWith('/staff')) {
+            return { directories: false, inventory: false, staff: true, reports: false, admin: false }
+        } else if (pathname.startsWith('/reports')) {
+            return { directories: false, inventory: false, staff: false, reports: true, admin: false }
+        } else if (pathname.startsWith('/admin')) {
+            return { directories: false, inventory: false, staff: false, reports: false, admin: true }
+        }
+        return { directories: false, inventory: false, staff: false, reports: false, admin: false }
+    }
+    
+    const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(getInitialExpandedSections())
+
+    // Update expanded sections when pathname changes
+    useEffect(() => {
+        setExpandedSections(getInitialExpandedSections())
+    }, [pathname])
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -70,13 +87,14 @@ export function Sidebar() {
                 { label: t('sidebar.warehouses'), href: '/directories/warehouses', icon: Warehouse },
                 { label: t('sidebar.warehouseZones'), href: '/directories/warehouse-zones', icon: Package },
                 { label: t('sidebar.warehouseCells'), href: '/directories/warehouse-cells', icon: Layers },
-                { label: t('sidebar.items'), href: '/directories/items', icon: ClipboardList },
                 { label: t('sidebar.itemGroups'), href: '/directories/item-groups', icon: Layers },
+                { label: t('sidebar.items'), href: '/directories/items', icon: ClipboardList },
                 { label: t('sidebar.units'), href: '/directories/units', icon: Ruler },
                 { label: t('sidebar.qualityCategories'), href: '/directories/quality-categories', icon: BadgeCheck  },
                 { label: t('sidebar.employeeCategories'), href: '/directories/employee-categories', icon: Users },
                 { label: t('sidebar.persons'), href: '/directories/persons', icon: User },
                 { label: t('sidebar.norms'), href: '/directories/norms', icon: BarChart3 },
+                { label: t('sidebar.itemSupplyNorms'), href: '/directories/item-supply-norms', icon: BarChart3 },
             ],
         },
         {
@@ -102,6 +120,7 @@ export function Sidebar() {
             icon: Users,
             items: [
                 { label: t('sidebar.employees'), href: '/staff/employees', icon: User },
+                { label: t('assignments.title'), href: '/staff/assignments', icon: ClipboardList },
             ],
         },
         {

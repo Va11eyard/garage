@@ -19,9 +19,41 @@ export function WearReportTable() {
         organizationId: '',
     })
     const { data: organizations } = useOrganizations({})
-    const { data, isLoading } = useWearReport({ ...debouncedFilters, page, size })
+    const { data, isLoading, error } = useWearReport({ ...debouncedFilters, page, size })
 
     if (isLoading) return <Spinner />
+    
+    if (error) {
+        return (
+            <div className="space-y-4">
+                <div className="flex gap-4">
+                    <div className="min-w-[200px]">
+                        <label className="block text-sm font-medium mb-1">{t('reports.organization')}</label>
+                        <Select
+                            value={filters.organizationId || undefined}
+                            onValueChange={(value) => updateFilter('organizationId', value)}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('organizations.selectOrganization')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {organizations?.content?.map((org: any) => (
+                                    <SelectItem key={org.id} value={org.id}>
+                                        {org.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div className="text-center py-12 text-red-500">
+                    <p className="font-medium">{t('common.error')}</p>
+                    <p className="text-sm mt-2">{(error as any)?.body?.message || (error as any)?.message || t('reports.backendError')}</p>
+                    <p className="text-xs mt-2 text-gray-500">{t('reports.contactSupport')}</p>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="space-y-4">
@@ -29,14 +61,13 @@ export function WearReportTable() {
                 <div className="min-w-[200px]">
                     <label className="block text-sm font-medium mb-1">{t('reports.organization')}</label>
                     <Select
-                        value={filters.organizationId || '__ALL__'}
-                        onValueChange={(value) => updateFilter('organizationId', value === '__ALL__' ? '' : value)}
+                        value={filters.organizationId || undefined}
+                        onValueChange={(value) => updateFilter('organizationId', value)}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder={t('organizations.selectOrganization')} />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
                             {organizations?.content?.map((org: any) => (
                                 <SelectItem key={org.id} value={org.id}>
                                     {org.name}
@@ -62,22 +93,34 @@ export function WearReportTable() {
                         <TableHead>{t('reports.employee')}</TableHead>
                         <TableHead>{t('reports.organization')}</TableHead>
                         <TableHead>{t('reports.item')}</TableHead>
-                        <TableHead>{t('reports.issuedQuantity')}</TableHead>
-                        <TableHead>{t('reports.wornQuantity')}</TableHead>
-                        <TableHead>{t('reports.remainingQuantity')}</TableHead>
+                        <TableHead>{t('reports.issueDate')}</TableHead>
+                        <TableHead>{t('reports.wearEndDate')}</TableHead>
+                        <TableHead>{t('reports.quantity')}</TableHead>
+                        <TableHead>{t('reports.category')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((row: any, index: number) => (
-                        <TableRow key={index}>
-                            <TableCell>{row.employeeName}</TableCell>
-                            <TableCell>{row.organizationName}</TableCell>
-                            <TableCell>{row.itemName}</TableCell>
-                            <TableCell>{row.issuedQuantity}</TableCell>
-                            <TableCell>{row.wornQuantity}</TableCell>
-                            <TableCell>{row.remainingQuantity}</TableCell>
+                    {data?.content && data.content.length > 0 ? (
+                        data.content.map((row: any, index: number) => (
+                            <TableRow key={row.assignmentId || index}>
+                                <TableCell>
+                                    {row.employeeLastName} {row.employeeFirstName} {row.employeeMiddleName || ''}
+                                </TableCell>
+                                <TableCell>{row.organizationName}</TableCell>
+                                <TableCell>{row.itemName}</TableCell>
+                                <TableCell>{row.issueDate}</TableCell>
+                                <TableCell>{row.wearEndDate}</TableCell>
+                                <TableCell>{row.quantity}</TableCell>
+                                <TableCell>{row.category}</TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={7} className="text-center text-gray-500">
+                                {t('common.noData')}
+                            </TableCell>
                         </TableRow>
-                    ))}
+                    )}
                 </TableBody>
             </Table>
 

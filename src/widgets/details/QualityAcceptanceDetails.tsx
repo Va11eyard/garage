@@ -16,7 +16,7 @@ export function QualityAcceptanceDetails({ id }: { id: string }) {
         <div className="gov-page-content space-y-6">
             <div className="gov-page-header flex justify-between items-center">
                 <div>
-                    <h1 className="gov-title">Акт приёмки по качеству #{acceptance.documentNumber}</h1>
+                    <h1 className="gov-title">Акт приёмки по качеству #{acceptance.docNumber}</h1>
                     <span className={`gov-badge gov-badge-${acceptance.status?.toLowerCase()}`}>
                         {acceptance.status}
                     </span>
@@ -36,11 +36,11 @@ export function QualityAcceptanceDetails({ id }: { id: string }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <span className="gov-form-label">{t('documents.documentNumber')}</span>
-                            <p className="text-gov-gray-dark">{acceptance.documentNumber}</p>
+                            <p className="text-gov-gray-dark">{acceptance.docNumber}</p>
                         </div>
                         <div>
                             <span className="gov-form-label">{t('documents.documentDate')}</span>
-                            <p className="text-gov-gray-dark">{new Date(acceptance.documentDate).toLocaleDateString()}</p>
+                            <p className="text-gov-gray-dark">{acceptance.docDate ? new Date(acceptance.docDate).toLocaleDateString() : '-'}</p>
                         </div>
                     </div>
                 </div>

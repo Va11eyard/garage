@@ -7,6 +7,7 @@ import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-desi
 import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { Checkbox } from '@/shared/ui/checkbox'
 import { useWarehouseCell } from '@/features/manage-warehouse-cells/model/useWarehouseCell'
 import { useUpdateWarehouseCell } from '@/features/manage-warehouse-cells/model/useUpdateWarehouseCell'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
@@ -29,6 +30,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
         code: '',
         description: '',
         capacity: '',
+        active: true,
     })
 
     const { data: zones, isLoading: zonesLoading } = useWarehouseZonesByWarehouse(formData.warehouseId || undefined)
@@ -41,6 +43,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
                 code: cell.code || '',
                 description: cell.description || '',
                 capacity: cell.capacity?.toString() || '',
+                active: cell.active ?? true,
             })
         }
     }, [cell])
@@ -61,6 +64,7 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
                     zoneId: formData.zoneId || undefined,
                     capacity: formData.capacity ? parseInt(formData.capacity) : undefined,
                     description: formData.description || undefined,
+                    active: formData.active,
                 }
             })
             toast.success(t('common.success'))
@@ -162,6 +166,20 @@ export default function WarehouseCellEditPage({ params }: { params: Promise<{ id
                                 onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                                 placeholder={t('warehouseCells.capacity')}
                             />
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="active"
+                                checked={formData.active}
+                                onCheckedChange={(checked) => setFormData({ ...formData, active: checked as boolean })}
+                            />
+                            <label
+                                htmlFor="active"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                {t('common.active')}
+                            </label>
                         </div>
 
                         <div className="flex gap-3 pt-4">

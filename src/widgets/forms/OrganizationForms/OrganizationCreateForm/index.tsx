@@ -9,6 +9,7 @@ import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { useCreateOrganization } from '@/features/manage-organizations/model/useCreateOrganization'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function OrganizationCreateForm() {
     const router = useRouter()
@@ -37,7 +38,7 @@ export function OrganizationCreateForm() {
             toast.success(t('common.success'))
             router.push('/directories/organizations')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         }
     }
 

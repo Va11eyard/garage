@@ -12,6 +12,7 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function NormCreateForm() {
     const { t } = useTranslation()
@@ -26,8 +27,8 @@ export function NormCreateForm() {
             const created = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push(`/directories/norms/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

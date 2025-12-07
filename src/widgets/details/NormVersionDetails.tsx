@@ -13,9 +13,7 @@ export function NormVersionDetails({ normId, versionId }: { normId: string; vers
     if (!version) return <div className="p-6">{t('common.noData')}</div>
 
     return (
-        <div className="container mx-auto py-6 space-y-4">
-            <h1 className="text-2xl font-bold">{t('norms.versionDetails')}</h1>
-
+        <div className="space-y-4">
             <Card>
                 <CardHeader>
                     <CardTitle>{t('norms.versionInfo')}</CardTitle>

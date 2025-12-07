@@ -3,6 +3,8 @@
 import { useCreateReceipt } from '@/features/manage-receipts/model/useCreateReceipt'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useItems } from '@/features/manage-items/model/useItems'
+import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
+import { useUnits } from '@/features/manage-units/model/useUnits'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { ReceiptCreateRequest, ReceiptLineRequest } from '@/shared/api/generated/__swagger_client'
 import { useTranslation } from '@/shared/i18n/use-translation'
@@ -15,18 +17,22 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ReceiptCreateForm() {
     const { t } = useTranslation()
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, setValue } = useForm<ReceiptCreateRequest>({
         defaultValues: {
             lines: [{ itemId: '', quantity: 0, price: 0 }]
-        }
+        },
+        mode: 'onChange'
     })
     const { fields, append, remove } = useFieldArray({ control, name: 'lines' })
     const { mutateAsync } = useCreateReceipt()
     const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
     const { data: itemsData } = useItems({ page: 0, size: 100 })
+    const { data: organizationsData } = useOrganizations({ page: 0, size: 100 })
+    const { data: unitsData } = useUnits()
     const router = useRouter()
 
     const onSubmit = async (data: ReceiptCreateRequest) => {
@@ -34,8 +40,8 @@ export function ReceiptCreateForm() {
             const created = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push(`/inventory/receipts/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -48,7 +54,7 @@ export function ReceiptCreateForm() {
             ]} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-3xl">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                     <div>
                         <GovLabel required>{t('documents.documentNumber')}</GovLabel>
                         <GovInput {...register('docNumber', { required: true })} />
@@ -61,15 +67,37 @@ export function ReceiptCreateForm() {
                             name="docDate"
                             control={control}
                             error={!!errors.docDate}
-                            required
+                            rules={{ required: true }}
                         />
                         {errors.docDate && <span className="text-red-600 text-sm">{t('common.error')}</span>}
+                    </div>
+
+                    <div>
+                        <GovLabel>{t('documents.status')}</GovLabel>
+                        <GovInput value="DRAFT" disabled className="bg-gray-50" />
                     </div>
                 </div>
 
                 <div>
+                    <GovLabel required>{t('organization.title')}</GovLabel>
+                    <Select onValueChange={(value) => setValue('organizationId', value, { shouldValidate: true })}>
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {organizationsData?.content?.map((org: any) => (
+                                <SelectItem key={org.id} value={org.id!}>
+                                    {org.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    {errors.organizationId && <span className="text-red-600 text-sm">{t('common.required')}</span>}
+                </div>
+
+                <div>
                     <GovLabel required>{t('documents.warehouse')}</GovLabel>
-                    <Select onValueChange={(value) => setValue('warehouseId', value)}>
+                    <Select onValueChange={(value) => setValue('warehouseId', value, { shouldValidate: true })}>
                         <SelectTrigger>
                             <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                         </SelectTrigger>
@@ -81,12 +109,13 @@ export function ReceiptCreateForm() {
                             ))}
                         </SelectContent>
                     </Select>
+                    {errors.warehouseId && <span className="text-red-600 text-sm">{t('common.required')}</span>}
                 </div>
 
                 <div className="space-y-2">
                     <Label className="text-lg font-semibold">Строки документа</Label>
                     {fields.map((field, index) => (
-                        <div key={field.id} className="grid grid-cols-4 gap-2 items-end p-4 border rounded">
+                        <div key={field.id} className="grid grid-cols-5 gap-2 items-end p-4 border rounded">
                             <div>
                                 <Label>Номенклатура</Label>
                                 <Select onValueChange={(value) => setValue(`lines.${index}.itemId`, value)}>
@@ -97,6 +126,21 @@ export function ReceiptCreateForm() {
                                         {itemsData?.content?.map((item: any) => (
                                             <SelectItem key={item.id} value={item.id!}>
                                                 {item.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div>
+                                <Label>Ед. изм.</Label>
+                                <Select onValueChange={(value) => setValue(`lines.${index}.unitId`, value)}>
+                                    <SelectTrigger>
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {unitsData?.map((unit: any) => (
+                                            <SelectItem key={unit.id} value={unit.id!}>
+                                                {unit.name}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
@@ -126,7 +170,7 @@ export function ReceiptCreateForm() {
                     <Button 
                         type="button" 
                         variant="outline" 
-                        onClick={() => append({ itemId: '', quantity: 0, price: 0 } as ReceiptLineRequest)}
+                        onClick={() => append({ itemId: '', unitId: '', quantity: 0, price: 0 } as ReceiptLineRequest)}
                     >
                         Добавить строку
                     </Button>

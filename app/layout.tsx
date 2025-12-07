@@ -10,8 +10,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
     title: {
-        template: '%s | АПК учёта ВИ МВД РК',
-        default: 'АПК учёта вещевого имущества МВД РК',
+        template: '%s | АПК учёта ВИ',
+        default: 'АПК учёта вещевого имущества',
     },
     description: 'Система учёта форменного и специального обмундирования',
 }

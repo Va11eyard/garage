@@ -14,6 +14,7 @@ import { Spinner } from '@/shared/ui/spinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function StaffHireForm() {
     const { t } = useTranslation()
@@ -33,8 +34,8 @@ export function StaffHireForm() {
             const hired = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push('/staff')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

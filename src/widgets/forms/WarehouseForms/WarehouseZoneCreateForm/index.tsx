@@ -42,8 +42,9 @@ export function WarehouseZoneCreateForm() {
             })
             toast.success(t('common.success'))
             router.push('/directories/warehouse-zones')
-        } catch (error) {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            const errorMessage = error?.body?.message || error?.message || t('common.error')
+            toast.error(errorMessage)
         } finally {
             setIsSubmitting(false)
         }

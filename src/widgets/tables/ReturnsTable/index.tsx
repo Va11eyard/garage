@@ -5,41 +5,50 @@ import { useDeleteReturn } from '@/features/manage-returns/model/useDeleteReturn
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
-import { GovDatePicker } from '@/gov-design/components/Form'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
+import { GovDatePicker } from '@/gov-design'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ReturnsTable() {
     const { t } = useTranslation()
     const isMobile = useMobile()
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({
-        warehouseId: '__ALL__',
+        warehouseId: '',
         from: '',
         to: ''
     })
-    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data: warehousesData } = useWarehouses({ page: 0, size: 1000 })
     const { data, isLoading } = useReturnsSearch({ 
-        ...debouncedFilters, 
-        warehouseId: debouncedFilters.warehouseId === '__ALL__' ? '' : debouncedFilters.warehouseId,
+        warehouseId: debouncedFilters.warehouseId || undefined,
+        from: debouncedFilters.from || undefined,
+        to: debouncedFilters.to || undefined,
         page, 
         size 
     })
     const deleteMutation = useDeleteReturn()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('returns.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('returns.deleteConfirm'),
+            t('common.confirmDelete') || 'Вы уверены, что хотите удалить этот документ?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -50,12 +59,11 @@ export function ReturnsTable() {
                 <div className="flex gap-4 flex-1 flex-wrap">
                     <div className="min-w-[200px]">
                         <label className="block text-sm font-medium mb-1">{t('documents.warehouse')}</label>
-                        <Select value={filters.warehouseId} onValueChange={(value) => updateFilter('warehouseId', value)}>
+                        <Select value={filters.warehouseId || undefined} onValueChange={(value) => updateFilter('warehouseId', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
                                 {warehousesData?.content?.map((warehouse: any) => (
                                     <SelectItem key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
@@ -89,19 +97,19 @@ export function ReturnsTable() {
                     <TableRow>
                         <TableHead>{t('documents.documentNumber')}</TableHead>
                         <TableHead>{t('documents.documentDate')}</TableHead>
-                        {!isMobile && <TableHead>Статус</TableHead>}
+                        {!isMobile && <TableHead>{t('documents.status')}</TableHead>}
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {data?.content?.map((doc: any) => (
                         <TableRow key={doc.id}>
-                            <TableCell>{doc.documentNumber}</TableCell>
-                            <TableCell>{new Date(doc.documentDate).toLocaleDateString()}</TableCell>
+                            <TableCell>{doc.docNumber}</TableCell>
+                            <TableCell>{doc.docDate ? new Date(doc.docDate).toLocaleDateString() : '-'}</TableCell>
                             {!isMobile && (
                                 <TableCell>
-                                    <span className={`gov-badge gov-badge-${doc.status?.toLowerCase()}`}>
-                                        {doc.status}
+                                    <span className={doc.status === 'DRAFT' ? 'text-gray-600' : doc.status === 'POSTED' ? 'text-green-600' : 'text-red-600'}>
+                                        {t(`documents.${doc.status}`)}
                                     </span>
                                 </TableCell>
                             )}
@@ -143,10 +151,22 @@ export function ReturnsTable() {
                 <span className="text-sm text-gov-text-secondary">
                     {t('pagination.page')} {page + 1} {t('pagination.of')} {data?.totalPages ?? 1}
                 </span>
-                <Button onClick={nextPage} disabled={data?.last}>
+                <Button onClick={nextPage} disabled={data?.last || page >= (data?.totalPages ?? 1) - 1}>
                     {t('pagination.next')}
                 </Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

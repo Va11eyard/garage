@@ -7,7 +7,8 @@ import { GovCard, GovCardHeader, GovCardTitle, GovCardContent } from '@/gov-desi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { Label } from '@/shared/ui/label'
 import { GovButton } from '@/gov-design/components/Button'
-import { Calendar, TrendingUp, ShoppingCart, FileText, Download, Filter } from 'lucide-react'
+import { Calendar, Download, Filter } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function PlanningReportsPage() {
     const { t } = useTranslation()
@@ -37,6 +38,8 @@ export default function PlanningReportsPage() {
     ]
 
     const handleGenerateReport = () => {
+        // TODO: Implement planning report generation when backend API is available
+        toast.info(t('reports.notImplemented') || 'Функция формирования отчетов находится в разработке')
         console.log('Generating planning report:', { reportType, period, department })
     }
 

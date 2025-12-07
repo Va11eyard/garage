@@ -12,6 +12,7 @@ import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
 import { ItemGroupService } from '@/features/manage-item-groups/model/service'
 import { UnitOfMeasureService } from '@/features/manage-units/model/service'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export default function ItemCreatePage() {
     const router = useRouter()
@@ -27,9 +28,12 @@ export default function ItemCreatePage() {
         groupId: '',
         baseUnitId: '',
         barcode: '',
-        weightKg: undefined as number | undefined,
-        volumeM3: undefined as number | undefined,
+        weightKg: '',
+        volumeM3: '',
+        active: true,
     })
+    
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
     useState(() => {
         const loadData = async () => {
@@ -54,9 +58,22 @@ export default function ItemCreatePage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setFieldErrors({})
 
-        if (!formData.code || !formData.name || !formData.baseUnitId) {
-            toast.error(t('common.required'))
+        // Client-side validation
+        const errors: Record<string, string> = {}
+        if (!formData.code) {
+            errors.code = t('common.required')
+        }
+        if (!formData.name) {
+            errors.name = t('common.required')
+        }
+        if (!formData.baseUnitId) {
+            errors.baseUnitId = t('common.required')
+        }
+        
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors)
             return
         }
 
@@ -67,13 +84,26 @@ export default function ItemCreatePage() {
                 baseUnitId: formData.baseUnitId,
                 groupId: formData.groupId || undefined,
                 barcode: formData.barcode || undefined,
-                weightKg: formData.weightKg,
-                volumeM3: formData.volumeM3,
+                weightKg: formData.weightKg ? parseFloat(formData.weightKg) : undefined,
+                volumeM3: formData.volumeM3 ? parseFloat(formData.volumeM3) : undefined,
+                active: formData.active,
             })
             toast.success(t('common.success'))
             router.push('/directories/items')
-        } catch (error) {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            // Parse field-specific errors from API
+            if (error?.body?.errors) {
+                const apiErrors: Record<string, string> = {}
+                const errors = error.body.errors
+                if (typeof errors === 'object' && !Array.isArray(errors)) {
+                    Object.keys(errors).forEach(field => {
+                        const fieldError = errors[field]
+                        apiErrors[field] = Array.isArray(fieldError) ? fieldError[0] : fieldError
+                    })
+                    setFieldErrors(apiErrors)
+                }
+            }
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -93,9 +123,9 @@ export default function ItemCreatePage() {
                     <GovInput
                         value={formData.code}
                         onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                        required
                         placeholder={t('items.code')}
                     />
+                    {fieldErrors.code && <p className="text-sm text-red-600 mt-1">{fieldErrors.code}</p>}
                 </div>
 
                 <div>
@@ -103,9 +133,9 @@ export default function ItemCreatePage() {
                     <GovInput
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
                         placeholder={t('items.name')}
                     />
+                    {fieldErrors.name && <p className="text-sm text-red-600 mt-1">{fieldErrors.name}</p>}
                 </div>
 
                 <div>
@@ -125,6 +155,7 @@ export default function ItemCreatePage() {
                             ))}
                         </SelectContent>
                     </Select>
+                    {fieldErrors.groupId && <p className="text-sm text-red-600 mt-1">{fieldErrors.groupId}</p>}
                 </div>
 
                 <div>
@@ -132,7 +163,6 @@ export default function ItemCreatePage() {
                     <Select
                         value={formData.baseUnitId}
                         onValueChange={(value) => setFormData({ ...formData, baseUnitId: value })}
-                        required
                     >
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
@@ -145,6 +175,7 @@ export default function ItemCreatePage() {
                             ))}
                         </SelectContent>
                     </Select>
+                    {fieldErrors.baseUnitId && <p className="text-sm text-red-600 mt-1">{fieldErrors.baseUnitId}</p>}
                 </div>
 
                 <div>
@@ -154,6 +185,43 @@ export default function ItemCreatePage() {
                         onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
                         placeholder={t('items.barcode')}
                     />
+                    {fieldErrors.barcode && <p className="text-sm text-red-600 mt-1">{fieldErrors.barcode}</p>}
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <GovLabel>{t('items.weightKg')}</GovLabel>
+                        <GovInput
+                            type="number"
+                            step="0.01"
+                            value={formData.weightKg}
+                            onChange={(e) => setFormData({ ...formData, weightKg: e.target.value })}
+                            placeholder="0.00"
+                        />
+                        {fieldErrors.weightKg && <p className="text-sm text-red-600 mt-1">{fieldErrors.weightKg}</p>}
+                    </div>
+                    <div>
+                        <GovLabel>{t('items.volumeM3')}</GovLabel>
+                        <GovInput
+                            type="number"
+                            step="0.001"
+                            value={formData.volumeM3}
+                            onChange={(e) => setFormData({ ...formData, volumeM3: e.target.value })}
+                            placeholder="0.000"
+                        />
+                        {fieldErrors.volumeM3 && <p className="text-sm text-red-600 mt-1">{fieldErrors.volumeM3}</p>}
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        id="active"
+                        checked={formData.active}
+                        onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                        className="w-4 h-4"
+                    />
+                    <GovLabel htmlFor="active" className="mb-0">{t('common.active')}</GovLabel>
                 </div>
 
                 <div className="flex gap-3 pt-4">

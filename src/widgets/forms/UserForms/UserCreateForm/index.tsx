@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { X } from 'lucide-react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function UserCreateForm() {
     const { t } = useTranslation()
@@ -37,8 +38,8 @@ export function UserCreateForm() {
             await mutateAsync(formData)
             toast.success(t('common.success'))
             router.push('/admin/users')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -23,13 +24,23 @@ export function OrgUnitsTable() {
     const isMobile = useMobile()
 
     const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
-    const [selectedOrgId, setSelectedOrgId] = useState<string>('')
+    const [selectedOrgId, setSelectedOrgId] = useState<string>('__ALL__')
     
     const { data: organizations } = useOrganizations({})
+    
+    // Get all organization IDs for "All" filter
+    const organizationIds = organizations?.content?.map((org: any) => org.id).filter(Boolean) || []
+    
+    // Create organization ID to name map
+    const orgMap = new Map(
+        organizations?.content?.map((org: any) => [org.id, org.name]) || []
+    )
+    
     const { data: orgUnitsData, isLoading } = useOrgUnits({
         code: debouncedFilters.code,
         name: debouncedFilters.name,
-        organizationId: selectedOrgId && selectedOrgId !== '__ALL__' ? selectedOrgId : undefined,
+        organizationId: selectedOrgId !== '__ALL__' ? selectedOrgId : undefined,
+        organizationIds: selectedOrgId === '__ALL__' ? organizationIds : undefined,
     })
     
     const deleteMutation = useDeleteOrgUnit()
@@ -42,7 +53,7 @@ export function OrgUnitsTable() {
             () => {
                 deleteMutation.mutate(id, {
                     onSuccess: () => toast.success(t('common.success')),
-                    onError: () => toast.error(t('common.error')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
                 })
             }
         )
@@ -74,7 +85,7 @@ export function OrgUnitsTable() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('organizations.organization')}</label>
-                        <Select value={selectedOrgId || '__ALL__'} onValueChange={(value) => setSelectedOrgId(value === '__ALL__' ? '' : value)}>
+                        <Select value={selectedOrgId} onValueChange={setSelectedOrgId}>
                             <SelectTrigger className="w-[200px]">
                                 <SelectValue placeholder={t('common.all')} />
                             </SelectTrigger>
@@ -104,6 +115,7 @@ export function OrgUnitsTable() {
                             <TableHead>{t('orgUnits.name')}</TableHead>
                             {!isMobile && <TableHead>{t('organizations.organization')}</TableHead>}
                             {!isMobile && <TableHead>{t('orgUnits.type')}</TableHead>}
+                            {!isMobile && <TableHead>{t('common.status')}</TableHead>}
                             <TableHead>{t('common.actions')}</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -112,8 +124,15 @@ export function OrgUnitsTable() {
                             <TableRow key={unit.id}>
                                 <TableCell>{unit.code}</TableCell>
                                 <TableCell>{unit.name}</TableCell>
-                                {!isMobile && <TableCell>{unit.organizationName || '-'}</TableCell>}
-                                {!isMobile && <TableCell>{unit.type || '-'}</TableCell>}
+                                {!isMobile && <TableCell>{orgMap.get(unit.organizationId) || '-'}</TableCell>}
+                                {!isMobile && <TableCell>{unit.unitType || '-'}</TableCell>}
+                                {!isMobile && (
+                                    <TableCell>
+                                        <span className={unit.active ? 'text-green-600' : 'text-red-600'}>
+                                            {unit.active ? t('common.active') : t('common.inactive')}
+                                        </span>
+                                    </TableCell>
+                                )}
                                 <TableCell>
                                     <Link href={`/directories/org-units/${unit.id}` as Route}>
                                         <Button variant="ghost" size="sm">

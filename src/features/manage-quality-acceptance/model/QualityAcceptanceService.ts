@@ -14,6 +14,7 @@ export class QualityAcceptanceService {
             params.from,
             params.to,
             params.status,
+            undefined, // docNumber
             params.page?.toString(),
             params.size?.toString()
         )

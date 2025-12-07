@@ -23,6 +23,7 @@ export default function QualityCategoryEditPage({ params }: { params: Promise<{ 
         code: '',
         name: '',
         description: '',
+        active: true,
     })
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function QualityCategoryEditPage({ params }: { params: Promise<{ 
                 code: category.code || '',
                 name: category.name || '',
                 description: category.description || '',
+                active: category.active ?? true,
             })
         }
     }, [category])
@@ -50,6 +52,7 @@ export default function QualityCategoryEditPage({ params }: { params: Promise<{ 
                     code: formData.code || undefined,
                     name: formData.name,
                     description: formData.description || undefined,
+                    active: formData.active,
                 }
             })
             toast.success(t('common.success'))
@@ -103,6 +106,17 @@ export default function QualityCategoryEditPage({ params }: { params: Promise<{ 
                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 placeholder={t('common.description')}
                             />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="active"
+                                checked={formData.active}
+                                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                                className="w-4 h-4"
+                            />
+                            <GovLabel htmlFor="active" className="mb-0">{t('common.active')}</GovLabel>
                         </div>
 
                         <div className="flex gap-3 pt-4">

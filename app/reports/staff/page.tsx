@@ -1,6 +1,6 @@
 'use client'
 
-import { WearReportTable } from '@/widgets/tables/WearReportTable'
+import { ProvisionAnalysisTable } from '@/widgets/tables/ProvisionAnalysisTable'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { useTranslation } from '@/shared/i18n/use-translation'
 
@@ -13,7 +13,17 @@ export default function StaffReportsPage() {
                 { label: t('breadcrumbs.reports'), href: '/reports' },
                 { label: t('breadcrumbs.staffReports') }
             ]} />
-            <WearReportTable />
+            
+            <div>
+                <h1 className="text-3xl font-bold text-gov-gray-900 mb-2">
+                    {t('reports.staffReports')}
+                </h1>
+                <p className="text-gov-gray-600">
+                    {t('employeeProvision.provisionAnalysis')}
+                </p>
+            </div>
+            
+            <ProvisionAnalysisTable />
         </div>
     )
 }

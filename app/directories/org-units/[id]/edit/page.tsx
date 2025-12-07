@@ -14,6 +14,7 @@ import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/use
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export default function OrgUnitEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
@@ -29,7 +30,10 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
         name: '',
         parentId: '',
         unitType: '',
+        active: true,
     })
+    
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
     const { data: orgUnits } = useOrgUnitsByOrganization(formData.organizationId)
 
@@ -41,15 +45,22 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                 name: orgUnit.name || '',
                 parentId: orgUnit.parentId || '',
                 unitType: orgUnit.unitType || '',
+                active: orgUnit.active ?? true,
             })
         }
     }, [orgUnit])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setFieldErrors({})
         
-        if (!formData.organizationId || !formData.code || !formData.name) {
-            toast.error(t('common.required'))
+        const errors: Record<string, string> = {}
+        if (!formData.organizationId) errors.organizationId = t('common.required')
+        if (!formData.code) errors.code = t('common.required')
+        if (!formData.name) errors.name = t('common.required')
+        
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors)
             return
         }
 
@@ -64,8 +75,19 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
             })
             toast.success(t('common.success'))
             router.push('/directories/org-units')
-        } catch (error) {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            if (error?.body?.errors) {
+                const apiErrors: Record<string, string> = {}
+                const errors = error.body.errors
+                if (typeof errors === 'object' && !Array.isArray(errors)) {
+                    Object.keys(errors).forEach(field => {
+                        const fieldError = errors[field]
+                        apiErrors[field] = Array.isArray(fieldError) ? fieldError[0] : fieldError
+                    })
+                    setFieldErrors(apiErrors)
+                }
+            }
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -98,7 +120,6 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                             <Select
                                 value={formData.organizationId}
                                 onValueChange={handleOrganizationChange}
-                                required
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder={t('organizations.selectOrganization')} />
@@ -111,6 +132,7 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                                     ))}
                                 </SelectContent>
                             </Select>
+                            {fieldErrors.organizationId && <p className="text-sm text-red-600 mt-1">{fieldErrors.organizationId}</p>}
                         </div>
 
                         <div>
@@ -118,9 +140,9 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                             <GovInput
                                 value={formData.code}
                                 onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                                required
                                 placeholder={t('orgUnits.code')}
                             />
+                            {fieldErrors.code && <p className="text-sm text-red-600 mt-1">{fieldErrors.code}</p>}
                         </div>
 
                         <div>
@@ -128,9 +150,9 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                             <GovInput
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                required
                                 placeholder={t('orgUnits.name')}
                             />
+                            {fieldErrors.name && <p className="text-sm text-red-600 mt-1">{fieldErrors.name}</p>}
                         </div>
 
                         {formData.organizationId && availableParents.length > 0 && (
@@ -161,6 +183,17 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                                 onChange={(e) => setFormData({ ...formData, unitType: e.target.value })}
                                 placeholder={t('orgUnits.type')}
                             />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="active"
+                                checked={formData.active}
+                                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                                className="w-4 h-4"
+                            />
+                            <GovLabel htmlFor="active" className="mb-0">{t('common.active')}</GovLabel>
                         </div>
 
                         <div className="flex gap-3 pt-4">

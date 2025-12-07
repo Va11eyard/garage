@@ -13,6 +13,7 @@ import { Checkbox } from '@/shared/ui/checkbox'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EmployeeCategoryEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -36,8 +37,8 @@ export function EmployeeCategoryEditForm({ id }: { id: string }) {
             await mutateAsync({ id, data })
             toast.success(t('common.success'))
             router.push(`/directories/employee-categories/${id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -10,6 +10,7 @@ import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ItemGroupsTable() {
     const { t } = useTranslation()
@@ -33,7 +34,7 @@ export function ItemGroupsTable() {
         if (confirm(t('itemGroup.deleteConfirm'))) {
             deleteMutation.mutate(id, {
                 onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
+                onError: (error: any) => toast.error(getErrorMessage(error)),
             })
         }
     }
@@ -74,6 +75,7 @@ export function ItemGroupsTable() {
                         <TableHead>{t('itemGroup.code')}</TableHead>
                         <TableHead>{t('itemGroup.name')}</TableHead>
                         {!isMobile && <TableHead>{t('itemGroup.parentGroup')}</TableHead>}
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -84,6 +86,16 @@ export function ItemGroupsTable() {
                             <TableCell>{group.name}</TableCell>
                             {!isMobile && <TableCell>{group.parentGroupName || '-'}</TableCell>}
                             <TableCell>
+                                <span className={group.active ? 'text-green-600' : 'text-red-600'}>
+                                    {group.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <Link href={`/directories/item-groups/${group.id}`}>
+                                    <Button variant="ghost" size="sm">
+                                        {t('common.view')}
+                                    </Button>
+                                </Link>
                                 <Link href={`/directories/item-groups/${group.id}/edit`}>
                                     <Button variant="ghost" size="sm">
                                         {t('common.edit')}

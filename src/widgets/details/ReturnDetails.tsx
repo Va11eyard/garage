@@ -16,7 +16,7 @@ export function ReturnDetails({ id }: { id: string }) {
         <div className="gov-page-content space-y-6">
             <div className="gov-page-header flex justify-between items-center">
                 <div>
-                    <h1 className="gov-title">Документ возврата #{returnDoc.documentNumber}</h1>
+                    <h1 className="gov-title">Документ возврата #{returnDoc.docNumber}</h1>
                     <span className={`gov-badge gov-badge-${returnDoc.status?.toLowerCase()}`}>
                         {returnDoc.status}
                     </span>
@@ -36,11 +36,11 @@ export function ReturnDetails({ id }: { id: string }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <span className="gov-form-label">{t('documents.documentNumber')}</span>
-                            <p className="text-gov-gray-dark">{returnDoc.documentNumber}</p>
+                            <p className="text-gov-gray-dark">{returnDoc.docNumber}</p>
                         </div>
                         <div>
                             <span className="gov-form-label">{t('documents.documentDate')}</span>
-                            <p className="text-gov-gray-dark">{new Date(returnDoc.documentDate).toLocaleDateString()}</p>
+                            <p className="text-gov-gray-dark">{returnDoc.docDate ? new Date(returnDoc.docDate).toLocaleDateString() : '-'}</p>
                         </div>
                     </div>
                 </div>

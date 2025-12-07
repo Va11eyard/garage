@@ -4,11 +4,13 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovDatePicker } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { DatePicker } from '@/shared/ui/date-picker'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function CategoryChangeCreateForm() {
     const { t } = useTranslation()
@@ -33,8 +35,8 @@ export function CategoryChangeCreateForm() {
             // TODO: Implement category change creation API call
             toast.success(t('common.success'))
             router.push('/admin/category-changes')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -59,7 +61,7 @@ export function CategoryChangeCreateForm() {
 
                 <div>
                     <GovLabel required>{t('categoryChanges.documentDate')}</GovLabel>
-                    <GovDatePicker
+                    <DatePicker
                         value={formData.documentDate}
                         onChange={(date) => setFormData({ ...formData, documentDate: date })}
                     />

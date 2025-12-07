@@ -17,7 +17,7 @@ export function SurplusDetails({ id }: { id: string }) {
     return (
         <div className="container mx-auto py-6 space-y-4">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Документ излишков #{surplus.documentNumber}</h1>
+                <h1 className="text-2xl font-bold">Документ излишков #{surplus.docNumber}</h1>
             </div>
 
             <Card>
@@ -27,11 +27,11 @@ export function SurplusDetails({ id }: { id: string }) {
                 <CardContent className="space-y-2">
                     <div>
                         <span className="font-semibold">{t('documents.documentNumber')}: </span>
-                        <span>{surplus.documentNumber}</span>
+                        <span>{surplus.docNumber}</span>
                     </div>
                     <div>
                         <span className="font-semibold">{t('documents.documentDate')}: </span>
-                        <span>{new Date(surplus.documentDate).toLocaleDateString()}</span>
+                        <span>{surplus.docDate ? new Date(surplus.docDate).toLocaleDateString() : '-'}</span>
                     </div>
                     <div>
                         <span className="font-semibold">Статус: </span>

@@ -8,6 +8,7 @@ import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function RoleCreateForm() {
     const { t } = useTranslation()
@@ -28,8 +29,8 @@ export function RoleCreateForm() {
             await mutateAsync(code)
             toast.success(t('common.success'))
             router.push('/admin/roles')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -13,17 +13,25 @@ import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 import { Route } from 'next'
 
 export function WarehouseZonesTable() {
     const { t } = useTranslation()
-    const { page, size, nextPage, previousPage } = usePagination()
-    const [selectedWarehouseId, setSelectedWarehouseId] = useState('')
+    const [selectedWarehouseId, setSelectedWarehouseId] = useState('__ALL__')
     const { data: warehouses } = useWarehouses({ page: 0, size: 100 })
-    const { data: zonesData, isLoading } = useWarehouseZonesSearch({ 
-        warehouseId: selectedWarehouseId || undefined,
-        page,
-        size
+    
+    // Get all warehouse IDs for "All" filter
+    const warehouseIds = warehouses?.content?.map((w: any) => w.id).filter(Boolean) || []
+    
+    // Create warehouse ID to name map
+    const warehouseMap = new Map(
+        warehouses?.content?.map((w: any) => [w.id, w.name]) || []
+    )
+    
+    const { data: zones, isLoading } = useWarehouseZonesSearch({ 
+        warehouseId: selectedWarehouseId !== '__ALL__' ? selectedWarehouseId : undefined,
+        warehouseIds: selectedWarehouseId === '__ALL__' ? warehouseIds : undefined,
     })
     const deleteMutation = useDeleteWarehouseZone()
     const confirmDialog = useConfirmDialog()
@@ -35,13 +43,15 @@ export function WarehouseZonesTable() {
             () => {
                 deleteMutation.mutate(id, {
                     onSuccess: () => toast.success(t('common.success')),
-                    onError: () => toast.error(t('common.error')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
                 })
             }
         )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
+    
+    const zonesData = zones || []
 
     return (
         <div className="space-y-4">
@@ -49,7 +59,7 @@ export function WarehouseZonesTable() {
                 <div className="flex gap-4 flex-1">
                     <div>
                         <label className="block text-sm font-medium mb-1">{t('warehouseZones.warehouse')}</label>
-                        <Select value={selectedWarehouseId || '__ALL__'} onValueChange={(value) => setSelectedWarehouseId(value === '__ALL__' ? '' : value)}>
+                        <Select value={selectedWarehouseId} onValueChange={setSelectedWarehouseId}>
                             <SelectTrigger className="w-[200px]">
                                 <SelectValue placeholder={t('common.all')} />
                             </SelectTrigger>
@@ -73,19 +83,24 @@ export function WarehouseZonesTable() {
                     <TableRow>
                         <TableHead>{t('warehouseZones.code')}</TableHead>
                         <TableHead>{t('warehouseZones.name')}</TableHead>
-                        <TableHead>{t('warehouseZones.warehouse')}</TableHead>
-                        <TableHead>{t('warehouseZones.sortOrder')}</TableHead>
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {zonesData?.content?.map((zone: any) => (
+                    {zonesData.map((zone: any) => (
                         <TableRow key={zone.id}>
                             <TableCell>{zone.code}</TableCell>
                             <TableCell>{zone.name}</TableCell>
-                            <TableCell>{zone.warehouseName || '—'}</TableCell>
-                            <TableCell>{zone.sortOrder}</TableCell>
                             <TableCell>
+                                <span className={zone.active ? 'text-green-600' : 'text-red-600'}>
+                                    {zone.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <Button variant="ghost" size="sm" asChild>
+                                    <Link href={`/directories/warehouse-zones/${zone.id}` as Route}>{t('common.view')}</Link>
+                                </Button>
                                 <Button variant="ghost" size="sm" asChild>
                                     <Link href={`/directories/warehouse-zones/${zone.id}/edit` as Route}>{t('common.edit')}</Link>
                                 </Button>
@@ -102,17 +117,8 @@ export function WarehouseZonesTable() {
                     ))}
                 </TableBody>
             </Table>
-            <div className="flex justify-between items-center">
-                <Button onClick={previousPage} disabled={page === 0}>
-                    {t('pagination.prev')}
-                </Button>
-                <span className="text-sm text-gov-text-secondary">
-                    {t('pagination.page')} {page + 1} {t('pagination.of')} {zonesData?.totalPages ?? 1}
-                </span>
-                <Button onClick={nextPage} disabled={zonesData?.last || page >= (zonesData?.totalPages ?? 1) - 1}>
-                    {t('pagination.next')}
-                </Button>
-            </div>
+            
+            {/* No pagination - using list endpoint */}
 
             <GovConfirmModal
                 isOpen={confirmDialog.isOpen}

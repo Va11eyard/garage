@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EquipmentCreateForm() {
     const { t } = useTranslation()
@@ -34,8 +35,8 @@ export function EquipmentCreateForm() {
             // TODO: Implement equipment creation API call
             toast.success(t('common.success'))
             router.push('/admin/equipment')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

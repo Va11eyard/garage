@@ -1,12 +1,12 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type ItemSupplyNormDto } from '@/shared/api/generated/__swagger_client'
+import { Service, type ProvisionNormDto } from '@/shared/api/generated/__swagger_client'
 
 export function useNorm(id: string) {
-    return useQuery<ItemSupplyNormDto, Error>({
+    return useQuery<ProvisionNormDto, Error>({
         queryKey: ['norms', id],
-        queryFn: () => Service.getItemSupplyNormById(id),
+        queryFn: () => Service.getProvisionNormById(id),
         enabled: !!id,
     })
 }

@@ -12,6 +12,7 @@ import { Input } from '@/shared/ui/input'
 import { Spinner } from '@/shared/ui/spinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ItemCreateForm() {
   const { t } = useTranslation()
@@ -26,8 +27,8 @@ export function ItemCreateForm() {
       const created = await mutateAsync(data)
       toast.success(t('common.success'))
       router.push(`/directories/items/${created.id}`)
-    } catch {
-      toast.error(t('common.error'))
+    } catch (error) {
+      toast.error(getErrorMessage(error))
     }
   }
 
@@ -59,6 +60,30 @@ export function ItemCreateForm() {
           {units?.content?.map((u: any) => <option key={u.id} value={u.id}>{u.name}</option>)}
         </select>
         {errors.baseUnitId && <span className="text-red-600">{t('common.error')}</span>}
+      </div>
+      <div>
+        <Label>{t('items.barcode')}</Label>
+        <Input {...register('barcode')} />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label>{t('items.weightKg')}</Label>
+          <Input {...register('weightKg', { valueAsNumber: true })} type="number" step="0.01" placeholder="0.00" />
+        </div>
+        <div>
+          <Label>{t('items.volumeM3')}</Label>
+          <Input {...register('volumeM3', { valueAsNumber: true })} type="number" step="0.001" placeholder="0.000" />
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <input 
+          type="checkbox" 
+          {...register('active')} 
+          id="active" 
+          className="w-4 h-4"
+          defaultChecked={true}
+        />
+        <Label htmlFor="active" className="mb-0">{t('common.active')}</Label>
       </div>
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? <Spinner className="w-4 h-4" /> : t('common.create')}

@@ -10,20 +10,19 @@ import { useState } from 'react'
 
 export function StockBalancesTable() {
     const { t } = useTranslation()
-    const [selectedWarehouse, setSelectedWarehouse] = useState<string>('__ALL__')
+    const [selectedWarehouse, setSelectedWarehouse] = useState<string>('')
     const { data: warehouses } = useWarehouses({})
-    const { data: balances, isLoading } = useStockBalances(selectedWarehouse === '__ALL__' ? undefined : selectedWarehouse)
+    const { data: balances, isLoading } = useStockBalances(selectedWarehouse || undefined)
 
     return (
         <div className="space-y-4">
             <div className="w-full max-w-md">
                 <label className="block text-sm font-medium mb-1">{t('stockBalances.warehouse')}</label>
-                <Select value={selectedWarehouse} onValueChange={setSelectedWarehouse}>
+                <Select value={selectedWarehouse || undefined} onValueChange={setSelectedWarehouse}>
                     <SelectTrigger className="w-[200px]">
-                        <SelectValue placeholder={t('common.all')} />
+                        <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="__ALL__">{t('common.all')}</SelectItem>
                         {warehouses?.content?.map((warehouse: any) => (
                             <SelectItem key={warehouse.id} value={warehouse.id!}>
                                 {warehouse.name}

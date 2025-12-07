@@ -5,11 +5,12 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovDatePicker } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { DatePicker } from '@/shared/ui/date-picker'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export function TemporaryIssueCreateForm() {
     const { t } = useTranslation()
@@ -17,26 +18,87 @@ export function TemporaryIssueCreateForm() {
     const { data: warehouses } = useWarehouses({})
     const router = useRouter()
     
+    const [organizations, setOrganizations] = useState<any[]>([])
+    const [employees, setEmployees] = useState<any[]>([])
+    
+    // Fetch organizations
+    useEffect(() => {
+        import('@/shared/api/generated/__swagger_client').then(({ Service }) => {
+            Service.searchOrganizationsPage(undefined, undefined, 0, 1000).then((data) => {
+                setOrganizations(data.content || [])
+            })
+        })
+    }, [])
+    
     const [formData, setFormData] = useState({
         docNumber: '',
         docDate: '',
+        organizationId: '',
         warehouseId: '',
+        employeeId: '',
+        reason: '',
+        plannedReturnDate: '',
     })
+
+    // Fetch employees when organization is selected
+    const handleOrganizationChange = async (orgId: string) => {
+        setFormData({ ...formData, organizationId: orgId, employeeId: '' })
+        if (orgId) {
+            try {
+                const { Service } = await import('@/shared/api/generated/__swagger_client')
+                const data = await Service.searchEmployeesPage(orgId, undefined, undefined, 0, 1000)
+                setEmployees(data.content || [])
+            } catch (error) {
+                console.error('Failed to fetch employees:', error)
+            }
+        } else {
+            setEmployees([])
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.docNumber || !formData.docDate || !formData.warehouseId) {
-            toast.error(t('common.required'))
+        if (!formData.docNumber?.trim()) {
+            toast.error(t('documents.documentNumber') + ': ' + t('common.required'))
+            return
+        }
+        
+        if (!formData.docDate) {
+            toast.error(t('documents.documentDate') + ': ' + t('common.required'))
+            return
+        }
+        
+        if (!formData.organizationId) {
+            toast.error(t('organizations.organization') + ': ' + t('common.required'))
+            return
+        }
+        
+        if (!formData.warehouseId) {
+            toast.error(t('documents.warehouse') + ': ' + t('common.required'))
+            return
+        }
+        
+        if (!formData.employeeId) {
+            toast.error(t('employees.employee') + ': ' + t('common.required'))
             return
         }
 
         try {
-            const created = await mutateAsync(formData)
+            const created = await mutateAsync({
+                docNumber: formData.docNumber.trim(),
+                docDate: formData.docDate,
+                organizationId: formData.organizationId,
+                warehouseId: formData.warehouseId,
+                employeeId: formData.employeeId,
+                reason: formData.reason || undefined,
+                plannedReturnDate: formData.plannedReturnDate || undefined,
+                lines: []
+            })
             toast.success(t('common.success'))
             router.push(`/inventory/temporary-use/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            toast.error(error?.body?.message || t('common.error'))
         }
     }
 
@@ -61,10 +123,29 @@ export function TemporaryIssueCreateForm() {
 
                 <div>
                     <GovLabel required>{t('documents.documentDate')}</GovLabel>
-                    <GovDatePicker
+                    <DatePicker
                         value={formData.docDate}
                         onChange={(date) => setFormData({ ...formData, docDate: date })}
                     />
+                </div>
+
+                <div>
+                    <GovLabel required>{t('organizations.organization')}</GovLabel>
+                    <Select
+                        value={formData.organizationId}
+                        onValueChange={handleOrganizationChange}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder={t('common.select')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {organizations?.map((org: any) => (
+                                <SelectItem key={org.id} value={org.id!}>
+                                    {org.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div>
@@ -72,7 +153,6 @@ export function TemporaryIssueCreateForm() {
                     <Select
                         value={formData.warehouseId}
                         onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
-                        required
                     >
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
@@ -85,6 +165,43 @@ export function TemporaryIssueCreateForm() {
                             ))}
                         </SelectContent>
                     </Select>
+                </div>
+
+                <div>
+                    <GovLabel required>{t('employees.employee')}</GovLabel>
+                    <Select
+                        value={formData.employeeId}
+                        onValueChange={(value) => setFormData({ ...formData, employeeId: value })}
+                        disabled={!formData.organizationId}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder={formData.organizationId ? t('common.select') : t('organizations.selectFirst')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {employees?.map((emp: any) => (
+                                <SelectItem key={emp.id} value={emp.id!}>
+                                    {emp.lastName} {emp.firstName} {emp.middleName}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div>
+                    <GovLabel>{t('documents.reason')}</GovLabel>
+                    <GovInput
+                        value={formData.reason}
+                        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                        placeholder={t('documents.reason')}
+                    />
+                </div>
+
+                <div>
+                    <GovLabel>{t('temporaryIssues.plannedReturnDate')}</GovLabel>
+                    <DatePicker
+                        value={formData.plannedReturnDate}
+                        onChange={(date) => setFormData({ ...formData, plannedReturnDate: date })}
+                    />
                 </div>
 
                 <div className="flex gap-3 pt-4">

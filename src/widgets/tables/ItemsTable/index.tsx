@@ -11,6 +11,7 @@ import { Input } from '@/shared/ui/input'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ItemsTable() {
     const { t } = useTranslation()
@@ -23,7 +24,7 @@ export function ItemsTable() {
         if (confirm(t('items.deleteConfirm'))) {
             deleteMutation.mutate(id, {
                 onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
+                onError: (error: any) => toast.error(getErrorMessage(error)),
             })
         }
     }
@@ -64,6 +65,10 @@ export function ItemsTable() {
                         <TableHead>{t('items.name')}</TableHead>
                         <TableHead>{t('items.itemGroup')}</TableHead>
                         <TableHead>{t('items.unitOfMeasure')}</TableHead>
+                        <TableHead>{t('items.barcode')}</TableHead>
+                        <TableHead>{t('items.weightKg')}</TableHead>
+                        <TableHead>{t('items.volumeM3')}</TableHead>
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -74,9 +79,20 @@ export function ItemsTable() {
                                 <Link href={`/directories/items/${item.id}` as Route} className="underline">{item.code}</Link>
                             </TableCell>
                             <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.itemGroupName}</TableCell>
-                            <TableCell>{item.unitOfMeasureName}</TableCell>
+                            <TableCell>{item.groupCode || '—'}</TableCell>
+                            <TableCell>{item.baseUnitCode || '—'}</TableCell>
+                            <TableCell>{item.barcode || '—'}</TableCell>
+                            <TableCell>{item.weightKg != null ? item.weightKg : '—'}</TableCell>
+                            <TableCell>{item.volumeM3 != null ? item.volumeM3 : '—'}</TableCell>
                             <TableCell>
+                                <span className={item.active ? 'text-green-600' : 'text-red-600'}>
+                                    {item.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <Link href={`/directories/items/${item.id}` as Route}>
+                                    <Button variant="ghost" size="sm">{t('common.view')}</Button>
+                                </Link>
                                 <Link href={`/directories/items/${item.id}/edit` as Route}>
                                     <Button variant="ghost" size="sm">{t('common.edit')}</Button>
                                 </Link>

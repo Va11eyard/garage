@@ -60,24 +60,39 @@ export function NormsTable() {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>{t('norm.item')}</TableHead>
-                        <TableHead>{t('norm.category')}</TableHead>
-                        {!isMobile && <TableHead>{t('norm.quantity')}</TableHead>}
-                        {!isMobile && <TableHead>{t('norm.wearPeriod')}</TableHead>}
+                        <TableHead>{t('common.code')}</TableHead>
+                        <TableHead>{t('common.name')}</TableHead>
+                        {!isMobile && <TableHead>{t('norm.season')}</TableHead>}
+                        {!isMobile && <TableHead>{t('common.status')}</TableHead>}
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {data?.content?.map((norm: any) => (
                         <TableRow key={norm.id}>
-                            <TableCell>{norm.item?.name || '-'}</TableCell>
-                            <TableCell>{norm.employeeCategory?.name || '-'}</TableCell>
-                            {!isMobile && <TableCell>{norm.quantity || '-'}</TableCell>}
-                            {!isMobile && <TableCell>{norm.wearPeriodMonths ? `${norm.wearPeriodMonths} мес.` : '-'}</TableCell>}
+                            <TableCell>{norm.code || '-'}</TableCell>
+                            <TableCell>{norm.name || '-'}</TableCell>
+                            {!isMobile && <TableCell>
+                                {norm.season === 'ALL' && t('norm.allSeasons')}
+                                {norm.season === 'SUMMER' && t('norm.summer')}
+                                {norm.season === 'WINTER' && t('norm.winter')}
+                                {norm.season === 'DEMISEASON' && t('norm.demiseason')}
+                                {!norm.season && '-'}
+                            </TableCell>}
+                            {!isMobile && <TableCell>
+                                <span className={norm.active ? 'text-green-600' : 'text-red-600'}>
+                                    {norm.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>}
                             <TableCell>
                                 <Link href={`/directories/norms/${norm.id}` as Route}>
                                     <Button variant="ghost" size="sm">
                                         {t('common.view')}
+                                    </Button>
+                                </Link>
+                                <Link href={`/directories/norms/${norm.id}/edit` as Route}>
+                                    <Button variant="ghost" size="sm">
+                                        {t('common.edit')}
                                     </Button>
                                 </Link>
                                 <Button

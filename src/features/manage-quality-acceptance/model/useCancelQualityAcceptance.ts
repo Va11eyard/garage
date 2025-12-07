@@ -1,18 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { type QualityAcceptanceDocumentDto } from '@/shared/api/generated/__swagger_client'
-import { QualityAcceptanceService } from './QualityAcceptanceService'
-
-const service = new QualityAcceptanceService()
+import { Service } from '@/shared/api/generated/__swagger_client'
 
 export function useCancelQualityAcceptance() {
     const queryClient = useQueryClient()
 
-    return useMutation<QualityAcceptanceDocumentDto, Error, string>({
-        mutationFn: (id: string) => service.cancel(id),
+    return useMutation({
+        mutationFn: (id: string) => Service.cancelQualityAcceptanceDocument(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['qualityAcceptances'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
         },
     })
 }

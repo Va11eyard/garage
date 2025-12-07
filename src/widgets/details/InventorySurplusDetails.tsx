@@ -16,7 +16,7 @@ export function InventorySurplusDetails({ id }: { id: string }) {
         <div className="gov-page-content space-y-6">
             <div className="gov-page-header flex justify-between items-center">
                 <div>
-                    <h1 className="gov-title">Документ излишков #{surplus.documentNumber}</h1>
+                    <h1 className="gov-title">Документ излишков #{surplus.docNumber}</h1>
                     <span className={`gov-badge gov-badge-${surplus.status?.toLowerCase()}`}>
                         {surplus.status}
                     </span>
@@ -36,11 +36,11 @@ export function InventorySurplusDetails({ id }: { id: string }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <span className="gov-form-label">{t('documents.documentNumber')}</span>
-                            <p className="text-gov-gray-dark">{surplus.documentNumber}</p>
+                            <p className="text-gov-gray-dark">{surplus.docNumber}</p>
                         </div>
                         <div>
                             <span className="gov-form-label">{t('documents.documentDate')}</span>
-                            <p className="text-gov-gray-dark">{new Date(surplus.documentDate).toLocaleDateString()}</p>
+                            <p className="text-gov-gray-dark">{surplus.docDate ? new Date(surplus.docDate).toLocaleDateString() : '-'}</p>
                         </div>
                     </div>
                 </div>

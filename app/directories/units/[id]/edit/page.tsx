@@ -23,6 +23,7 @@ export default function UnitEditPage({ params }: { params: Promise<{ id: string 
         code: '',
         name: '',
         shortName: '',
+        active: true,
     })
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function UnitEditPage({ params }: { params: Promise<{ id: string 
                 code: unit.code || '',
                 name: unit.name || '',
                 shortName: unit.shortName || '',
+                active: unit.active ?? true,
             })
         }
     }, [unit])
@@ -47,8 +49,9 @@ export default function UnitEditPage({ params }: { params: Promise<{ id: string 
             await updateMutation.mutateAsync({
                 id,
                 data: {
-                    ...formData,
+                    name: formData.name,
                     shortName: formData.shortName || undefined,
+                    active: formData.active,
                 }
             })
             toast.success(t('common.success'))
@@ -103,6 +106,17 @@ export default function UnitEditPage({ params }: { params: Promise<{ id: string 
                                 onChange={(e) => setFormData({ ...formData, shortName: e.target.value })}
                                 placeholder={t('unitOfMeasure.shortName')}
                             />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="active"
+                                checked={formData.active}
+                                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                                className="w-4 h-4"
+                            />
+                            <GovLabel htmlFor="active" className="mb-0">{t('common.active')}</GovLabel>
                         </div>
 
                         <div className="flex gap-3 pt-4">

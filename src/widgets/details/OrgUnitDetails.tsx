@@ -28,11 +28,11 @@ export function OrgUnitDetails({ id }: { id: string }) {
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-gov-gray-900">{orgUnit.name}</h1>
                 <div className="flex gap-2">
+                    <Link href="/directories/org-units">
+                        <GovButton variant="outline">{t('common.back')}</GovButton>
+                    </Link>
                     <Link href={`/directories/org-units/${id}/edit`}>
                         <GovButton>{t('common.edit')}</GovButton>
-                    </Link>
-                    <Link href="/directories/org-units">
-                        <GovButton variant="secondary">{t('common.back')}</GovButton>
                     </Link>
                 </div>
             </div>
@@ -63,12 +63,8 @@ export function OrgUnitDetails({ id }: { id: string }) {
                         )}
                         <div>
                             <dt className="text-sm font-medium text-gov-gray-500">{t('organizations.status')}</dt>
-                            <dd className="mt-1">
-                                <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                                    orgUnit.active 
-                                        ? 'bg-green-100 text-green-800' 
-                                        : 'bg-red-100 text-red-800'
-                                }`}>
+                            <dd className="mt-1 text-sm">
+                                <span className={orgUnit.active ? 'text-green-600' : 'text-red-600'}>
                                     {orgUnit.active ? t('common.active') : t('common.inactive')}
                                 </span>
                             </dd>

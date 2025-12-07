@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function IntegrationEndpointCreateForm() {
     const { t } = useTranslation()
@@ -33,8 +34,8 @@ export function IntegrationEndpointCreateForm() {
             // TODO: Implement integration endpoint creation API call
             toast.success(t('common.success'))
             router.push('/admin/integration-endpoints')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -81,6 +81,9 @@ export function QualityCategoriesTable() {
                                 </span>
                             </TableCell>
                             <TableCell>
+                                <Link href={`/directories/quality-categories/${category.id}` as any}>
+                                    <Button variant="ghost" size="sm">{t('common.view')}</Button>
+                                </Link>
                                 <Link href={`/directories/quality-categories/${category.id}/edit` as any}>
                                     <Button variant="ghost" size="sm">{t('common.edit')}</Button>
                                 </Link>

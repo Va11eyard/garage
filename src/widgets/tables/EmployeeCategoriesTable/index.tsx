@@ -71,6 +71,7 @@ export function EmployeeCategoriesTable() {
                         <TableHead>{t('employeeCategories.code')}</TableHead>
                         <TableHead>{t('employeeCategories.name')}</TableHead>
                         {!isMobile && <TableHead>{t('employeeCategories.description')}</TableHead>}
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -80,6 +81,11 @@ export function EmployeeCategoriesTable() {
                             <TableCell>{category.code}</TableCell>
                             <TableCell>{category.name}</TableCell>
                             {!isMobile && <TableCell>{category.description || '-'}</TableCell>}
+                            <TableCell>
+                                <span className={category.active ? 'text-green-600' : 'text-red-600'}>
+                                    {category.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
                             <TableCell>
                                 <Link href={`/directories/employee-categories/${category.id}` as Route}>
                                     <Button variant="ghost" size="sm">

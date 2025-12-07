@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
-import { GovInput, GovLabel, GovDatePicker } from '@/gov-design/components/Form'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
+import { DatePicker } from '@/shared/ui/date-picker'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Service } from '@/shared/api/generated/__swagger_client'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function PersonCreateForm() {
     const router = useRouter()
@@ -40,7 +42,7 @@ export function PersonCreateForm() {
             toast.success(t('common.success'))
             router.push('/directories/persons')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         } finally {
             setIsSubmitting(false)
         }
@@ -97,7 +99,7 @@ export function PersonCreateForm() {
 
                 <div>
                     <GovLabel>{t('persons.birthDate')}</GovLabel>
-                    <GovDatePicker
+                    <DatePicker
                         value={formData.birthDate}
                         onChange={(date) => setFormData({ ...formData, birthDate: date })}
                     />

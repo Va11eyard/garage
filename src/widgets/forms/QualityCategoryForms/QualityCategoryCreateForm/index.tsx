@@ -9,6 +9,7 @@ import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Service } from '@/shared/api/generated/__swagger_client'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function QualityCategoryCreateForm() {
     const router = useRouter()
@@ -38,7 +39,7 @@ export function QualityCategoryCreateForm() {
             toast.success(t('common.success'))
             router.push('/directories/quality-categories')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         } finally {
             setIsSubmitting(false)
         }

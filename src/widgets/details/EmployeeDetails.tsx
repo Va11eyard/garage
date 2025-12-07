@@ -3,21 +3,25 @@
 import { useEmployee } from '@/features/manage-employees/model/useEmployee'
 import { useEmployeeHistory } from '@/features/manage-employees/model/useEmployeeHistory'
 import { useTranslation } from '@/shared/i18n/use-translation'
-import { Button } from '@/shared/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
+import { useRouter } from 'next/navigation'
+import { GovBreadcrumb } from '@/gov-design/patterns'
+import { GovButton } from '@/gov-design/components/Button'
+import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
+import { Spinner } from '@/shared/ui/spinner'
 import Link from 'next/link'
 import { Calendar, UserCheck, UserX, ArrowRightLeft } from 'lucide-react'
 
 export function EmployeeDetails({ id }: { id: string }) {
     const { t } = useTranslation()
+    const router = useRouter()
     const { data: employee, isLoading } = useEmployee(id)
     const { data: history, isLoading: historyLoading } = useEmployeeHistory(id)
 
-    if (isLoading) return <div>{t('common.loading')}</div>
-    if (!employee) return <div>{t('common.noData')}</div>
+    if (isLoading) return <Spinner />
+    if (!employee) return <div>{t('common.notFound')}</div>
 
-    const getEventIcon = (status: string) => {
-        switch (status) {
+    const getEventIcon = (eventType: string) => {
+        switch (eventType) {
             case 'HIRED':
                 return <UserCheck className="w-5 h-5 text-green-600" />
             case 'TRANSFERRED':
@@ -29,8 +33,8 @@ export function EmployeeDetails({ id }: { id: string }) {
         }
     }
 
-    const getEventColor = (status: string) => {
-        switch (status) {
+    const getEventColor = (eventType: string) => {
+        switch (eventType) {
             case 'HIRED':
                 return 'border-green-500 bg-green-50'
             case 'TRANSFERRED':
@@ -43,90 +47,121 @@ export function EmployeeDetails({ id }: { id: string }) {
     }
 
     return (
-        <div className="container mx-auto py-6 space-y-4">
+        <div className="space-y-6">
+            <GovBreadcrumb items={[
+                { label: t('breadcrumbs.staff'), href: '/staff' },
+                { label: t('employees.title'), href: '/staff/employees' },
+                { label: employee.personnelNumber || id }
+            ]} />
+
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Сотрудник</h1>
+                <h1 className="text-3xl font-bold">
+                    {employee.lastName} {employee.firstName} {employee.middleName}
+                </h1>
                 <div className="flex gap-2">
-                    {employee.status === 'ACTIVE' && (
+                    <GovButton variant="outline" onClick={() => router.push('/staff/employees')}>
+                        {t('common.back')}
+                    </GovButton>
+                    {employee.active && (
                         <>
-                            <Link href={`/staff/employees/${id}/transfer`}>
-                                <Button variant="outline">{t('employees.transferEmployee')}</Button>
+                            <Link href={`/staff/employees/${id}/edit`}>
+                                <GovButton>{t('employees.transferEmployee')}</GovButton>
                             </Link>
                             <Link href={`/staff/employees/${id}/dismiss`}>
-                                <Button variant="destructive">{t('employees.dismissEmployee')}</Button>
+                                <GovButton variant="danger">{t('employees.dismissEmployee')}</GovButton>
                             </Link>
                         </>
                     )}
                 </div>
             </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>{t('employees.title')}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                    <div>
-                        <span className="font-semibold">{t('employees.status')}: </span>
-                        <span className={`px-2 py-1 rounded ${
-                            employee.status === 'ACTIVE' ? 'bg-green-100 text-green-800' :
-                            employee.status === 'DISMISSED' ? 'bg-red-100 text-red-800' :
-                            'bg-gray-100 text-gray-800'
-                        }`}>
-                            {employee.status}
-                        </span>
+            <GovCard>
+                <GovCardHeader>
+                    <GovCardTitle>{t('common.details')}</GovCardTitle>
+                </GovCardHeader>
+                <GovCardContent className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-sm text-gray-500">{t('staff.personnelNumber')}</p>
+                            <p className="font-medium">{employee.personnelNumber || '-'}</p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">{t('staff.fullName')}</p>
+                            <p className="font-medium">
+                                {employee.lastName} {employee.firstName} {employee.middleName}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">{t('employees.organization')}</p>
+                            <p className="font-medium">{employee.organizationName || '-'}</p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">{t('employees.orgUnit')}</p>
+                            <p className="font-medium">{employee.orgUnitName || '-'}</p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">{t('employees.position')}</p>
+                            <p className="font-medium">{employee.positionName || '-'}</p>
+                        </div>
+                        {employee.rankName && (
+                            <div>
+                                <p className="text-sm text-gray-500">{t('staff.rank')}</p>
+                                <p className="font-medium">{employee.rankName}</p>
+                            </div>
+                        )}
+                        <div>
+                            <p className="text-sm text-gray-500">{t('employees.hireDate')}</p>
+                            <p className="font-medium">{employee.hireDate ? new Date(employee.hireDate).toLocaleDateString() : '-'}</p>
+                        </div>
+                        {employee.dismissalDate && (
+                            <div>
+                                <p className="text-sm text-gray-500">{t('employees.dismissDate')}</p>
+                                <p className="font-medium">{new Date(employee.dismissalDate).toLocaleDateString()}</p>
+                            </div>
+                        )}
+                        <div>
+                            <p className="text-sm text-gray-500">{t('employees.status')}</p>
+                            <p className="font-medium">
+                                <span className={employee.active ? 'text-green-600' : 'text-red-600'}>
+                                    {employee.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                    {employee.hireDate && (
-                        <div>
-                            <span className="font-semibold">{t('employees.hireDate')}: </span>
-                            <span>{new Date(employee.hireDate).toLocaleDateString()}</span>
-                        </div>
-                    )}
-                    {employee.dismissDate && (
-                        <div>
-                            <span className="font-semibold">{t('employees.dismissDate')}: </span>
-                            <span>{new Date(employee.dismissDate).toLocaleDateString()}</span>
-                        </div>
-                    )}
-                    {employee.position && (
-                        <div>
-                            <span className="font-semibold">{t('employees.position')}: </span>
-                            <span>{employee.position}</span>
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
+                </GovCardContent>
+            </GovCard>
 
             {/* Employee History Timeline */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+            <GovCard>
+                <GovCardHeader>
+                    <GovCardTitle className="flex items-center gap-2">
                         <Calendar className="w-5 h-5" />
-                        {t('employees.history') || 'История событий'}
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
+                        {t('employees.history')}
+                    </GovCardTitle>
+                </GovCardHeader>
+                <GovCardContent>
                     {historyLoading ? (
                         <div className="text-center py-4">{t('common.loading')}</div>
                     ) : !history || history.length === 0 ? (
                         <div className="text-center py-4 text-gray-500">
-                            {t('employees.noHistory') || 'Нет истории событий'}
+                            {t('employees.noHistory')}
                         </div>
                     ) : (
                         <div className="space-y-4">
                             {history.map((event: any, index: number) => (
                                 <div
                                     key={event.id || index}
-                                    className={`flex gap-4 p-4 rounded-lg border-l-4 ${getEventColor(event.status)}`}
+                                    className={`flex gap-4 p-4 rounded-lg border-l-4 ${getEventColor(event.eventType)}`}
                                 >
                                     <div className="flex-shrink-0 mt-1">
-                                        {getEventIcon(event.status)}
+                                        {getEventIcon(event.eventType)}
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex items-center justify-between mb-2">
                                             <h4 className="font-semibold text-lg">
-                                                {event.status === 'HIRED' && (t('employees.hired') || 'Принят на работу')}
-                                                {event.status === 'TRANSFERRED' && (t('employees.transferred') || 'Переведен')}
-                                                {event.status === 'DISMISSED' && (t('employees.dismissed') || 'Уволен')}
+                                                {event.eventType === 'HIRED' && t('employees.hired')}
+                                                {event.eventType === 'TRANSFERRED' && t('employees.transferred')}
+                                                {event.eventType === 'DISMISSED' && t('employees.dismissed')}
                                             </h4>
                                             <span className="text-sm text-gray-600">
                                                 {new Date(event.eventDate).toLocaleDateString('ru-RU', {
@@ -138,27 +173,27 @@ export function EmployeeDetails({ id }: { id: string }) {
                                         </div>
                                         {event.organizationName && (
                                             <div className="text-sm text-gray-700">
-                                                <span className="font-medium">{t('employees.organization') || 'Организация'}:</span> {event.organizationName}
+                                                <span className="font-medium">{t('employees.organization')}:</span> {event.organizationName}
                                             </div>
                                         )}
                                         {event.orgUnitName && (
                                             <div className="text-sm text-gray-700">
-                                                <span className="font-medium">{t('employees.orgUnit') || 'Подразделение'}:</span> {event.orgUnitName}
+                                                <span className="font-medium">{t('employees.orgUnit')}:</span> {event.orgUnitName}
                                             </div>
                                         )}
-                                        {event.position && (
+                                        {event.positionName && (
                                             <div className="text-sm text-gray-700">
-                                                <span className="font-medium">{t('employees.position') || 'Должность'}:</span> {event.position}
+                                                <span className="font-medium">{t('employees.position')}:</span> {event.positionName}
                                             </div>
                                         )}
-                                        {event.rank && (
+                                        {event.rankName && (
                                             <div className="text-sm text-gray-700">
-                                                <span className="font-medium">{t('employees.rank') || 'Звание'}:</span> {event.rank}
+                                                <span className="font-medium">{t('staff.rank')}:</span> {event.rankName}
                                             </div>
                                         )}
-                                        {event.notes && (
+                                        {event.comment && (
                                             <div className="text-sm text-gray-600 mt-2 italic">
-                                                {event.notes}
+                                                {event.comment}
                                             </div>
                                         )}
                                     </div>
@@ -166,8 +201,8 @@ export function EmployeeDetails({ id }: { id: string }) {
                             ))}
                         </div>
                     )}
-                </CardContent>
-            </Card>
+                </GovCardContent>
+            </GovCard>
         </div>
     )
 }

@@ -4,12 +4,15 @@ import { usePersons } from '@/features/manage-persons/model/usePersons'
 import { useDeletePerson } from '@/features/manage-persons/model/useDeletePerson'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 import Link from 'next/link'
 
 export function PersonsTable() {
@@ -24,14 +27,19 @@ export function PersonsTable() {
         size 
     })
     const deleteMutation = useDeletePerson()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('persons.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('persons.deleteConfirm'),
+            'Вы уверены, что хотите удалить эту персону?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -67,20 +75,41 @@ export function PersonsTable() {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>{t('persons.iin')}</TableHead>
-                        <TableHead>{t('persons.fullName')}</TableHead>
+                        <TableHead>{t('persons.nationalId')}</TableHead>
+                        <TableHead>{t('persons.lastName')}</TableHead>
+                        <TableHead>{t('persons.firstName')}</TableHead>
+                        {!isMobile && <TableHead>{t('persons.middleName')}</TableHead>}
                         {!isMobile && <TableHead>{t('persons.birthDate')}</TableHead>}
+                        {!isMobile && <TableHead>{t('persons.gender')}</TableHead>}
+                        <TableHead>{t('common.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {data?.content?.map((person: any) => (
                         <TableRow key={person.id}>
-                            <TableCell>{person.iin}</TableCell>
-                            <TableCell>{person.fullName}</TableCell>
+                            <TableCell>{person.nationalId || '-'}</TableCell>
+                            <TableCell>{person.lastName}</TableCell>
+                            <TableCell>{person.firstName}</TableCell>
+                            {!isMobile && <TableCell>{person.middleName || '-'}</TableCell>}
                             {!isMobile && <TableCell>{person.birthDate || '-'}</TableCell>}
+                            {!isMobile && <TableCell>
+                                {person.gender === 'MALE' && t('persons.male')}
+                                {person.gender === 'FEMALE' && t('persons.female')}
+                                {!person.gender && '-'}
+                            </TableCell>}
                             <TableCell>
-                                <Link href={`/directories/persons/${person.id}/edit`}>
+                                <span className={person.active ? 'text-green-600' : 'text-red-600'}>
+                                    {person.active ? t('common.active') : t('common.inactive')}
+                                </span>
+                            </TableCell>
+                            <TableCell>
+                                <Link href={`/directories/persons/${person.id}` as any}>
+                                    <Button variant="ghost" size="sm">
+                                        {t('common.view')}
+                                    </Button>
+                                </Link>
+                                <Link href={`/directories/persons/${person.id}/edit` as any}>
                                     <Button variant="ghost" size="sm">
                                         {t('common.edit')}
                                     </Button>
@@ -110,6 +139,18 @@ export function PersonsTable() {
                     {t('pagination.next')}
                 </Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

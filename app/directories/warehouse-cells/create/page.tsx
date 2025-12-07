@@ -6,6 +6,7 @@ import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel, GovTextarea } from '@/gov-design/components/Form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { Checkbox } from '@/shared/ui/checkbox'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useWarehouseZonesByWarehouse } from '@/features/manage-warehouse-zones/model/useWarehouseZonesByWarehouse'
 import { useCreateWarehouseCell } from '@/features/manage-warehouse-cells/model/useCreateWarehouseCell'
@@ -27,6 +28,7 @@ export default function WarehouseCellCreatePage() {
         code: '',
         description: '',
         capacity: '',
+        active: true,
     })
 
     const { data: zones, isLoading: zonesLoading } = useWarehouseZonesByWarehouse(formData.warehouseId || undefined)
@@ -46,6 +48,7 @@ export default function WarehouseCellCreatePage() {
                 code: formData.code,
                 description: formData.description || undefined,
                 capacity: formData.capacity ? parseInt(formData.capacity) : undefined,
+                active: formData.active,
             })
             toast.success(t('common.success'))
             router.push('/directories/warehouse-cells')
@@ -140,6 +143,20 @@ export default function WarehouseCellCreatePage() {
                         onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                         placeholder={t('warehouseCells.capacity')}
                     />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                    <Checkbox
+                        id="active"
+                        checked={formData.active}
+                        onCheckedChange={(checked) => setFormData({ ...formData, active: checked as boolean })}
+                    />
+                    <label
+                        htmlFor="active"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                        {t('common.active')}
+                    </label>
                 </div>
 
                 <div className="flex gap-3 pt-4">

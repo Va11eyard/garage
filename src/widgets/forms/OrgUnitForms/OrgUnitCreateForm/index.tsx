@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function OrgUnitCreateForm() {
     const { t } = useTranslation()
@@ -44,8 +45,8 @@ export function OrgUnitCreateForm() {
             })
             toast.success(t('common.success'))
             router.push('/directories/org-units')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

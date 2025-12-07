@@ -7,13 +7,17 @@ import { GovCard, GovCardHeader, GovCardTitle, GovCardContent } from '@/gov-desi
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { Label } from '@/shared/ui/label'
 import { GovButton } from '@/gov-design/components/Button'
+import { GovInput } from '@/gov-design/components/Form'
 import { BarChart3, TrendingUp, PieChart, Activity, Download, Filter } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function AnalyticsReportsPage() {
     const { t } = useTranslation()
     const [reportType, setReportType] = useState('usage-trends')
     const [timeframe, setTimeframe] = useState('year')
     const [category, setCategory] = useState('all')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
 
     const reportTypes = [
         { value: 'usage-trends', label: t('reports.usageTrends') || 'Тренды использования' },
@@ -37,7 +41,9 @@ export default function AnalyticsReportsPage() {
     ]
 
     const handleGenerateReport = () => {
-        console.log('Generating analytics report:', { reportType, timeframe, category })
+        // TODO: Implement analytics report generation when backend API is available
+        toast.info(t('reports.notImplemented') || 'Функция формирования отчетов находится в разработке')
+        console.log('Generating analytics report:', { reportType, timeframe, category, startDate, endDate })
     }
 
     return (
@@ -114,6 +120,27 @@ export default function AnalyticsReportsPage() {
                             </Select>
                         </div>
                     </div>
+
+                    {timeframe === 'custom' && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                            <div className="space-y-2">
+                                <Label>{t('common.startDate') || 'Дата начала'}</Label>
+                                <GovInput
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>{t('common.endDate') || 'Дата окончания'}</Label>
+                                <GovInput
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     <div className="flex gap-2">
                         <GovButton onClick={handleGenerateReport} className="flex items-center gap-2">

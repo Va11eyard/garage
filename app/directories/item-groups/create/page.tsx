@@ -11,12 +11,15 @@ import { useItemGroups } from '@/features/manage-item-groups/model/useItemGroups
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export default function ItemGroupCreatePage() {
     const router = useRouter()
     const { t } = useTranslation()
     const createMutation = useCreateItemGroup()
-    const { data: itemGroups = [], isLoading } = useItemGroups()
+    const { data: itemGroupsData, isLoading } = useItemGroups()
+    
+    const itemGroups = itemGroupsData || []
     
     const [formData, setFormData] = useState({
         code: '',
@@ -40,7 +43,7 @@ export default function ItemGroupCreatePage() {
             toast.success(t('common.success'))
             router.push('/directories/item-groups')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         }
     }
 

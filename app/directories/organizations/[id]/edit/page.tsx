@@ -11,6 +11,7 @@ import { useUpdateOrganization } from '@/features/manage-organizations/model/use
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Spinner } from '@/shared/ui/spinner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export default function OrganizationEditPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
@@ -25,6 +26,8 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
         shortName: '',
         active: true,
     })
+    
+    const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
     useEffect(() => {
         if (organization) {
@@ -39,9 +42,14 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setFieldErrors({})
         
-        if (!formData.code || !formData.name) {
-            toast.error(t('common.required'))
+        const errors: Record<string, string> = {}
+        if (!formData.code) errors.code = t('common.required')
+        if (!formData.name) errors.name = t('common.required')
+        
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors)
             return
         }
 
@@ -55,8 +63,19 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
             })
             toast.success(t('common.success'))
             router.push('/directories/organizations')
-        } catch (error) {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            if (error?.body?.errors) {
+                const apiErrors: Record<string, string> = {}
+                const errors = error.body.errors
+                if (typeof errors === 'object' && !Array.isArray(errors)) {
+                    Object.keys(errors).forEach(field => {
+                        const fieldError = errors[field]
+                        apiErrors[field] = Array.isArray(fieldError) ? fieldError[0] : fieldError
+                    })
+                    setFieldErrors(apiErrors)
+                }
+            }
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -83,9 +102,9 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
                             <GovInput
                                 value={formData.code}
                                 onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                                required
                                 placeholder={t('organizations.code')}
                             />
+                            {fieldErrors.code && <p className="text-sm text-red-600 mt-1">{fieldErrors.code}</p>}
                         </div>
 
                         <div>
@@ -93,9 +112,9 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
                             <GovInput
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                required
                                 placeholder={t('organizations.name')}
                             />
+                            {fieldErrors.name && <p className="text-sm text-red-600 mt-1">{fieldErrors.name}</p>}
                         </div>
 
                         <div>
@@ -105,6 +124,7 @@ export default function OrganizationEditPage({ params }: { params: Promise<{ id:
                                 onChange={(e) => setFormData({ ...formData, shortName: e.target.value })}
                                 placeholder={t('organizations.shortName')}
                             />
+                            {fieldErrors.shortName && <p className="text-sm text-red-600 mt-1">{fieldErrors.shortName}</p>}
                         </div>
 
                         <div className="flex items-center gap-2">

@@ -3,88 +3,121 @@
 import { usePerson } from '@/features/manage-persons/model/usePerson'
 import { useUpdatePerson } from '@/features/manage-persons/model/useUpdatePerson'
 import { useTranslation } from '@/shared/i18n/use-translation'
-import { Button } from '@/shared/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
-import { Input } from '@/shared/ui/input'
-import { Label } from '@/shared/ui/label'
+import { GovBreadcrumb } from '@/gov-design/patterns'
+import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
+import { GovButton } from '@/gov-design/components/Button'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { Spinner } from '@/shared/ui/spinner'
+import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function PersonEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
     const router = useRouter()
     const { data: person, isLoading } = usePerson(id)
-    const updatePerson = useUpdatePerson(id)
-    const [fullName, setFullName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
+    const updateMutation = useUpdatePerson(id)
+    
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+    })
 
     useEffect(() => {
         if (person) {
-            setFullName(person.fullName || '')
-            setEmail(person.email || '')
-            setPhone(person.phone || '')
+            setFormData({
+                fullName: person.fullName || '',
+                email: person.email || '',
+                phone: person.phone || '',
+            })
         }
     }, [person])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        
+        if (!formData.fullName) {
+            toast.error(t('common.required'))
+            return
+        }
+
         try {
-            await updatePerson.mutateAsync({ fullName, email, phone })
-            router.push(`/directories/persons/${id}` as any)
+            await updateMutation.mutateAsync({
+                fullName: formData.fullName,
+                email: formData.email || undefined,
+                phone: formData.phone || undefined,
+            })
+            toast.success(t('common.success'))
+            router.push('/directories/persons')
         } catch (error) {
-            console.error('Failed to update person:', error)
+            toast.error(getErrorMessage(error))
         }
     }
 
-    if (isLoading) return <div className="p-6">{t('common.loading')}</div>
-    if (!person) return <div className="p-6">{t('common.noData')}</div>
+    if (isLoading) return <Spinner />
+    if (!person) return <div>{t('common.notFound')}</div>
 
     return (
-        <div className="container mx-auto py-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>{t('persons.edit')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-6">
+            <GovBreadcrumb items={[
+                { label: t('sidebar.directoriesSection'), href: '/directories' },
+                { label: t('persons.title'), href: '/directories/persons' },
+                { label: person.fullName || '', href: `/directories/persons/${id}` },
+                { label: t('common.edit') }
+            ]} />
+
+            <GovCard>
+                <GovCardHeader>
+                    <GovCardTitle>{t('persons.edit')}</GovCardTitle>
+                </GovCardHeader>
+                <GovCardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
-                            <Label htmlFor="fullName">{t('persons.fullName')}</Label>
-                            <Input
-                                id="fullName"
-                                value={fullName}
-                                onChange={(e) => setFullName(e.target.value)}
+                            <GovLabel required>{t('persons.fullName')}</GovLabel>
+                            <GovInput
+                                value={formData.fullName}
+                                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                                 required
+                                placeholder={t('persons.fullName')}
                             />
                         </div>
+
                         <div>
-                            <Label htmlFor="email">{t('persons.email')}</Label>
-                            <Input
-                                id="email"
+                            <GovLabel>{t('persons.email')}</GovLabel>
+                            <GovInput
                                 type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                placeholder={t('persons.email')}
                             />
                         </div>
+
                         <div>
-                            <Label htmlFor="phone">{t('persons.phone')}</Label>
-                            <Input
-                                id="phone"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                            <GovLabel>{t('persons.phone')}</GovLabel>
+                            <GovInput
+                                value={formData.phone}
+                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                placeholder={t('persons.phone')}
                             />
                         </div>
-                        <div className="flex gap-2">
-                            <Button type="submit" disabled={updatePerson.isPending}>
-                                {updatePerson.isPending ? t('common.saving') : t('common.save')}
-                            </Button>
-                            <Button type="button" variant="outline" onClick={() => router.back()}>
+
+                        <div className="flex gap-3 pt-4">
+                            <GovButton type="submit" disabled={updateMutation.isPending}>
+                                {updateMutation.isPending ? t('common.loading') : t('common.save')}
+                            </GovButton>
+                            <GovButton 
+                                type="button" 
+                                variant="secondary"
+                                onClick={() => router.back()}
+                            >
                                 {t('common.cancel')}
-                            </Button>
+                            </GovButton>
                         </div>
                     </form>
-                </CardContent>
-            </Card>
+                </GovCardContent>
+            </GovCard>
         </div>
     )
 }

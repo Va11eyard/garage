@@ -1,7 +1,6 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { type ReturnDocumentDto } from '@/shared/api/generated/__swagger_client'
 import { ReturnService } from './service'
 
 const service = new ReturnService()
@@ -9,7 +8,7 @@ const service = new ReturnService()
 export function usePostReturn() {
     const queryClient = useQueryClient()
 
-    return useMutation<ReturnDocumentDto, Error, string>({
+    return useMutation({
         mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['returns'] })

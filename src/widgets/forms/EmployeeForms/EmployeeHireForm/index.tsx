@@ -16,6 +16,7 @@ import { Label } from '@/shared/ui/label'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EmployeeHireForm() {
     const { t } = useTranslation()
@@ -25,7 +26,8 @@ export function EmployeeHireForm() {
     const { data: persons } = usePersons({ page: 0, size: 100 })
     const { data: categories } = useEmployeeCategories()
     const [selectedOrgId, setSelectedOrgId] = useState<string>('')
-    const { data: orgUnits } = useOrgUnitsByOrganization(selectedOrgId)
+    const { data: orgUnitsData } = useOrgUnitsByOrganization(selectedOrgId)
+    const orgUnits = orgUnitsData || []
     const router = useRouter()
 
     const onSubmit = async (data: EmployeeHireRequest) => {
@@ -33,8 +35,8 @@ export function EmployeeHireForm() {
             const created = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push(`/staff/employees/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 
@@ -99,9 +101,15 @@ export function EmployeeHireForm() {
                 </div>
 
                 <div>
+                    <GovLabel required>{t('staff.personnelNumber')}</GovLabel>
+                    <GovInput {...register('personnelNumber', { required: true })} placeholder={t('staff.personnelNumber')} />
+                    {errors.personnelNumber && <span className="text-red-600 text-sm">{t('common.required')}</span>}
+                </div>
+
+                <div>
                     <GovLabel required>{t('employees.position')}</GovLabel>
                     <GovInput {...register('positionName', { required: true })} placeholder={t('employees.position')} />
-                    {errors.positionName && <span className="text-red-600 text-sm">{t('common.error')}</span>}
+                    {errors.positionName && <span className="text-red-600 text-sm">{t('common.required')}</span>}
                 </div>
 
                 <div>
@@ -110,9 +118,9 @@ export function EmployeeHireForm() {
                         name="hireDate"
                         control={control}
                         error={!!errors.hireDate}
-                        required
+                        rules={{ required: true }}
                     />
-                    {errors.hireDate && <span className="text-red-600 text-sm">{t('common.error')}</span>}
+                    {errors.hireDate && <span className="text-red-600 text-sm">{t('common.required')}</span>}
                 </div>
 
                 <div className="flex gap-3 pt-4">

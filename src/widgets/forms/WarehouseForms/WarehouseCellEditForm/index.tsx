@@ -14,6 +14,7 @@ import { Spinner } from '@/shared/ui/spinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function WarehouseCellEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -41,8 +42,8 @@ export function WarehouseCellEditForm({ id }: { id: string }) {
             await mutateAsync({ id, data: update })
             toast.success(t('common.success'))
             router.push(`/directories/warehouse-cells/${id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

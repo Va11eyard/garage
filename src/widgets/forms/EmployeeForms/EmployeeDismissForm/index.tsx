@@ -9,6 +9,8 @@ import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EmployeeDismissForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -25,9 +27,10 @@ export function EmployeeDismissForm({ id }: { id: string }) {
                 dismissalDate,
                 reason,
             })
+            toast.success(t('common.success'))
             router.push(`/staff/employees/${id}`)
         } catch (error) {
-            console.error('Failed to dismiss employee:', error)
+            toast.error(getErrorMessage(error))
         }
     }
 

@@ -13,6 +13,7 @@ import { Spinner } from '@/shared/ui/spinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function WarehouseCreateForm() {
     const { t } = useTranslation()
@@ -28,8 +29,8 @@ export function WarehouseCreateForm() {
             const created = await mutateAsync(data)
             toast.success(t('common.success'))
             router.push(`/directories/warehouses/${created.id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

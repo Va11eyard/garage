@@ -11,6 +11,8 @@ import { Label } from '@/shared/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function EmployeeTransferForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -28,9 +30,10 @@ export function EmployeeTransferForm({ id }: { id: string }) {
                 transferDate,
                 newOrgUnitId,
             })
+            toast.success(t('common.success'))
             router.push(`/staff/employees/${id}`)
         } catch (error) {
-            console.error('Failed to transfer employee:', error)
+            toast.error(getErrorMessage(error))
         }
     }
 

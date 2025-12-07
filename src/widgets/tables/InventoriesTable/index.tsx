@@ -8,12 +8,13 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
-import { GovDatePicker } from '@/gov-design/components/Form'
+import { DatePicker } from '@/shared/ui/date-picker'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
+import { GovDatePicker } from '@/gov-design'
 
 export function InventoriesTable() {
     const { t } = useTranslation()

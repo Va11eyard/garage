@@ -1,18 +1,16 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { type WriteOffDocumentDto } from '@/shared/api/generated/__swagger_client'
-import { WriteOffService } from './service'
-
-const service = new WriteOffService()
+import { Service } from '@/shared/api/generated/__swagger_client'
 
 export function usePostWriteOff() {
     const queryClient = useQueryClient()
 
-    return useMutation<WriteOffDocumentDto, Error, string>({
-        mutationFn: (id: string) => service.post(id),
+    return useMutation({
+        mutationFn: (id: string) => Service.postWriteOffDocument(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
+            queryClient.invalidateQueries({ queryKey: ['write-offs'] })
+            queryClient.invalidateQueries({ queryKey: ['write-off'] })
         },
     })
 }

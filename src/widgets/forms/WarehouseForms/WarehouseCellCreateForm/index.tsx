@@ -49,8 +49,9 @@ export function WarehouseCellCreateForm() {
             })
             toast.success(t('common.success'))
             router.push('/directories/warehouse-cells')
-        } catch (error) {
-            toast.error(t('common.error'))
+        } catch (error: any) {
+            const errorMessage = error?.body?.message || error?.message || t('common.error')
+            toast.error(errorMessage)
         } finally {
             setIsSubmitting(false)
         }

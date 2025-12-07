@@ -18,11 +18,9 @@ export class OrgUnitService {
         page?: number
         size?: number
     }) {
-        // No paginated search endpoint for org-units - use listByOrganization
         if (params.orgId) {
             return Service.listOrgUnitsByOrganization(params.orgId)
         }
-        // Return empty array if no orgId provided
         return []
     }
 

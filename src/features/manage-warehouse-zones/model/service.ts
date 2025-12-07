@@ -10,19 +10,11 @@ export class WarehouseZoneService {
         return Service.listByWarehouse(warehouseId)
     }
 
-    async search(params: {
-        warehouseId?: string
-        code?: string
-        name?: string
-        page?: number
-        size?: number
-    }) {
-        // No paginated search endpoint for warehouse zones - use listByWarehouse
-        if (params.warehouseId) {
-            return Service.listByWarehouse(params.warehouseId)
-        }
-        // Return empty array if no warehouseId provided
-        return []
+    async listByWarehouses(warehouseIds: string[]): Promise<WarehouseZoneDto[]> {
+        // Fetch zones from all warehouses and combine them
+        const promises = warehouseIds.map(id => Service.listByWarehouse(id))
+        const results = await Promise.all(promises)
+        return results.flat()
     }
 
     async get(id: string): Promise<WarehouseZoneDto> {

@@ -10,6 +10,7 @@ import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function UnitEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
@@ -24,8 +25,8 @@ export function UnitEditForm({ id }: { id: string }) {
             await mutateAsync({ id, data: update })
             toast.success(t('common.success'))
             router.push(`/directories/units/${id}`)
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 

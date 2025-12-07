@@ -13,6 +13,7 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 import Link from 'next/link'
 import { Spinner } from '@/shared/ui/spinner'
 import { Route } from 'next'
@@ -38,7 +39,7 @@ export function WarehousesTable() {
             () => {
                 deleteMutation.mutate(id, {
                     onSuccess: () => toast.success(t('common.success')),
-                    onError: () => toast.error(t('common.error')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
                 })
             }
         )
@@ -102,6 +103,7 @@ export function WarehousesTable() {
                         <TableHead>{t('warehouses.code')}</TableHead>
                         <TableHead>{t('warehouses.name')}</TableHead>
                         <TableHead>{t('warehouses.address')}</TableHead>
+                        <TableHead>{t('warehouses.description')}</TableHead>
                         <TableHead>{t('warehouses.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
@@ -116,12 +118,16 @@ export function WarehousesTable() {
                                 </Link>
                             </TableCell>
                             <TableCell>{warehouse.address || '—'}</TableCell>
+                            <TableCell>{warehouse.description || '—'}</TableCell>
                             <TableCell>
                                 <span className={warehouse.active ? 'text-green-600' : 'text-red-600'}>
                                   {warehouse.active ? t('common.active') : t('common.inactive')}
                                 </span>
                             </TableCell>
                             <TableCell>
+                                <Button variant="ghost" size="sm" asChild>
+                                    <Link href={`/directories/warehouses/${warehouse.id}` as Route}>{t('common.view')}</Link>
+                                </Button>
                                 <Button variant="ghost" size="sm" asChild>
                                     <Link href={`/directories/warehouses/${warehouse.id}/edit` as Route}>{t('common.edit')}</Link>
                                 </Button>

@@ -23,8 +23,8 @@ export function useWearReport(filters: WearReportFilters = {}) {
             }
             return Service.searchEmployeeWearReportPage(
                 filters.organizationId!,
-                filters.orgUnitId || undefined,
-                filters.itemId || undefined,
+                filters.orgUnitId,
+                filters.itemId,
                 filters.from,
                 filters.to,
                 filters.page,

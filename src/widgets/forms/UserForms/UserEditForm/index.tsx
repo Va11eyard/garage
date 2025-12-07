@@ -3,80 +3,138 @@
 import { useUser } from '@/features/manage-users/model/useUser'
 import { useUpdateUser } from '@/features/manage-users/model/useUpdateUser'
 import { useRoles } from '@/features/manage-roles/model/useRoles'
-import { useForm } from 'react-hook-form'
 import { useTranslation } from '@/shared/i18n/use-translation'
-import { Button } from '@/shared/ui/button'
-import { Label } from '@/shared/ui/label'
-import { Input } from '@/shared/ui/input'
+import { GovBreadcrumb } from '@/gov-design/patterns'
+import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
+import { GovButton } from '@/gov-design/components/Button'
+import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { Spinner } from '@/shared/ui/spinner'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function UserEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
     const { data: user, isLoading } = useUser(id)
-    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm()
-    const { mutateAsync } = useUpdateUser()
+    const updateMutation = useUpdateUser()
     const { data: roles } = useRoles()
     const router = useRouter()
 
+    const [formData, setFormData] = useState({
+        username: '',
+        roles: [] as string[],
+        active: true,
+    })
+
     useEffect(() => {
         if (user) {
-            reset({
-                username: user.username,
+            setFormData({
+                username: user.username || '',
                 roles: user.roles || [],
-                active: user.enabled
+                active: user.enabled ?? true,
             })
         }
-    }, [user, reset])
+    }, [user])
 
-    const onSubmit = async (data: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+
+        if (!formData.username) {
+            toast.error(t('common.required'))
+            return
+        }
+
         try {
-            await mutateAsync({ id, data })
+            await updateMutation.mutateAsync({
+                id,
+                data: {
+                    username: formData.username,
+                    roles: formData.roles,
+                    active: formData.active,
+                }
+            })
             toast.success(t('common.success'))
             router.push('/admin/users')
-        } catch {
-            toast.error(t('common.error'))
+        } catch (error) {
+            toast.error(getErrorMessage(error))
         }
     }
 
-    if (isLoading) return <div className="gov-page-content">{t('common.loading')}</div>
+    if (isLoading) return <Spinner />
+    if (!user) return <div>{t('common.notFound')}</div>
 
     return (
-        <div className="gov-page-content">
-            <form onSubmit={handleSubmit(onSubmit)} className="gov-card max-w-2xl space-y-6">
-                <h2 className="gov-title">{t('users.editUser')}</h2>
-                
-                <div className="space-y-2">
-                    <Label className="gov-label">{t('users.username')}</Label>
-                    <Input {...register('username', { required: true })} className="gov-input" disabled />
-                </div>
+        <div className="space-y-6">
+            <GovBreadcrumb items={[
+                { label: t('sidebar.adminSection'), href: '/admin' },
+                { label: t('users.title'), href: '/admin/users' },
+                { label: user.username || '', href: `/admin/users/${id}` },
+                { label: t('common.edit') }
+            ]} />
 
-                <div className="space-y-2">
-                    <Label className="gov-label">{t('users.roles')}</Label>
-                    <select {...register('roles')} multiple className="gov-input min-h-[120px]">
-                        {roles?.map((role: any) => (
-                            <option key={role.code} value={role.code}>
-                                {role.code} - {role.description}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+            <GovCard>
+                <GovCardHeader>
+                    <GovCardTitle>{t('users.editUser')}</GovCardTitle>
+                </GovCardHeader>
+                <GovCardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
+                        <div>
+                            <GovLabel required>{t('users.username')}</GovLabel>
+                            <GovInput
+                                value={formData.username}
+                                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                required
+                                disabled
+                                placeholder={t('users.username')}
+                            />
+                        </div>
 
-                <div className="flex items-center gap-2">
-                    <input type="checkbox" {...register('active')} id="active" className="gov-checkbox" />
-                    <Label htmlFor="active" className="gov-label">{t('users.active')}</Label>
-                </div>
+                        <div>
+                            <GovLabel>{t('users.roles')}</GovLabel>
+                            <select
+                                multiple
+                                value={formData.roles}
+                                onChange={(e) => {
+                                    const selected = Array.from(e.target.selectedOptions, option => option.value)
+                                    setFormData({ ...formData, roles: selected })
+                                }}
+                                className="w-full border rounded px-3 py-2 min-h-[120px]"
+                            >
+                                {roles?.map((role: any) => (
+                                    <option key={role.code} value={role.code}>
+                                        {role.code} - {role.description}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                <div className="flex gap-4">
-                    <Button type="submit" disabled={isSubmitting} className="gov-button-primary">
-                        {t('common.save')}
-                    </Button>
-                    <Button type="button" onClick={() => router.back()} className="gov-button-secondary">
-                        {t('common.cancel')}
-                    </Button>
-                </div>
-            </form>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="active"
+                                checked={formData.active}
+                                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                                className="w-4 h-4"
+                            />
+                            <GovLabel htmlFor="active" className="mb-0">{t('users.active')}</GovLabel>
+                        </div>
+
+                        <div className="flex gap-3 pt-4">
+                            <GovButton type="submit" disabled={updateMutation.isPending}>
+                                {updateMutation.isPending ? t('common.loading') : t('common.save')}
+                            </GovButton>
+                            <GovButton 
+                                type="button" 
+                                variant="secondary"
+                                onClick={() => router.back()}
+                            >
+                                {t('common.cancel')}
+                            </GovButton>
+                        </div>
+                    </form>
+                </GovCardContent>
+            </GovCard>
         </div>
     )
 }

@@ -1,7 +1,6 @@
 "use client"
 
-import * as React from "react"
-import { Control, Controller, FieldValues, Path } from "react-hook-form"
+import { Control, Controller, FieldValues, Path, RegisterOptions } from "react-hook-form"
 import { GovDatePicker } from "./GovDatePicker"
 
 interface GovDatePickerControllerProps<T extends FieldValues> {
@@ -12,17 +11,20 @@ interface GovDatePickerControllerProps<T extends FieldValues> {
   className?: string
   error?: boolean
   required?: boolean
+  rules?: Omit<RegisterOptions<T, Path<T>>, 'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'>
 }
 
 export function GovDatePickerController<T extends FieldValues>({
   name,
   control,
+  rules,
   ...props
 }: GovDatePickerControllerProps<T>) {
   return (
     <Controller
       name={name}
       control={control}
+      rules={rules}
       render={({ field }) => (
         <GovDatePicker
           value={field.value}

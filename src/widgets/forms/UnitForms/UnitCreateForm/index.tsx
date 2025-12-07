@@ -8,6 +8,7 @@ import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
 import { Service } from '@/shared/api/generated/__swagger_client'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function UnitCreateForm() {
     const router = useRouter()
@@ -37,7 +38,7 @@ export function UnitCreateForm() {
             toast.success(t('common.success'))
             router.push('/directories/units')
         } catch (error) {
-            toast.error(t('common.error'))
+            toast.error(getErrorMessage(error))
         } finally {
             setIsSubmitting(false)
         }

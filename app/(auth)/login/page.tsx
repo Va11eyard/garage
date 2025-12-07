@@ -156,7 +156,6 @@ export default function LoginPage() {
 
                 <div className="mt-6 text-center text-black text-sm">
                     <p className="opacity-90">{t('auth.copyright')}</p>
-                    <p className="opacity-75 mt-1">{t('auth.contactCenter')}: <span className="font-bold">1414</span></p>
                 </div>
             </div>
         </div>

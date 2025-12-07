@@ -4,7 +4,7 @@ export function Footer() {
             <div className="container mx-auto px-6 py-8">
                 
                 <div className="border-t border-gov-gray-700 mt-8 pt-6 text-center text-sm text-gov-gray-400">
-                    © 2025 iQadam Systems. Все права защищены.
+                    © 2025 PRAGMATiCo. Все права защищены.
                 </div>
             </div>
         </footer>

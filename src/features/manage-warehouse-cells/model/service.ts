@@ -14,22 +14,18 @@ export class WarehouseCellService {
         return Service.listWarehouseCellsByZone(zoneId)
     }
 
-    async search(params: {
-        warehouseId?: string
-        zoneId?: string
-        code?: string
-        page?: number
-        size?: number
-    }) {
-        // No paginated search endpoint for warehouse cells - use list methods
-        if (params.zoneId) {
-            return Service.listWarehouseCellsByZone(params.zoneId)
-        }
-        if (params.warehouseId) {
-            return Service.listWarehouseCellsByWarehouse(params.warehouseId)
-        }
-        // Return empty array if no filter provided
-        return []
+    async listByWarehouses(warehouseIds: string[]): Promise<WarehouseCellDto[]> {
+        // Fetch cells from all warehouses and combine them
+        const promises = warehouseIds.map(id => Service.listWarehouseCellsByWarehouse(id))
+        const results = await Promise.all(promises)
+        return results.flat()
+    }
+
+    async listByZones(zoneIds: string[]): Promise<WarehouseCellDto[]> {
+        // Fetch cells from all zones and combine them
+        const promises = zoneIds.map(id => Service.listWarehouseCellsByZone(id))
+        const results = await Promise.all(promises)
+        return results.flat()
     }
 
     async get(id: string): Promise<WarehouseCellDto> {
