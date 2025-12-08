@@ -105,7 +105,7 @@ export function ReceiptEditForm({ id }: { id: string }) {
                             </div>
 
                             <div>
-                                <GovLabel>{t('documents.status')}</GovLabel>
+                                <GovLabel>{t('documents.statusLabel')}</GovLabel>
                                 <GovInput value={receipt?.status || 'DRAFT'} disabled className="bg-gray-50" />
                             </div>
                         </div>

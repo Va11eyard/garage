@@ -112,7 +112,7 @@ export default function WriteOffDetailPage({ params }: { params: Promise<{ id: s
               <p className="font-medium">{writeOff.warehouseName || '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{t('documents.status')}</p>
+              <p className="text-sm text-gray-500">{t('documents.statusLabel')}</p>
               <p className="font-medium">
                 <span className={
                   writeOff.status === 'DRAFT' ? 'text-gray-600' :

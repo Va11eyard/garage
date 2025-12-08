@@ -73,7 +73,7 @@ export function ReceiptCreateForm() {
                     </div>
 
                     <div>
-                        <GovLabel>{t('documents.status')}</GovLabel>
+                        <GovLabel>{t('documents.statusLabel')}</GovLabel>
                         <GovInput value="DRAFT" disabled className="bg-gray-50" />
                     </div>
                 </div>

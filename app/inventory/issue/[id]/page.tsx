@@ -114,7 +114,7 @@ export default function IssueDetailPage({ params }: { params: Promise<{ id: stri
               <p className="font-medium">{issue.warehouseName || '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{t('documents.status')}</p>
+              <p className="text-sm text-gray-500">{t('documents.statusLabel')}</p>
               <p className="font-medium">
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                   issue.status === 'DRAFT' ? 'bg-gray-100 text-gray-800' :

@@ -20,6 +20,12 @@ export function ItemGroupsTable() {
     const [codeFilter, setCodeFilter] = useState('')
     const [nameFilter, setNameFilter] = useState('')
 
+    // Create a map of item group IDs to names for parent lookup
+    const groupMap = useMemo(() => {
+        if (!data) return new Map()
+        return new Map(data.map((group: any) => [group.id, group.name]))
+    }, [data])
+
     const filteredData = useMemo(() => {
         if (!data) return []
         
@@ -84,7 +90,7 @@ export function ItemGroupsTable() {
                         <TableRow key={group.id}>
                             <TableCell>{group.code}</TableCell>
                             <TableCell>{group.name}</TableCell>
-                            {!isMobile && <TableCell>{group.parentGroupName || '-'}</TableCell>}
+                            {!isMobile && <TableCell>{group.parentId ? (groupMap.get(group.parentId) || '-') : '-'}</TableCell>}
                             <TableCell>
                                 <span className={group.active ? 'text-green-600' : 'text-red-600'}>
                                     {group.active ? t('common.active') : t('common.inactive')}

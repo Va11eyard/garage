@@ -110,7 +110,7 @@ export function IssueEditForm({ id }: { id: string }) {
                             </div>
 
                             <div>
-                                <GovLabel>{t('documents.status')}</GovLabel>
+                                <GovLabel>{t('documents.statusLabel')}</GovLabel>
                                 <GovInput value={issue?.status || 'DRAFT'} disabled className="bg-gray-50" />
                             </div>
                         </div>

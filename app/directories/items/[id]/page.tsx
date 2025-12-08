@@ -6,6 +6,8 @@ import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { useItem } from '@/features/manage-items/model/useItem'
+import { useItemGroup } from '@/features/manage-item-groups/model/useItemGroup'
+import { useUnit } from '@/features/manage-units/model/useUnit'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Spinner } from '@/shared/ui/spinner'
 
@@ -14,6 +16,8 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
   const { t } = useTranslation()
   const router = useRouter()
   const { data: item, isLoading } = useItem(id)
+  const { data: itemGroup } = useItemGroup(item?.groupId)
+  const { data: unit } = useUnit(item?.baseUnitId)
 
   if (isLoading) return <Spinner />
   if (!item) return <div>{t('common.notFound')}</div>
@@ -54,11 +58,11 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('items.itemGroup')}</p>
-              <p className="font-medium">{item.itemGroupName || '-'}</p>
+              <p className="font-medium">{itemGroup?.name || item.groupCode || '-'}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('items.unitOfMeasure')}</p>
-              <p className="font-medium">{item.unitOfMeasureName || '-'}</p>
+              <p className="font-medium">{unit?.name || item.baseUnitCode || '-'}</p>
             </div>
             {item.barcode && (
               <div>

@@ -64,7 +64,7 @@ export function ReceiptsTable() {
                         <TableHead>{t('documents.documentNumber')}</TableHead>
                         <TableHead>{t('documents.documentDate')}</TableHead>
                         {!isMobile && <TableHead>{t('documents.warehouse')}</TableHead>}
-                        <TableHead>{t('documents.status')}</TableHead>
+                        <TableHead>{t('documents.statusLabel')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>

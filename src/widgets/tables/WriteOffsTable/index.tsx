@@ -97,7 +97,7 @@ export function WriteOffsTable() {
                     <TableRow>
                         <TableHead>{t('documents.documentNumber')}</TableHead>
                         <TableHead>{t('documents.documentDate')}</TableHead>
-                        {!isMobile && <TableHead>{t('documents.status')}</TableHead>}
+                        {!isMobile && <TableHead>{t('documents.statusLabel')}</TableHead>}
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
                 </TableHeader>

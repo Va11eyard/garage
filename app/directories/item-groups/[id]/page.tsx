@@ -14,6 +14,7 @@ export default function ItemGroupDetailPage({ params }: { params: Promise<{ id: 
   const { t } = useTranslation()
   const router = useRouter()
   const { data: itemGroup, isLoading } = useItemGroup(id)
+  const { data: parentGroup } = useItemGroup(itemGroup?.parentId)
 
   if (isLoading) return <Spinner />
   if (!itemGroup) return <div>{t('common.notFound')}</div>
@@ -54,7 +55,7 @@ export default function ItemGroupDetailPage({ params }: { params: Promise<{ id: 
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('itemGroup.parentGroup')}</p>
-              <p className="font-medium">{itemGroup.parentGroupName || t('itemGroup.noParent')}</p>
+              <p className="font-medium">{parentGroup?.name || (itemGroup.parentId ? '-' : t('itemGroup.noParent'))}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('common.status')}</p>

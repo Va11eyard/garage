@@ -107,7 +107,7 @@ export default function ReturnDetailPage({ params }: { params: Promise<{ id: str
               <p className="font-medium">{returnDoc.docDate ? new Date(returnDoc.docDate).toLocaleDateString() : '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{t('documents.status')}</p>
+              <p className="text-sm text-gray-500">{t('documents.statusLabel')}</p>
               <p className="font-medium">
                 <span className={returnDoc.status === 'DRAFT' ? 'text-gray-600' : returnDoc.status === 'POSTED' ? 'text-green-600' : 'text-red-600'}>
                   {t(`documents.${returnDoc.status}`)}

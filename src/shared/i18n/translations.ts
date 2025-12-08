@@ -354,6 +354,7 @@ export const translations = {
             edit: 'Редактировать зону',
             editZone: 'Редактировать зону',
             deleteConfirm: 'Удалить зону?',
+            warehouseCannotBeChanged: 'Склад не может быть изменен после создания',
         },
         warehouseCells: {
             title: 'Ячейки склада',
@@ -1294,6 +1295,7 @@ export const translations = {
             edit: 'Аймақты өңдеу',
             editZone: 'Аймақты өңдеу',
             deleteConfirm: 'Аймақты жою керек пе?',
+            warehouseCannotBeChanged: 'Қойманы жасағаннан кейін өзгерту мүмкін емес',
         },
         warehouseCells: {
             title: 'Қойма ұяшықтары',

@@ -112,7 +112,7 @@ export default function TemporaryUseDetailPage({ params }: { params: Promise<{ i
               <p className="font-medium">{tempIssue.warehouseName || '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{t('documents.status')}</p>
+              <p className="text-sm text-gray-500">{t('documents.statusLabel')}</p>
               <p className="font-medium">
                 <span className={
                   tempIssue.status === 'DRAFT' ? 'text-gray-600' :

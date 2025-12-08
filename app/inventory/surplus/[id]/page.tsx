@@ -109,7 +109,7 @@ export default function SurplusDetailPage({ params }: { params: Promise<{ id: st
               <p className="font-medium">{surplus.warehouseName || '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">{t('documents.status')}</p>
+              <p className="text-sm text-gray-500">{t('documents.statusLabel')}</p>
               <p className="font-medium">
                 <span className={
                   surplus.status === 'DRAFT' ? 'text-gray-600' :
