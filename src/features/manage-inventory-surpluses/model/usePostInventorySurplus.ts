@@ -9,8 +9,8 @@ export function usePostInventorySurplus() {
     return useMutation({
         mutationFn: (id: string) => Service.postInventorySurplusDocument(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'] })
-            queryClient.invalidateQueries({ queryKey: ['inventory-surplus'] })
+            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['inventory-surplus'], exact: false })
         },
     })
 }

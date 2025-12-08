@@ -12,8 +12,8 @@ export function useCreateWarehouseCell() {
     return useMutation({
         mutationFn: (data: WarehouseCellCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouse-cells'] })
-            queryClient.invalidateQueries({ queryKey: ['warehouseCells'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouse-cells'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseCells'], exact: false })
         },
     })
 }

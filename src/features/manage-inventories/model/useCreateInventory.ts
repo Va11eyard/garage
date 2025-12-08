@@ -9,7 +9,7 @@ export function useCreateInventory() {
     return useMutation<InventoryDocumentDto, Error, InventoryDocumentCreateRequest>({
         mutationFn: (data: InventoryDocumentCreateRequest) => Service.createInventoryDocument(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['inventories'] })
+            queryClient.invalidateQueries({ queryKey: ['inventories'], exact: false })
         },
     })
 }

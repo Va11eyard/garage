@@ -57,16 +57,29 @@ export function AuditLogsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((log: any) => (
-                        <TableRow key={log.id}>
-                            <TableCell>{format(new Date(log.timestamp), 'dd.MM.yyyy HH:mm:ss')}</TableCell>
-                            <TableCell>{log.username || log.userId}</TableCell>
-                            <TableCell>{log.action}</TableCell>
-                            <TableCell>{log.entityType}</TableCell>
-                            <TableCell className="font-mono text-xs">{log.entityId}</TableCell>
-                            <TableCell>{log.ipAddress || '—'}</TableCell>
-                        </TableRow>
-                    ))}
+                    {data?.content?.map((log: any) => {
+                        const formatTimestamp = (timestamp: string | null | undefined) => {
+                            if (!timestamp) return '—'
+                            try {
+                                const date = new Date(timestamp)
+                                if (isNaN(date.getTime())) return '—'
+                                return format(date, 'dd.MM.yyyy HH:mm:ss')
+                            } catch {
+                                return '—'
+                            }
+                        }
+
+                        return (
+                            <TableRow key={log.id}>
+                                <TableCell>{formatTimestamp(log.timestamp)}</TableCell>
+                                <TableCell>{log.username || log.userId || '—'}</TableCell>
+                                <TableCell>{log.action || '—'}</TableCell>
+                                <TableCell>{log.entityType || '—'}</TableCell>
+                                <TableCell className="font-mono text-xs">{log.entityId || '—'}</TableCell>
+                                <TableCell>{log.ipAddress || '—'}</TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
             </Table>
 

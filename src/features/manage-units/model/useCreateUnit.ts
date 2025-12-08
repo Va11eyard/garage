@@ -10,7 +10,7 @@ export function useCreateUnit() {
     return useMutation({
         mutationFn: (data: UnitOfMeasureCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['units'] })
+            queryClient.invalidateQueries({ queryKey: ['units'], exact: false })
         },
     })
 }

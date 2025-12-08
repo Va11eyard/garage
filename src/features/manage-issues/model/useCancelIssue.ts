@@ -11,7 +11,7 @@ export function useCancelIssue() {
     return useMutation({
         mutationFn: (id: string) => service.cancel(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['issues'] })
+            queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
         },
     })
 }

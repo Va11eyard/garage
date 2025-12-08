@@ -11,7 +11,7 @@ export function useDeleteWarehouse() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouses'], exact: false })
         },
     })
 }

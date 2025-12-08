@@ -2,12 +2,13 @@
 
 import { useCategoryChanges } from '@/features/manage-category-changes/model/useCategoryChanges'
 import { usePostCategoryChange } from '@/features/manage-category-changes/model/usePostCategoryChange'
+import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { Spinner } from '@/shared/ui/spinner'
 import { Badge } from '@/shared/ui/badge'
 import { toast } from 'sonner'
@@ -19,10 +20,11 @@ export function CategoryChangesTable() {
     const { t } = useTranslation()
     const { page, size, nextPage, previousPage } = usePagination()
     const { filters, debouncedFilters, updateFilter } = useFilters({
-        warehouseId: '',
-        status: '',
+        warehouseId: 'ALL',
+        status: 'ALL',
     })
     const { data, isLoading } = useCategoryChanges({ ...debouncedFilters, page, size })
+    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
     const postMutation = usePostCategoryChange()
 
     const handlePost = (id: string) => {
@@ -40,23 +42,34 @@ export function CategoryChangesTable() {
         <div className="space-y-4">
             <div className="flex justify-between items-end gap-4">
                 <div className="flex gap-4 flex-1">
-                    <div>
+                    <div className="min-w-[200px]">
                         <label className="block text-sm font-medium mb-1">{t('categoryChanges.warehouse')}</label>
-                        <Input
-                            placeholder={t('categoryChanges.warehouse')}
-                            value={filters.warehouseId}
-                            onChange={(e) => updateFilter('warehouseId', e.target.value)}
-                            className="w-full"
-                        />
+                        <Select value={filters.warehouseId} onValueChange={(value) => updateFilter('warehouseId', value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.select')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
+                                {warehousesData?.content?.map((warehouse: any) => (
+                                    <SelectItem key={warehouse.id} value={warehouse.id!}>
+                                        {warehouse.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
-                    <div>
+                    <div className="min-w-[150px]">
                         <label className="block text-sm font-medium mb-1">{t('categoryChanges.status')}</label>
-                        <Input
-                            placeholder={t('categoryChanges.status')}
-                            value={filters.status}
-                            onChange={(e) => updateFilter('status', e.target.value)}
-                            className="w-full"
-                        />
+                        <Select value={filters.status} onValueChange={(value) => updateFilter('status', value)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder={t('common.select')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
+                                <SelectItem value="DRAFT">{t('documents.status.draft')}</SelectItem>
+                                <SelectItem value="POSTED">{t('documents.status.posted')}</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
                 <Button variant="default" asChild className="shrink-0 text-black">

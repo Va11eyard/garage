@@ -9,7 +9,7 @@ export function useDeleteNorm() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => Service.deleteItemSupplyNorm(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['norms'] })
+            queryClient.invalidateQueries({ queryKey: ['norms'], exact: false })
         },
     })
 }

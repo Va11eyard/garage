@@ -11,7 +11,7 @@ export function useUpdateItem() {
     return useMutation<ItemDto, Error, { id: string; data: ItemUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['items'] })
+            queryClient.invalidateQueries({ queryKey: ['items'], exact: false })
         },
     })
 }

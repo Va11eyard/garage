@@ -11,8 +11,8 @@ export function useDeleteWriteOff() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['write-offs'] })
-            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
+            queryClient.invalidateQueries({ queryKey: ['write-offs'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs'], exact: false })
         },
     })
 }

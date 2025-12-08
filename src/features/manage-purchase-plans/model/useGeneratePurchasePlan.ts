@@ -7,7 +7,7 @@ export function useGeneratePurchasePlan() {
     return useMutation({
         mutationFn: (request: any) => Service.generate(request),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['purchase-plans'] })
+            queryClient.invalidateQueries({ queryKey: ['purchase-plans'], exact: false })
         },
     })
 }

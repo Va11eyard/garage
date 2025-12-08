@@ -9,7 +9,7 @@ export function useUpsertSystemSetting() {
     return useMutation({
         mutationFn: service.upsert.bind(service),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['system-settings'] })
+            queryClient.invalidateQueries({ queryKey: ['system-settings'], exact: false })
         },
     })
 }

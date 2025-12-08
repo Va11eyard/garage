@@ -11,7 +11,7 @@ export function useDeleteMovement() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movements'] })
+            queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
         },
     })
 }

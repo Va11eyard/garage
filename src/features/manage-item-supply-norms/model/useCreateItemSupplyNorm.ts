@@ -9,8 +9,8 @@ export function useCreateItemSupplyNorm() {
     return useMutation({
         mutationFn: (data: ItemSupplyNormCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['item-supply-norms'] })
-            queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'] })
+            queryClient.invalidateQueries({ queryKey: ['item-supply-norms'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'], exact: false })
         },
     })
 }

@@ -12,7 +12,7 @@ export function useCreateIssue() {
     return useMutation<IssueDocumentDto, Error, IssueCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['issues'] })
+            queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
         },
     })
 }

@@ -12,7 +12,7 @@ export function useCreateReceipt() {
     return useMutation<ReceiptDocumentDto, Error, ReceiptCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['receipts'] })
+            queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
         },
     })
 }

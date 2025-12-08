@@ -9,7 +9,7 @@ export function useSendHeartbeat() {
     return useMutation({
         mutationFn: (code: string) => Service.sendDeviceHeartbeat(code),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['equipment'] })
+            queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
         },
     })
 }

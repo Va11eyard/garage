@@ -10,7 +10,7 @@ export function useUnpostReceipt() {
     return useMutation<ReceiptDocumentDto, Error, string>({
         mutationFn: (id: string) => service.unpost(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['receipts'] })
+            queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
         },
     })
 }

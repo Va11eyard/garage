@@ -9,7 +9,7 @@ export function useSendIntegrationEndpoint() {
     return useMutation({
         mutationFn: (code: string) => Service.sendTestIntegrationMessage(code, 'TEST'),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['integration-endpoints'] })
+            queryClient.invalidateQueries({ queryKey: ['integration-endpoints'], exact: false })
         },
     })
 }

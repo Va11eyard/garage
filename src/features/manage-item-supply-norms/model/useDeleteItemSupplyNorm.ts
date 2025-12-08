@@ -8,8 +8,8 @@ export function useDeleteItemSupplyNorm() {
     return useMutation({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['item-supply-norms'] })
-            queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'] })
+            queryClient.invalidateQueries({ queryKey: ['item-supply-norms'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'], exact: false })
         },
     })
 }

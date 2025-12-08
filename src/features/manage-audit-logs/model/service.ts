@@ -13,13 +13,17 @@ export class AuditLogService {
         page?: number
         size?: number
     }): Promise<PageAuditLogDto> {
-        return Service.search(
-            params.entityType || '',
-            params.entityId,
+        return Service.adminSearchAuditLogs(
             params.userId,
+            undefined, // username
             params.action,
+            params.entityType,
+            params.entityId,
+            undefined, // from
+            undefined, // to
+            undefined, // text
             params.page,
-            params.size as any
+            params.size
         )
     }
 

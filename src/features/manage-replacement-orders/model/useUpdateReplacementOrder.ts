@@ -12,8 +12,8 @@ export function useUpdateReplacementOrder(id: string) {
     return useMutation<ReplacementOrderDto, Error, ReplacementOrderUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['replacement-orders'] })
-            queryClient.invalidateQueries({ queryKey: ['replacement-orders', id] })
+            queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['replacement-orders', id], exact: false })
         },
     })
 }

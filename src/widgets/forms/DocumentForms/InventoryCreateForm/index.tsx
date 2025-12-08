@@ -39,6 +39,11 @@ export function InventoryCreateForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
+        toast.error('Создание документа инвентаризации временно недоступно. Документ должен содержать хотя бы одну строку. Эта функция будет доступна после обновления формы создания.')
+        return
+        
+        // Commented out until form supports adding lines before submission
+        /*
         if (!formData.docNumber?.trim()) {
             toast.error(t('documents.documentNumber') + ': ' + t('common.required'))
             return
@@ -71,6 +76,7 @@ export function InventoryCreateForm() {
             const errorMessage = error?.body?.message || error?.message || t('common.error')
             toast.error(errorMessage)
         }
+        */
     }
 
     return (

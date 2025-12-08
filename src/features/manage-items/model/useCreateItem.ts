@@ -12,7 +12,7 @@ export function useCreateItem() {
     return useMutation<ItemDto, Error, ItemCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['items'] })
+            queryClient.invalidateQueries({ queryKey: ['items'], exact: false })
         },
     })
 }

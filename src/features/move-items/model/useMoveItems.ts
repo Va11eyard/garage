@@ -12,8 +12,8 @@ export function useMoveItems() {
     return useMutation<MovementDocumentDto, Error, MovementDocumentCreateRequest>({
         mutationFn: (data: MovementDocumentCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movements'] })
-            queryClient.invalidateQueries({ queryKey: ['stock'] })
+            queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['stock'], exact: false })
         },
     })
 }

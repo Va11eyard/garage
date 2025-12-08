@@ -9,8 +9,8 @@ export function useUpdateNorm(id: string) {
     return useMutation<ProvisionNormDto, Error, ProvisionNormUpdateRequest>({
         mutationFn: (data: any) => Service.updateProvisionNorm(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['norms'] })
-            queryClient.invalidateQueries({ queryKey: ['norms', id] })
+            queryClient.invalidateQueries({ queryKey: ['norms'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['norms', id], exact: false })
         },
     })
 }

@@ -12,8 +12,8 @@ export function useReturnItems() {
     return useMutation<ReturnDocumentDto, Error, ReturnCreateRequest>({
         mutationFn: (data: ReturnCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['returns'] })
-            queryClient.invalidateQueries({ queryKey: ['assignments'] })
+            queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['assignments'], exact: false })
         },
     })
 }

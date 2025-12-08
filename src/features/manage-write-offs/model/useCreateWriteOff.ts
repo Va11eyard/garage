@@ -12,8 +12,8 @@ export function useCreateWriteOff() {
     return useMutation<WriteOffDocumentDto, Error, WriteOffCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['write-offs'] })
-            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
+            queryClient.invalidateQueries({ queryKey: ['write-offs'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs'], exact: false })
         },
     })
 }

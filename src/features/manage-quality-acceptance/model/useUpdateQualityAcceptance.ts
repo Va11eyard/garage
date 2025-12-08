@@ -9,10 +9,10 @@ export function useUpdateQualityAcceptance(id: string) {
     return useMutation({
         mutationFn: (data: any) => Service.updateQualityAcceptanceDocument(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
-            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'] })
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'] })
-            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance', id] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance', id], exact: false })
         },
     })
 }

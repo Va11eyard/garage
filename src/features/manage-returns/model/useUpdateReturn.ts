@@ -9,8 +9,8 @@ export function useUpdateReturn(id: string) {
     return useMutation({
         mutationFn: (data: any) => Service.updateReturnDocument(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['returns'] })
-            queryClient.invalidateQueries({ queryKey: ['returns', id] })
+            queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['returns', id], exact: false })
         },
     })
 }

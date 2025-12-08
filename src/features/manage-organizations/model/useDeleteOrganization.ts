@@ -11,7 +11,7 @@ export function useDeleteOrganization() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['organizations'] })
+            queryClient.invalidateQueries({ queryKey: ['organizations'], exact: false })
         },
     })
 }

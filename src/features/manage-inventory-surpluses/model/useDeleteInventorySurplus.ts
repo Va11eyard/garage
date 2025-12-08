@@ -11,7 +11,7 @@ export function useDeleteInventorySurplus() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'] })
+            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'], exact: false })
         },
     })
 }

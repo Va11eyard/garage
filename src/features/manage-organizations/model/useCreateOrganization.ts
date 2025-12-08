@@ -12,7 +12,7 @@ export function useCreateOrganization() {
     return useMutation<OrganizationDto, Error, OrganizationCreateRequest>({
         mutationFn: (data: OrganizationCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['organizations'] })
+            queryClient.invalidateQueries({ queryKey: ['organizations'], exact: false })
         },
     })
 }

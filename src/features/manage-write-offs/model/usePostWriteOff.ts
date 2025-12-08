@@ -9,9 +9,9 @@ export function usePostWriteOff() {
     return useMutation({
         mutationFn: (id: string) => Service.postWriteOffDocument(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['write-offs'] })
-            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
-            queryClient.invalidateQueries({ queryKey: ['write-off'] })
+            queryClient.invalidateQueries({ queryKey: ['write-offs'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['write-off'], exact: false })
         },
     })
 }

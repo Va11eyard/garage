@@ -11,9 +11,15 @@ export function useMovements(params: {
 }) {
     return useQuery({
         queryKey: ['movements', params],
-        queryFn: () => Service.searchMovementDocumentsByFromWarehouse(
-            params.warehouseId || '',
-            { page: params.page, size: params.size }
-        ),
+        queryFn: () => {
+            if (!params.warehouseId) {
+                return { content: [], totalPages: 0, totalElements: 0 }
+            }
+            return Service.searchMovementDocumentsByFromWarehouse(
+                params.warehouseId,
+                { page: params.page, size: params.size }
+            )
+        },
+        enabled: !!params.warehouseId
     })
 }

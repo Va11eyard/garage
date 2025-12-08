@@ -9,7 +9,7 @@ export function useCreateCategoryChange() {
     return useMutation({
         mutationFn: service.create.bind(service),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['category-changes'] })
+            queryClient.invalidateQueries({ queryKey: ['category-changes'], exact: false })
         },
     })
 }

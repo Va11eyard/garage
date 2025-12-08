@@ -22,26 +22,26 @@ export function Sidebar() {
     const [username, setUsername] = useState<string>('Пользователь')
     
     // Determine which section should be expanded based on current route
-    const getInitialExpandedSections = () => {
-        if (pathname.startsWith('/directories')) {
-            return { directories: true, inventory: false, staff: false, reports: false, admin: false }
-        } else if (pathname.startsWith('/inventory')) {
-            return { directories: false, inventory: true, staff: false, reports: false, admin: false }
-        } else if (pathname.startsWith('/staff')) {
-            return { directories: false, inventory: false, staff: true, reports: false, admin: false }
-        } else if (pathname.startsWith('/reports')) {
-            return { directories: false, inventory: false, staff: false, reports: true, admin: false }
-        } else if (pathname.startsWith('/admin')) {
+    const getInitialExpandedSections = (path: string) => {
+        if (path.startsWith('/admin')) {
             return { directories: false, inventory: false, staff: false, reports: false, admin: true }
+        } else if (path.startsWith('/directories')) {
+            return { directories: true, inventory: false, staff: false, reports: false, admin: false }
+        } else if (path.startsWith('/inventory')) {
+            return { directories: false, inventory: true, staff: false, reports: false, admin: false }
+        } else if (path.startsWith('/staff')) {
+            return { directories: false, inventory: false, staff: true, reports: false, admin: false }
+        } else if (path.startsWith('/reports')) {
+            return { directories: false, inventory: false, staff: false, reports: true, admin: false }
         }
         return { directories: false, inventory: false, staff: false, reports: false, admin: false }
     }
     
-    const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(getInitialExpandedSections())
+    const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(() => getInitialExpandedSections(pathname))
 
     // Update expanded sections when pathname changes
     useEffect(() => {
-        setExpandedSections(getInitialExpandedSections())
+        setExpandedSections(getInitialExpandedSections(pathname))
     }, [pathname])
 
     useEffect(() => {
@@ -141,7 +141,7 @@ export function Sidebar() {
         icon: Settings,
         items: [
             { label: t('sidebar.users'), href: '/admin/users', icon: Users },
-            { label: t('sidebar.roles'), href: '/directories/roles', icon: Award },
+            { label: t('sidebar.roles'), href: '/admin/roles', icon: Award },
             { label: t('adminSearch.title'), href: '/admin/search', icon: Search },
             { label: t('auditLog.title'), href: '/admin/audit-logs', icon: ScrollText },
             { label: t('systemSettings.title'), href: '/admin/system-settings', icon: Settings },

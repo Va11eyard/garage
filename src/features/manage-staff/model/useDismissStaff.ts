@@ -9,7 +9,7 @@ export function useDismissStaff() {
     return useMutation({
         mutationFn: ({ id, data }: { id: string, data: EmployeeDismissRequest }) => Service.dismissEmployee(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['staff'] })
+            queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
         },
     })
 }

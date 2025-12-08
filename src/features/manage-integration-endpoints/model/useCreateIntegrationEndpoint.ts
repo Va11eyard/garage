@@ -9,7 +9,8 @@ export function useCreateIntegrationEndpoint() {
     return useMutation({
         mutationFn: service.create.bind(service),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['integration-endpoints'] })
+            queryClient.invalidateQueries({ queryKey: ['integration-endpoints'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['integrationEndpoints'], exact: false })
         },
     })
 }

@@ -12,7 +12,7 @@ export function useCreateReplacementOrder() {
     return useMutation<ReplacementOrderDto, Error, ReplacementOrderCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['replacement-orders'] })
+            queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
         },
     })
 }

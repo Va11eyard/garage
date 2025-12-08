@@ -12,8 +12,8 @@ export function useCreateWarehouseZone() {
     return useMutation({
         mutationFn: (data: WarehouseZoneCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouse-zones'] })
-            queryClient.invalidateQueries({ queryKey: ['warehouseZones'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouse-zones'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseZones'], exact: false })
         },
     })
 }

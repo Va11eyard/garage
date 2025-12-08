@@ -9,7 +9,7 @@ export function usePostCategoryChange() {
     return useMutation({
         mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['category-changes'] })
+            queryClient.invalidateQueries({ queryKey: ['category-changes'], exact: false })
         },
     })
 }

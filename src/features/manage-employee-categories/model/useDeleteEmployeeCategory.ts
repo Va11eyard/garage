@@ -9,8 +9,8 @@ export function useDeleteEmployeeCategory() {
     return useMutation({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employee-categories'] })
-            queryClient.invalidateQueries({ queryKey: ['employeeCategories'] })
+            queryClient.invalidateQueries({ queryKey: ['employee-categories'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['employeeCategories'], exact: false })
         },
     })
 }

@@ -10,8 +10,8 @@ export function useDeleteItemGroup() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['item-groups'] })
-            queryClient.invalidateQueries({ queryKey: ['itemGroups'] })
+            queryClient.invalidateQueries({ queryKey: ['item-groups'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['itemGroups'], exact: false })
         },
     })
 }

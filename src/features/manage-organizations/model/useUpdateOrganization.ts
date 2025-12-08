@@ -12,8 +12,8 @@ export function useUpdateOrganization() {
     return useMutation<OrganizationDto, Error, { id: string; data: OrganizationUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: OrganizationUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['organizations'] })
-            queryClient.invalidateQueries({ queryKey: ['organization'] })
+            queryClient.invalidateQueries({ queryKey: ['organizations'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['organization'], exact: false })
         },
     })
 }

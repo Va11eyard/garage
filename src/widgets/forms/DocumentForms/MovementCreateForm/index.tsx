@@ -78,6 +78,11 @@ export function MovementCreateForm() {
             return
         }
 
+        toast.error('Создание документа перемещения временно недоступно. Документ должен содержать хотя бы одну строку. Эта функция будет доступна после обновления формы создания.')
+        return
+        
+        // Commented out until form supports adding lines before submission
+        /*
         try {
             const created = await mutateAsync({
                 ...formData,
@@ -90,6 +95,7 @@ export function MovementCreateForm() {
             const errorMessage = error?.body?.message || error?.message || t('common.error')
             toast.error(errorMessage)
         }
+        */
     }
 
     return (

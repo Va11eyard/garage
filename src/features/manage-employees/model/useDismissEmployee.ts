@@ -9,8 +9,8 @@ export function useDismissEmployee(id: string) {
     return useMutation<EmployeeDto, Error, EmployeeDismissRequest>({
         mutationFn: (data: EmployeeDismissRequest) => Service.dismissEmployee(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employees'] })
-            queryClient.invalidateQueries({ queryKey: ['employees', id] })
+            queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['employees', id], exact: false })
         },
     })
 }

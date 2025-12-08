@@ -12,8 +12,8 @@ export function useCreateOrgUnit() {
     return useMutation<OrgUnitDto, Error, OrgUnitCreateRequest>({
         mutationFn: (data: OrgUnitCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['org-units'] })
-            queryClient.invalidateQueries({ queryKey: ['orgUnits'] })
+            queryClient.invalidateQueries({ queryKey: ['org-units'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['orgUnits'], exact: false })
         },
     })
 }

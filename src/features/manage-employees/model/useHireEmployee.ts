@@ -9,7 +9,7 @@ export function useHireEmployee() {
     return useMutation<EmployeeDto, Error, EmployeeHireRequest>({
         mutationFn: (data: EmployeeHireRequest) => Service.hireEmployee(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employees'] })
+            queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
         },
     })
 }

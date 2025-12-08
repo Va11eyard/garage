@@ -9,8 +9,8 @@ export function useUpdateMovement(id: string) {
     return useMutation({
         mutationFn: (data: any) => Service.updateMovementDocument(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['movements'] })
-            queryClient.invalidateQueries({ queryKey: ['movements', id] })
+            queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['movements', id], exact: false })
         },
     })
 }

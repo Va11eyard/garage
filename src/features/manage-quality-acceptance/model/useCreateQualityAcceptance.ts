@@ -12,9 +12,9 @@ export function useCreateQualityAcceptance() {
     return useMutation<QualityAcceptanceDocumentDto, Error, QualityAcceptanceCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
-            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'] })
-            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptance'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'], exact: false })
         },
     })
 }

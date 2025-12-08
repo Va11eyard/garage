@@ -9,8 +9,8 @@ export function useCreateEmployeeCategory() {
     return useMutation({
         mutationFn: service.create.bind(service),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employee-categories'] })
-            queryClient.invalidateQueries({ queryKey: ['employeeCategories'] })
+            queryClient.invalidateQueries({ queryKey: ['employee-categories'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['employeeCategories'], exact: false })
         },
     })
 }

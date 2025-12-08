@@ -12,9 +12,9 @@ export function useUpdateWarehouseCell() {
     return useMutation<WarehouseCellDto, Error, { id: string; data: WarehouseCellUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: WarehouseCellUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouse-cells'] })
-            queryClient.invalidateQueries({ queryKey: ['warehouseCells'] })
-            queryClient.invalidateQueries({ queryKey: ['warehouseCell'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouse-cells'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseCells'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseCell'], exact: false })
         },
     })
 }

@@ -12,7 +12,7 @@ export function useDeleteReturn() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['returns'] })
+            queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
         },
     })
 }

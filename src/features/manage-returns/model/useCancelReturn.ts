@@ -11,7 +11,7 @@ export function useCancelReturn() {
     return useMutation({
         mutationFn: (id: string) => service.cancel(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['returns'] })
+            queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
         },
     })
 }

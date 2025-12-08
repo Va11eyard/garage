@@ -12,7 +12,7 @@ export function useCreateUser() {
     return useMutation<UserDto, Error, CreateUserRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['users'] })
+            queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
         },
     })
 }

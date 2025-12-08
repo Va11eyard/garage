@@ -9,8 +9,8 @@ export function useTransferEmployee(id: string) {
     return useMutation<EmployeeDto, Error, EmployeeTransferRequest>({
         mutationFn: (data: EmployeeTransferRequest) => Service.transferEmployee(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employees'] })
-            queryClient.invalidateQueries({ queryKey: ['employees', id] })
+            queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['employees', id], exact: false })
         },
     })
 }

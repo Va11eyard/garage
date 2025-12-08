@@ -9,8 +9,8 @@ export function useCreateStaff() {
     return useMutation<PersonDto, Error, PersonCreateRequest>({
         mutationFn: (data: PersonCreateRequest) => Service.createPerson(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['staff'] })
-            queryClient.invalidateQueries({ queryKey: ['persons'] })
+            queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
         },
     })
 }

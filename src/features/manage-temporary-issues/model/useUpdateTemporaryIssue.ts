@@ -12,9 +12,9 @@ export function useUpdateTemporaryIssue(id: string) {
     return useMutation<TemporaryIssueDocumentDto, Error, TemporaryIssueUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
-            queryClient.invalidateQueries({ queryKey: ['temporaryIssues'] })
-            queryClient.invalidateQueries({ queryKey: ['temporary-issues', id] })
+            queryClient.invalidateQueries({ queryKey: ['temporary-issues'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['temporaryIssues'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['temporary-issues', id], exact: false })
         },
     })
 }

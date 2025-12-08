@@ -11,7 +11,7 @@ export function usePostReturn() {
     return useMutation({
         mutationFn: (id: string) => service.post(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['returns'] })
+            queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
         },
     })
 }

@@ -10,8 +10,8 @@ export function useUpdateStaff() {
         mutationFn: ({ id, data }: { id: string; data: PersonUpdateRequest }) => 
             Service.updatePerson(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['staff'] })
-            queryClient.invalidateQueries({ queryKey: ['persons'] })
+            queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
         },
     })
 }

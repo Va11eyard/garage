@@ -11,8 +11,8 @@ export function useCreateItemGroup() {
     return useMutation({
         mutationFn: (data: ItemGroupCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['item-groups'] })
-            queryClient.invalidateQueries({ queryKey: ['itemGroups'] })
+            queryClient.invalidateQueries({ queryKey: ['item-groups'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['itemGroups'], exact: false })
         },
     })
 }

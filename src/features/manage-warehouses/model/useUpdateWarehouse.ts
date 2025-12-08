@@ -12,7 +12,7 @@ export function useUpdateWarehouse() {
     return useMutation<WarehouseDto, Error, { id: string; data: WarehouseUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouses'], exact: false })
         },
     })
 }

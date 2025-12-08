@@ -11,7 +11,7 @@ export function useDeleteUser() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['users'] })
+            queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
         },
     })
 }

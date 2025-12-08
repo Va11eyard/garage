@@ -28,9 +28,28 @@ export function WarehousesTable() {
     })
 
     const { data: organizations } = useOrganizations({})
-    const { data: warehouses, isLoading } = useWarehouses({ ...debouncedFilters, page, size })
+    const { data: warehousesData, isLoading } = useWarehouses({ 
+        code: debouncedFilters.code, 
+        name: debouncedFilters.name, 
+        page, 
+        size 
+    })
     const deleteMutation = useDeleteWarehouse()
     const confirmDialog = useConfirmDialog()
+
+    // Filter by organization on the client side (using immediate filter, not debounced)
+    const warehouses = warehousesData ? {
+        ...warehousesData,
+        content: (warehousesData.content || []).filter((warehouse: any) => {
+            if (!filters.organizationId) return true
+            return warehouse.organizationId === filters.organizationId
+        }),
+        // Update total count to reflect filtered results
+        totalElements: (warehousesData.content || []).filter((warehouse: any) => {
+            if (!filters.organizationId) return true
+            return warehouse.organizationId === filters.organizationId
+        }).length
+    } : warehousesData
 
     const handleDelete = (id: string) => {
         confirmDialog.showConfirm(

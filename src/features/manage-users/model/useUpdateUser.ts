@@ -12,7 +12,7 @@ export function useUpdateUser() {
     return useMutation<UserDto, Error, { id: string; data: UpdateUserRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['users'] })
+            queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
         },
     })
 }

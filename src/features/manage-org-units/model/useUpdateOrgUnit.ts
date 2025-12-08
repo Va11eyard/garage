@@ -12,9 +12,9 @@ export function useUpdateOrgUnit() {
     return useMutation<OrgUnitDto, Error, { id: string; data: OrgUnitUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['org-units'] })
-            queryClient.invalidateQueries({ queryKey: ['orgUnits'] })
-            queryClient.invalidateQueries({ queryKey: ['orgUnit'] })
+            queryClient.invalidateQueries({ queryKey: ['org-units'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['orgUnits'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['orgUnit'], exact: false })
         },
     })
 }

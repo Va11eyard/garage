@@ -9,7 +9,7 @@ export function useRegisterEquipment() {
     return useMutation({
         mutationFn: service.register.bind(service),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['equipment'] })
+            queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
         },
     })
 }

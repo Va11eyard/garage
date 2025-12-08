@@ -10,7 +10,7 @@ export function useSendDeviceError() {
         mutationFn: ({ code, message }: { code: string; message: string }) => 
             Service.reportDeviceError(code, message),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['equipment'] })
+            queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
         },
     })
 }

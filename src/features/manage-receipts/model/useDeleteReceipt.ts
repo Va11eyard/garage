@@ -9,7 +9,7 @@ export function useDeleteReceipt() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['receipts'] })
+            queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
         },
     })
 }

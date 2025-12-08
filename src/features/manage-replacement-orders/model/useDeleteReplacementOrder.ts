@@ -11,7 +11,7 @@ export function useDeleteReplacementOrder() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['replacement-orders'] })
+            queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
         },
     })
 }

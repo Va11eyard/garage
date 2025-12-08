@@ -12,8 +12,8 @@ export function useUpdateUnit() {
     return useMutation<UnitOfMeasureDto, Error, { id: string; data: UnitOfMeasureUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: UnitOfMeasureUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['units'] })
-            queryClient.invalidateQueries({ queryKey: ['unit'] })
+            queryClient.invalidateQueries({ queryKey: ['units'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['unit'], exact: false })
         },
     })
 }

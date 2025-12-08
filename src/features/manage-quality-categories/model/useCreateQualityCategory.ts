@@ -10,8 +10,8 @@ export function useCreateQualityCategory() {
     return useMutation({
         mutationFn: (data: QualityCategoryCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['quality-categories'] })
-            queryClient.invalidateQueries({ queryKey: ['qualityCategories'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-categories'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['qualityCategories'], exact: false })
         },
     })
 }

@@ -12,7 +12,7 @@ export function useCreateInventorySurplus() {
     return useMutation<InventorySurplusDocumentDto, Error, InventorySurplusCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'] })
+            queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'], exact: false })
         },
     })
 }

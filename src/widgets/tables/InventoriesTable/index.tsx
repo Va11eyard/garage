@@ -8,13 +8,13 @@ import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
-import { DatePicker } from '@/shared/ui/date-picker'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
 import { GovDatePicker } from '@/gov-design'
+import { useEffect } from 'react'
 
 export function InventoriesTable() {
     const { t } = useTranslation()
@@ -29,6 +29,13 @@ export function InventoriesTable() {
     const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
     const { data, isLoading } = useInventories({ ...debouncedFilters, page, size })
     const deleteMutation = useDeleteInventory()
+
+    // Auto-select first warehouse if none selected
+    useEffect(() => {
+        if (!filters.warehouseId && warehousesData?.content?.length) {
+            updateFilter('warehouseId', warehousesData.content[0].id!)
+        }
+    }, [warehousesData, filters.warehouseId])
 
     const handleDelete = (id: string) => {
         if (confirm('Удалить документ инвентаризации?')) {
@@ -46,13 +53,12 @@ export function InventoriesTable() {
             <div className="flex justify-between items-end gap-4 flex-wrap">
                 <div className="flex gap-4 flex-1 flex-wrap">
                     <div className="min-w-[200px]">
-                        <label className="block text-sm font-medium mb-1">{t('documents.warehouse')}</label>
-                        <Select value={filters.warehouseId || 'ALL'} onValueChange={(value) => updateFilter('warehouseId', value === 'ALL' ? '' : value)}>
+                        <label className="block text-sm font-medium mb-1">{t('documents.warehouse')} *</label>
+                        <Select value={filters.warehouseId || ''} onValueChange={(value) => updateFilter('warehouseId', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder={t('warehouses.selectWarehouse')} />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="ALL">{t('common.all')}</SelectItem>
                                 {warehousesData?.content?.map((warehouse: any) => (
                                     <SelectItem key={warehouse.id} value={warehouse.id!}>
                                         {warehouse.name}
@@ -60,20 +66,6 @@ export function InventoriesTable() {
                                 ))}
                             </SelectContent>
                         </Select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('common.dateFrom')}</label>
-                        <GovDatePicker
-                            value={filters.fromDate}
-                            onChange={(date) => updateFilter('fromDate', date)}
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">{t('common.dateTo')}</label>
-                        <GovDatePicker
-                            value={filters.toDate}
-                            onChange={(date) => updateFilter('toDate', date)}
-                        />
                     </div>
                     <div className="min-w-[150px]">
                         <label className="block text-sm font-medium mb-1">{t('common.status')}</label>
@@ -86,9 +78,9 @@ export function InventoriesTable() {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="ALL">{t('common.all')}</SelectItem>
-                                <SelectItem value="DRAFT">DRAFT</SelectItem>
-                                <SelectItem value="POSTED">POSTED</SelectItem>
-                                <SelectItem value="CANCELLED">CANCELLED</SelectItem>
+                                <SelectItem value="DRAFT">{t('documents.status.draft')}</SelectItem>
+                                <SelectItem value="POSTED">{t('documents.status.posted')}</SelectItem>
+                                <SelectItem value="CANCELLED">{t('documents.status.cancelled')}</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -115,7 +107,7 @@ export function InventoriesTable() {
                             {!isMobile && (
                                 <TableCell>
                                     <span className={`gov-badge gov-badge-${doc.status?.toLowerCase()}`}>
-                                        {doc.status}
+                                        {t(`documents.status.${doc.status?.toLowerCase() || 'draft'}`)}
                                     </span>
                                 </TableCell>
                             )}

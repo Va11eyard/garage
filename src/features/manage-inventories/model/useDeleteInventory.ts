@@ -9,7 +9,7 @@ export function useDeleteInventory() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => Service.deleteInventoryDocument(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['inventories'] })
+            queryClient.invalidateQueries({ queryKey: ['inventories'], exact: false })
         },
     })
 }

@@ -10,7 +10,7 @@ export function useCreatePerson() {
     return useMutation({
         mutationFn: (data: PersonCreateRequest) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['persons'] })
+            queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
         },
     })
 }

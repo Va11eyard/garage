@@ -8,7 +8,7 @@ export function useCreateProvisionNorm() {
     return useMutation({
         mutationFn: (data: ProvisionNormCreateRequest) => Service.createProvisionNorm(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['provision-norms'] })
+            queryClient.invalidateQueries({ queryKey: ['provision-norms'], exact: false })
         },
     })
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useRegisterEquipment } from '@/features/manage-equipment/model/useRegisterEquipment'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
@@ -14,6 +15,7 @@ import { getErrorMessage } from '@/shared/utils/error-handler'
 export function EquipmentCreateForm() {
     const { t } = useTranslation()
     const { data: warehouses } = useWarehouses({})
+    const registerMutation = useRegisterEquipment()
     const router = useRouter()
     
     const [formData, setFormData] = useState({
@@ -31,13 +33,34 @@ export function EquipmentCreateForm() {
             return
         }
 
-        try {
-            // TODO: Implement equipment creation API call
-            toast.success(t('common.success'))
-            router.push('/admin/equipment')
-        } catch (error) {
-            toast.error(getErrorMessage(error))
+        const payload: any = {
+            code: formData.code,
+            name: formData.name,
+            type: formData.type,
         }
+        
+        if (formData.warehouseId) {
+            payload.warehouseId = formData.warehouseId
+        }
+
+        registerMutation.mutate(payload, {
+            onSuccess: () => {
+                toast.success(t('equipment.registerSuccess'))
+                router.push('/admin/equipment')
+            },
+            onError: (error: any) => {
+                const errorMessage = getErrorMessage(error)
+                
+                if (errorMessage.includes('ByteBuddyInterceptor') || errorMessage.includes('Type definition error')) {
+                    toast.warning('Устройство возможно создано, но произошла ошибка сериализации. Проверьте список оборудования.')
+                    setTimeout(() => router.push('/admin/equipment'), 2000)
+                } else if (errorMessage.includes('duplicate key') || errorMessage.includes('uq_devices_code')) {
+                    toast.error('Устройство с таким кодом уже существует. Используйте другой код.')
+                } else {
+                    toast.error(errorMessage)
+                }
+            }
+        })
     }
 
     return (
@@ -80,9 +103,11 @@ export function EquipmentCreateForm() {
                             <SelectValue placeholder={t('common.select')} />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="SCANNER">Сканер</SelectItem>
-                            <SelectItem value="PRINTER">Принтер</SelectItem>
-                            <SelectItem value="TERMINAL">Терминал</SelectItem>
+                            <SelectItem value="BARCODE_SCANNER">{t('equipment.deviceTypes.barcodeScanner')}</SelectItem>
+                            <SelectItem value="RFID_READER">{t('equipment.deviceTypes.rfidReader')}</SelectItem>
+                            <SelectItem value="GATE_CONTROLLER">{t('equipment.deviceTypes.gateController')}</SelectItem>
+                            <SelectItem value="CCTV_CAMERA">{t('equipment.deviceTypes.cctvCamera')}</SelectItem>
+                            <SelectItem value="TERMINAL">{t('equipment.deviceTypes.terminal')}</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

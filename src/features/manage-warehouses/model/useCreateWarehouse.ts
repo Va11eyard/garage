@@ -10,7 +10,7 @@ export function useCreateWarehouse() {
     return useMutation<WarehouseDto, Error, WarehouseCreateRequest>({
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['warehouses'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouses'], exact: false })
         },
     })
 }

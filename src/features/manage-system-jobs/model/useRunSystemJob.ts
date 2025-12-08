@@ -9,7 +9,7 @@ export function useRunSystemJob() {
     return useMutation({
         mutationFn: (code: string) => StubService.adminRunSystemJob(code),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['system-jobs'] })
+            queryClient.invalidateQueries({ queryKey: ['system-jobs'], exact: false })
         },
     })
 }

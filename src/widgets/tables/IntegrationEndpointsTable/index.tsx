@@ -127,7 +127,15 @@ export function IntegrationEndpointsTable() {
                             <TableCell className="font-mono">{endpoint.code}</TableCell>
                             <TableCell>{endpoint.name}</TableCell>
                             <TableCell>
-                                {endpoint.externalSystem ? t(`integrationEndpoints.systems.${endpoint.externalSystem.toLowerCase().replace('_', '')}`) : '—'}
+                                {endpoint.externalSystem ? (() => {
+                                    const systemMap: Record<string, string> = {
+                                        'HR_SYSTEM': 'hrSystem',
+                                        'ERP': 'erp',
+                                        'ACCOUNTING': 'accounting',
+                                        'SECURITY_SYSTEM': 'securitySystem'
+                                    }
+                                    return t(`integrationEndpoints.systems.${systemMap[endpoint.externalSystem] || 'hrSystem'}`)
+                                })() : '—'}
                             </TableCell>
                             <TableCell className="font-mono text-xs">{endpoint.baseUrl || '—'}</TableCell>
                             <TableCell>

@@ -12,8 +12,8 @@ export function useTransferStaff() {
         mutationFn: ({ employeeId, newOrgUnitId }: { employeeId: string; newOrgUnitId: string }) => 
             service.transfer(employeeId, newOrgUnitId),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['employees'] })
-            queryClient.invalidateQueries({ queryKey: ['staff'] })
+            queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
         },
     })
 }
