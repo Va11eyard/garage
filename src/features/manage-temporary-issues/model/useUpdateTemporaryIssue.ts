@@ -13,6 +13,7 @@ export function useUpdateTemporaryIssue(id: string) {
         mutationFn: (data: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
+            queryClient.invalidateQueries({ queryKey: ['temporaryIssues'] })
             queryClient.invalidateQueries({ queryKey: ['temporary-issues', id] })
         },
     })

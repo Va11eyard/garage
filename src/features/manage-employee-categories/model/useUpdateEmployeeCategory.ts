@@ -10,6 +10,7 @@ export function useUpdateEmployeeCategory() {
         mutationFn: ({ id, data }: { id: string; data: any }) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['employee-categories'] })
+            queryClient.invalidateQueries({ queryKey: ['employeeCategories'] })
         },
     })
 }

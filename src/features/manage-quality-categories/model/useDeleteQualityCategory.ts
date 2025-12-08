@@ -11,6 +11,7 @@ export function useDeleteQualityCategory() {
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['quality-categories'] })
             queryClient.invalidateQueries({ queryKey: ['qualityCategories'] })
         },
     })

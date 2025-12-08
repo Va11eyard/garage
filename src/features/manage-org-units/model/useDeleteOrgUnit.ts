@@ -12,6 +12,7 @@ export function useDeleteOrgUnit() {
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['org-units'] })
+            queryClient.invalidateQueries({ queryKey: ['orgUnits'] })
         },
     })
 }

@@ -12,6 +12,7 @@ export function useCreateItemGroup() {
         mutationFn: (data: ItemGroupCreateRequest) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['item-groups'] })
+            queryClient.invalidateQueries({ queryKey: ['itemGroups'] })
         },
     })
 }

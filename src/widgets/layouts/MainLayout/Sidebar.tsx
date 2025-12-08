@@ -11,7 +11,7 @@ import {
     Layers, Ruler, User, BarChart3, FileText,
     Download, Upload, RotateCcw, Trash2, Plus, CheckCircle,
     Clock, Truck, ClipboardList, Users, Award, Settings,
-    ScrollText, ChevronLeft, ChevronRight, Link2, BadgeCheck
+    ScrollText, ChevronLeft, ChevronRight, Link2, BadgeCheck, Search
 } from 'lucide-react'
 
 export function Sidebar() {
@@ -142,8 +142,11 @@ export function Sidebar() {
         items: [
             { label: t('sidebar.users'), href: '/admin/users', icon: Users },
             { label: t('sidebar.roles'), href: '/directories/roles', icon: Award },
+            { label: t('adminSearch.title'), href: '/admin/search', icon: Search },
             { label: t('auditLog.title'), href: '/admin/audit-logs', icon: ScrollText },
             { label: t('systemSettings.title'), href: '/admin/system-settings', icon: Settings },
+            { label: t('systemJobs.title'), href: '/admin/system-jobs', icon: Clock },
+            { label: t('backup.title'), href: '/admin/backup', icon: Download },
             { label: t('equipment.title'), href: '/admin/equipment', icon: Package },
             { label: t('integrationEndpoints.title'), href: '/admin/integration-endpoints', icon: Link2 },
             { label: t('categoryChanges.title'), href: '/admin/category-changes', icon: FileText },

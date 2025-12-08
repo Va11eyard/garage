@@ -10,6 +10,7 @@ export function useCancelWriteOff() {
         mutationFn: (id: string) => Service.cancelWriteOffDocument(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['write-offs'] })
+            queryClient.invalidateQueries({ queryKey: ['writeOffs'] })
             queryClient.invalidateQueries({ queryKey: ['write-off'] })
         },
     })

@@ -10,6 +10,7 @@ export function usePostTemporaryIssue() {
         mutationFn: (id: string) => Service.postTemporaryIssueDocument(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
+            queryClient.invalidateQueries({ queryKey: ['temporaryIssues'] })
             queryClient.invalidateQueries({ queryKey: ['temporary-issue'] })
         },
     })

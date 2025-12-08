@@ -12,6 +12,7 @@ export function useUpdateQualityCategory() {
     return useMutation<QualityCategoryDto, Error, { id: string; data: QualityCategoryUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: QualityCategoryUpdateRequest }) => service.update(id, data),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['quality-categories'] })
             queryClient.invalidateQueries({ queryKey: ['qualityCategories'] })
         },
     })

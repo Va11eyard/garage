@@ -12,6 +12,8 @@ export function useDeleteQualityAcceptance() {
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'] })
         },
     })
 }

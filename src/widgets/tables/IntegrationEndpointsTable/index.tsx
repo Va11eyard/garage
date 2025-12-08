@@ -2,6 +2,7 @@
 
 import { useIntegrationEndpoints } from '@/features/manage-integration-endpoints/model/useIntegrationEndpoints'
 import { useTestIntegrationEndpoint } from '@/features/manage-integration-endpoints/model/useTestIntegrationEndpoint'
+import { useSendIntegrationEndpoint } from '@/features/manage-integration-endpoints/model/useSendIntegrationEndpoint'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
@@ -19,6 +20,7 @@ export function IntegrationEndpointsTable() {
     const { t } = useTranslation()
     const { data, isLoading } = useIntegrationEndpoints()
     const testMutation = useTestIntegrationEndpoint()
+    const sendMutation = useSendIntegrationEndpoint()
     const { filters, updateFilter } = useFilters({
         system: 'ALL',
         status: 'ALL'
@@ -35,7 +37,14 @@ export function IntegrationEndpointsTable() {
 
     const handleTest = (code: string) => {
         testMutation.mutate(code, {
-            onSuccess: () => toast.success(t('common.success')),
+            onSuccess: () => toast.success(t('integrationEndpoints.testSuccess')),
+            onError: () => toast.error(t('common.error')),
+        })
+    }
+
+    const handleSend = (code: string) => {
+        sendMutation.mutate(code, {
+            onSuccess: () => toast.success(t('integrationEndpoints.sendSuccess')),
             onError: () => toast.error(t('common.error')),
         })
     }
@@ -138,14 +147,24 @@ export function IntegrationEndpointsTable() {
                                 {getLastTestDate(endpoint)}
                             </TableCell>
                             <TableCell>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleTest(endpoint.code!)}
-                                    disabled={testMutation.isPending}
-                                >
-                                    {t('integrationEndpoints.testEndpoint')}
-                                </Button>
+                                <div className="flex gap-2">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleTest(endpoint.code!)}
+                                        disabled={testMutation.isPending}
+                                    >
+                                        {t('integrationEndpoints.testEndpoint')}
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleSend(endpoint.code!)}
+                                        disabled={sendMutation.isPending || endpoint.status !== 'ACTIVE'}
+                                    >
+                                        {t('integrationEndpoints.sendData')}
+                                    </Button>
+                                </div>
                             </TableCell>
                         </TableRow>
                     ))}

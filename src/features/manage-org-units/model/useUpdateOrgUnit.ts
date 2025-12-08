@@ -13,6 +13,7 @@ export function useUpdateOrgUnit() {
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['org-units'] })
+            queryClient.invalidateQueries({ queryKey: ['orgUnits'] })
             queryClient.invalidateQueries({ queryKey: ['orgUnit'] })
         },
     })

@@ -10,6 +10,7 @@ export function useUpdateItemSupplyNorm(id: string) {
         mutationFn: (data: ItemSupplyNormUpdateRequest) => service.update(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['item-supply-norms'] })
+            queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'] })
             queryClient.invalidateQueries({ queryKey: ['item-supply-norm', id] })
         },
     })

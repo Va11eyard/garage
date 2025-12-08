@@ -13,6 +13,8 @@ export function useCreateQualityAcceptance() {
         mutationFn: (data: any) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance'] })
+            queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'] })
+            queryClient.invalidateQueries({ queryKey: ['quality-acceptances'] })
         },
     })
 }

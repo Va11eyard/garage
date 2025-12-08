@@ -13,6 +13,7 @@ export function useCreateWarehouseCell() {
         mutationFn: (data: WarehouseCellCreateRequest) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouse-cells'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouseCells'] })
         },
     })
 }

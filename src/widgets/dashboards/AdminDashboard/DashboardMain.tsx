@@ -9,7 +9,7 @@ import { useItemsCount } from '@/features/manage-items/model/useItemsCount'
 import { useWarehousesCount } from '@/features/manage-warehouses/model/useWarehousesCount'
 import { useOrganizationsCount } from '@/features/manage-organizations/model/useOrganizationsCount'
 import { Spinner } from '@/shared/ui/spinner'
-import { BookOpen, Users, Package, Wrench, FileText, Warehouse, Box, Building } from 'lucide-react'
+import { BookOpen, Users, Package, Wrench, FileText, Warehouse, Box, Building, BarChart3 } from 'lucide-react'
 
 export function DashboardMain() {
     const { t } = useTranslation()
@@ -25,6 +25,7 @@ export function DashboardMain() {
         { tKey: 'inventory', href: '/inventory', icon: Package, color: 'text-purple-500', bgColor: 'bg-purple-50' },
         { tKey: 'equipment', href: '/equipment', icon: Wrench, color: 'text-gov-orange-400', bgColor: 'bg-orange-50' },
         { tKey: 'reports', href: '/reports', icon: FileText, color: 'text-gov-red-500', bgColor: 'bg-red-50' },
+        { tKey: 'consolidation', href: '/dashboard/consolidation', icon: BarChart3, color: 'text-indigo-500', bgColor: 'bg-indigo-50' },
     ]
 
     const stats = [

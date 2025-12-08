@@ -12,6 +12,7 @@ export function useUpdateWarehouseZone() {
     return useMutation<WarehouseZoneDto, Error, { id: string; data: WarehouseZoneUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['warehouse-zones'] })
             queryClient.invalidateQueries({ queryKey: ['warehouseZones'] })
         },
     })

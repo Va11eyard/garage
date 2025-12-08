@@ -12,6 +12,7 @@ export function useDeleteTemporaryIssue() {
         mutationFn: (id: string) => service.delete(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'] })
+            queryClient.invalidateQueries({ queryKey: ['temporaryIssues'] })
         },
     })
 }

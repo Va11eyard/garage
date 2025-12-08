@@ -13,6 +13,7 @@ export function useCreateWarehouseZone() {
         mutationFn: (data: WarehouseZoneCreateRequest) => service.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['warehouse-zones'] })
+            queryClient.invalidateQueries({ queryKey: ['warehouseZones'] })
         },
     })
 }
