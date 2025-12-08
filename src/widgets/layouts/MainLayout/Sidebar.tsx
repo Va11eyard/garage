@@ -92,7 +92,6 @@ export function Sidebar() {
                 { label: t('sidebar.units'), href: '/directories/units', icon: Ruler },
                 { label: t('sidebar.qualityCategories'), href: '/directories/quality-categories', icon: BadgeCheck  },
                 { label: t('sidebar.employeeCategories'), href: '/directories/employee-categories', icon: Users },
-                { label: t('sidebar.persons'), href: '/directories/persons', icon: User },
                 { label: t('sidebar.norms'), href: '/directories/norms', icon: BarChart3 },
                 { label: t('sidebar.itemSupplyNorms'), href: '/directories/item-supply-norms', icon: BarChart3 },
             ],

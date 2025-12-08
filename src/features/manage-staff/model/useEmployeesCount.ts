@@ -9,8 +9,15 @@ export function useEmployeesCount() {
     return useQuery({
         queryKey: ['employees', 'count'],
         queryFn: async () => {
-            const page = await service.search({ page: 0, size: 1 });
-            return page.totalElements;
+            try {
+                const page = await service.search({ page: 0, size: 1 });
+                return page.totalElements ?? 0;
+            } catch (error) {
+                console.error('Error fetching employees count:', error);
+                return 0;
+            }
         },
+        retry: false,
+        throwOnError: false,
     })
 }

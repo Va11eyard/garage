@@ -50,9 +50,6 @@ export function Header() {
                     <Link href="/inventory" className="text-sm hover:text-gov-gold-400 transition-colors py-3 border-b-2 border-transparent hover:border-gov-gold-400">
                         {t('nav.inventory')}
                     </Link>
-                    <Link href="/admin" className="text-sm hover:text-gov-gold-400 transition-colors py-3 border-b-2 border-transparent hover:border-gov-gold-400">
-                        {t('nav.admin')}
-                    </Link>
                 </nav>
             </div>
         </header>

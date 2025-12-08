@@ -79,7 +79,7 @@ export function DashboardMain() {
                                 <div className="flex items-start justify-between">
                                     <div>
                                         <div className={`text-3xl font-bold ${stat.color} mb-2`}>
-                                            {stat.isLoading ? <Spinner /> : stat.value}
+                                            {stat.isLoading ? <Spinner /> : (stat.value ?? 0)}
                                         </div>
                                         <div className="text-sm text-gov-gray-600 font-medium">
                                             {t('dashboard.stats.' + stat.tKey)}
