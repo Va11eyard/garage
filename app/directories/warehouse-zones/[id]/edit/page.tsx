@@ -7,6 +7,7 @@ import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehouse } from '@/features/manage-warehouses/model/useWarehouse'
 import { useWarehouseZone } from '@/features/manage-warehouse-zones/model/useWarehouseZone'
 import { useUpdateWarehouseZone } from '@/features/manage-warehouse-zones/model/useUpdateWarehouseZone'
 import { useTranslation } from '@/shared/i18n/use-translation'
@@ -21,6 +22,7 @@ export default function WarehouseZoneEditPage({ params }: { params: Promise<{ id
     const { t } = useTranslation()
     const { data: warehouses, isLoading: warehousesLoading } = useWarehouses({})
     const { data: zone, isLoading: zoneLoading } = useWarehouseZone(id)
+    const { data: currentWarehouse } = useWarehouse(zone?.warehouseId)
     const updateMutation = useUpdateWarehouseZone()
     
     const [formData, setFormData] = useState({
@@ -46,7 +48,7 @@ export default function WarehouseZoneEditPage({ params }: { params: Promise<{ id
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.warehouseId || !formData.code || !formData.name) {
+        if (!formData.code || !formData.name) {
             toast.error(t('common.required'))
             return
         }
@@ -55,8 +57,9 @@ export default function WarehouseZoneEditPage({ params }: { params: Promise<{ id
             await updateMutation.mutateAsync({
                 id,
                 data: {
-                    ...formData,
+                    name: formData.name,
                     sortOrder: formData.sortOrder || 0,
+                    active: formData.active,
                 }
             })
             toast.success(t('common.success'))
@@ -81,23 +84,11 @@ export default function WarehouseZoneEditPage({ params }: { params: Promise<{ id
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
                 <div>
                     <GovLabel required>{t('warehouseZones.warehouse')}</GovLabel>
-                    <Select
-                        value={formData.warehouseId}
-                        onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
-                        required
+                    <GovInput
+                        value={currentWarehouse?.name || ''}
                         disabled
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder={t('warehouseZones.selectWarehouse')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {warehouses?.content?.map((warehouse: WarehouseDto) => (
-                                <SelectItem key={warehouse.id} value={warehouse.id!}>
-                                    {warehouse.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                        className="bg-gray-50"
+                    />
                     <p className="text-sm text-gray-500 mt-1">{t('warehouseZones.warehouseCannotBeChanged')}</p>
                 </div>
 

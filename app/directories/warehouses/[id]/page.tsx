@@ -6,6 +6,8 @@ import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovCard, GovCardContent, GovCardHeader, GovCardTitle } from '@/gov-design/components/Card'
 import { useWarehouse } from '@/features/manage-warehouses/model/useWarehouse'
+import { useOrganization } from '@/features/manage-organizations/model/useOrganization'
+import { useOrgUnit } from '@/features/manage-org-units/model/useOrgUnit'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Spinner } from '@/shared/ui/spinner'
 
@@ -14,6 +16,8 @@ export default function WarehouseDetailPage({ params }: { params: Promise<{ id: 
   const { t } = useTranslation()
   const router = useRouter()
   const { data: warehouse, isLoading } = useWarehouse(id)
+  const { data: organization } = useOrganization(warehouse?.organizationId)
+  const { data: orgUnit } = useOrgUnit(warehouse?.orgUnitId)
 
   if (isLoading) return <Spinner />
   if (!warehouse) return <div>{t('common.notFound')}</div>
@@ -54,11 +58,11 @@ export default function WarehouseDetailPage({ params }: { params: Promise<{ id: 
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('warehouses.organization')}</p>
-              <p className="font-medium">{warehouse.organizationName || '-'}</p>
+              <p className="font-medium">{organization?.name || '-'}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('warehouses.orgUnit')}</p>
-              <p className="font-medium">{warehouse.orgUnitName || '-'}</p>
+              <p className="font-medium">{orgUnit?.name || '-'}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">{t('common.status')}</p>

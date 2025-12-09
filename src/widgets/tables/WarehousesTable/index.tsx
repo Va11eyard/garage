@@ -1,12 +1,14 @@
 'use client'
 
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
+import { useOrgUnits } from '@/features/manage-org-units/model/useOrgUnits'
 import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
 import { useDeleteWarehouse } from '@/features/manage-warehouses/model/useDeleteWarehouse'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
 import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { useTranslation } from '@/shared/i18n/use-translation'
+import { useMemo } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
@@ -34,6 +36,24 @@ export function WarehousesTable() {
         page, 
         size 
     })
+    
+    // Get all organization IDs to fetch org units
+    const organizationIds = organizations?.content?.map((org: any) => org.id).filter(Boolean) || []
+    const { data: allOrgUnits } = useOrgUnits({
+        organizationIds: organizationIds.length > 0 ? organizationIds : undefined
+    })
+    
+    // Create maps for quick lookup
+    const orgMap = useMemo(() => {
+        if (!organizations?.content) return new Map()
+        return new Map(organizations.content.map((org: any) => [org.id, org.name]))
+    }, [organizations])
+    
+    const orgUnitMap = useMemo(() => {
+        if (!allOrgUnits) return new Map()
+        return new Map(allOrgUnits.map((unit: any) => [unit.id, unit.name]))
+    }, [allOrgUnits])
+    
     const deleteMutation = useDeleteWarehouse()
     const confirmDialog = useConfirmDialog()
 
@@ -121,8 +141,9 @@ export function WarehousesTable() {
                     <TableRow>
                         <TableHead>{t('warehouses.code')}</TableHead>
                         <TableHead>{t('warehouses.name')}</TableHead>
+                        <TableHead>{t('warehouses.organization')}</TableHead>
+                        <TableHead>{t('warehouses.orgUnit')}</TableHead>
                         <TableHead>{t('warehouses.address')}</TableHead>
-                        <TableHead>{t('warehouses.description')}</TableHead>
                         <TableHead>{t('warehouses.status')}</TableHead>
                         <TableHead>{t('common.actions')}</TableHead>
                     </TableRow>
@@ -136,8 +157,9 @@ export function WarehousesTable() {
                                     {warehouse.name}
                                 </Link>
                             </TableCell>
+                            <TableCell>{orgMap.get(warehouse.organizationId) || '-'}</TableCell>
+                            <TableCell>{orgUnitMap.get(warehouse.orgUnitId) || '-'}</TableCell>
                             <TableCell>{warehouse.address || '—'}</TableCell>
-                            <TableCell>{warehouse.description || '—'}</TableCell>
                             <TableCell>
                                 <span className={warehouse.active ? 'text-green-600' : 'text-red-600'}>
                                   {warehouse.active ? t('common.active') : t('common.inactive')}

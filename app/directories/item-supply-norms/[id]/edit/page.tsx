@@ -81,8 +81,6 @@ export default function ItemSupplyNormEditPage({ params }: { params: Promise<{ i
         setFieldErrors({})
         
         const errors: Record<string, string> = {}
-        if (!formData.employeeCategoryId) errors.employeeCategoryId = t('common.required')
-        if (!formData.itemId) errors.itemId = t('common.required')
         if (!formData.quantity) errors.quantity = t('common.required')
         if (!formData.wearMonths) errors.wearMonths = t('common.required')
         if (!formData.validFrom) errors.validFrom = t('common.required')
@@ -94,8 +92,6 @@ export default function ItemSupplyNormEditPage({ params }: { params: Promise<{ i
 
         try {
             await updateMutation.mutateAsync({
-                employeeCategoryId: formData.employeeCategoryId,
-                itemId: formData.itemId,
                 quantity: Number(formData.quantity),
                 wearMonths: Number(formData.wearMonths),
                 validFrom: formData.validFrom,
@@ -139,45 +135,21 @@ export default function ItemSupplyNormEditPage({ params }: { params: Promise<{ i
                 <GovCardContent>
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
-                            <GovLabel required>{t('norm.category')}</GovLabel>
-                            <Select
-                                key={formData.employeeCategoryId}
-                                value={formData.employeeCategoryId || undefined}
-                                onValueChange={(value) => setFormData({ ...formData, employeeCategoryId: value })}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder={t('common.select')} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {categories.map((cat: any) => (
-                                        <SelectItem key={cat.id} value={cat.id!}>
-                                            {cat.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {fieldErrors.employeeCategoryId && <p className="text-sm text-red-600 mt-1">{fieldErrors.employeeCategoryId}</p>}
+                            <GovLabel>{t('norm.category')}</GovLabel>
+                            <GovInput
+                                value={norm?.employeeCategoryName || ''}
+                                disabled
+                            />
+                            <p className="text-sm text-gray-500 mt-1">{t('itemSupplyNorm.categoryCannotBeChanged')}</p>
                         </div>
 
                         <div>
-                            <GovLabel required>{t('norm.item')}</GovLabel>
-                            <Select
-                                key={formData.itemId}
-                                value={formData.itemId || undefined}
-                                onValueChange={(value) => setFormData({ ...formData, itemId: value })}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder={t('common.select')} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {items.map((item: any) => (
-                                        <SelectItem key={item.id} value={item.id!}>
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {fieldErrors.itemId && <p className="text-sm text-red-600 mt-1">{fieldErrors.itemId}</p>}
+                            <GovLabel>{t('norm.item')}</GovLabel>
+                            <GovInput
+                                value={norm?.itemName || ''}
+                                disabled
+                            />
+                            <p className="text-sm text-gray-500 mt-1">{t('itemSupplyNorm.itemCannotBeChanged')}</p>
                         </div>
 
                         <div>

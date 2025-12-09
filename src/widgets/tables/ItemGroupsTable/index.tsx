@@ -3,9 +3,11 @@
 import { useState, useMemo } from 'react'
 import { useItemGroups } from '@/features/manage-item-groups/model/useItemGroups'
 import { useDeleteItemGroup } from '@/features/manage-item-groups/model/useDeleteItemGroup'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
@@ -17,6 +19,7 @@ export function ItemGroupsTable() {
     const isMobile = useMobile()
     const { data, isLoading } = useItemGroups()
     const deleteMutation = useDeleteItemGroup()
+    const confirmDialog = useConfirmDialog()
     const [codeFilter, setCodeFilter] = useState('')
     const [nameFilter, setNameFilter] = useState('')
 
@@ -37,12 +40,16 @@ export function ItemGroupsTable() {
     }, [data, codeFilter, nameFilter])
 
     const handleDelete = (id: string) => {
-        if (confirm(t('itemGroup.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: (error: any) => toast.error(getErrorMessage(error)),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('itemGroup.deleteConfirm'),
+            t('common.deleteWarning') || 'Вы уверены, что хотите удалить эту группу?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -120,6 +127,18 @@ export function ItemGroupsTable() {
                     ))}
                 </TableBody>
             </Table>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

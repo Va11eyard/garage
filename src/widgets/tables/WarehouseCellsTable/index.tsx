@@ -5,10 +5,12 @@ import { useWarehouseZonesSearch } from '@/features/manage-warehouse-zones/model
 import { useWarehouseCellsSearch } from '@/features/manage-warehouse-cells/model/useWarehouseCellsSearch'
 import { useDeleteWarehouseCell } from '@/features/manage-warehouse-cells/model/useDeleteWarehouseCell'
 import { useTranslation } from '@/shared/i18n/use-translation'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { getErrorMessage } from '@/shared/utils/error-handler'
@@ -37,18 +39,23 @@ export function WarehouseCellsTable() {
         zoneIds: selectedWarehouseId === '__ALL__' && selectedZoneId === '__ALL__' ? zoneIds : undefined,
     })
     const deleteMutation = useDeleteWarehouseCell()
+    const confirmDialog = useConfirmDialog()
     
     const warehouses = warehousesData?.content || []
     const zonesData = zones || []
     const cellsData = cells || []
 
     const handleDelete = (id: string) => {
-        if (confirm(t('warehouseCells.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: (error: any) => toast.error(getErrorMessage(error)),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('warehouseCells.deleteConfirm'),
+            t('common.deleteWarning') || 'Вы уверены, что хотите удалить эту ячейку?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     return (
@@ -144,6 +151,18 @@ export function WarehouseCellsTable() {
                     </TableBody>
                 </Table>
             )}
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

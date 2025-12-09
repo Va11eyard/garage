@@ -1,15 +1,19 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useUnits } from '@/features/manage-units/model/useUnits'
 import { useDeleteUnit } from '@/features/manage-units/model/useDeleteUnit'
 import { useFilters } from '@/shared/hooks/use-filters'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { useMobile } from '@/shared/hooks/use-mobile'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function UnitsTable() {
     const { t } = useTranslation()
@@ -17,14 +21,30 @@ export function UnitsTable() {
     const { filters, updateFilter } = useFilters({ code: '', name: '' })
     const { data, isLoading } = useUnits()
     const deleteMutation = useDeleteUnit()
+    const confirmDialog = useConfirmDialog()
+
+    // Client-side filtering since backend doesn't support filter parameters
+    const filteredData = useMemo(() => {
+        if (!data) return []
+        
+        return data.filter((unit: any) => {
+            const matchesCode = !filters.code || unit.code?.toLowerCase().includes(filters.code.toLowerCase())
+            const matchesName = !filters.name || unit.name?.toLowerCase().includes(filters.name.toLowerCase())
+            return matchesCode && matchesName
+        })
+    }, [data, filters.code, filters.name])
 
     const handleDelete = (id: string) => {
-        if (confirm(t('unitOfMeasure.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: () => toast.error(t('common.error')),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('unitOfMeasure.deleteConfirm'),
+            t('common.deleteWarning') || 'Вы уверены, что хотите удалить эту единицу измерения?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -68,7 +88,7 @@ export function UnitsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.map((unit: any) => (
+                    {filteredData.map((unit: any) => (
                         <TableRow key={unit.id}>
                             <TableCell>{unit.code}</TableCell>
                             <TableCell>{unit.name}</TableCell>
@@ -105,9 +125,21 @@ export function UnitsTable() {
 
             <div className="flex justify-end items-center">
                 <span className="text-sm text-gov-text-secondary">
-                    {t('common.all')}: {data?.length ?? 0}
+                    {t('common.all')}: {filteredData.length}
                 </span>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

@@ -4,10 +4,12 @@ import { useItems } from '@/features/manage-items/model/useItems'
 import { useDeleteItem } from '@/features/manage-items/model/useDeleteItem'
 import { usePagination } from '@/shared/hooks/use-pagination'
 import { useFilters } from '@/shared/hooks/use-filters'
+import { useConfirmDialog } from '@/shared/hooks/use-confirm-dialog'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
+import { GovConfirmModal } from '@/gov-design/patterns/GovModal'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { Route } from 'next'
@@ -19,14 +21,19 @@ export function ItemsTable() {
     const { filters, debouncedFilters, updateFilter } = useFilters({ code: '', name: '' })
     const { data, isLoading } = useItems({ ...debouncedFilters, page, size })
     const deleteMutation = useDeleteItem()
+    const confirmDialog = useConfirmDialog()
 
     const handleDelete = (id: string) => {
-        if (confirm(t('items.deleteConfirm'))) {
-            deleteMutation.mutate(id, {
-                onSuccess: () => toast.success(t('common.success')),
-                onError: (error: any) => toast.error(getErrorMessage(error)),
-            })
-        }
+        confirmDialog.showConfirm(
+            t('items.deleteConfirm'),
+            t('common.deleteWarning') || 'Вы уверены, что хотите удалить эту номенклатуру?',
+            () => {
+                deleteMutation.mutate(id, {
+                    onSuccess: () => toast.success(t('common.success')),
+                    onError: (error: any) => toast.error(getErrorMessage(error)),
+                })
+            }
+        )
     }
 
     if (isLoading) return <div>{t('common.loading')}</div>
@@ -116,6 +123,18 @@ export function ItemsTable() {
         </span>
                 <Button onClick={nextPage} disabled={data?.last || page >= (data?.totalPages ?? 1) - 1}>{t('pagination.next')}</Button>
             </div>
+
+            <GovConfirmModal
+                isOpen={confirmDialog.isOpen}
+                onClose={confirmDialog.hideConfirm}
+                onConfirm={confirmDialog.handleConfirm}
+                title={confirmDialog.title}
+                message={confirmDialog.message}
+                confirmText={t('common.delete')}
+                cancelText={t('common.cancel')}
+                variant="danger"
+                isLoading={deleteMutation.isPending}
+            />
         </div>
     )
 }

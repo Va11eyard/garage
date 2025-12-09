@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useOrgUnit } from '@/features/manage-org-units/model/useOrgUnit'
 import { useUpdateOrgUnit } from '@/features/manage-org-units/model/useUpdateOrgUnit'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
+import { useOrganization } from '@/features/manage-organizations/model/useOrganization'
 import { useOrgUnitsByOrganization } from '@/features/manage-org-units/model/useOrgUnitsByOrganization'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { toast } from 'sonner'
@@ -23,6 +24,7 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
     const { data: orgUnit, isLoading } = useOrgUnit(id)
     const updateMutation = useUpdateOrgUnit()
     const { data: organizations } = useOrganizations({})
+    const { data: currentOrganization } = useOrganization(orgUnit?.organizationId)
     
     const [formData, setFormData] = useState({
         organizationId: '',
@@ -117,21 +119,12 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
                             <GovLabel required>{t('orgUnits.organization')}</GovLabel>
-                            <Select
-                                value={formData.organizationId}
-                                onValueChange={handleOrganizationChange}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder={t('organizations.selectOrganization')} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {organizations?.content?.map((org: any) => (
-                                        <SelectItem key={org.id} value={org.id}>
-                                            {org.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <GovInput
+                                value={currentOrganization?.name || ''}
+                                disabled
+                                className="bg-gray-50"
+                            />
+                            <p className="text-sm text-gray-500 mt-1">{t('orgUnits.organizationCannotBeChanged')}</p>
                             {fieldErrors.organizationId && <p className="text-sm text-red-600 mt-1">{fieldErrors.organizationId}</p>}
                         </div>
 

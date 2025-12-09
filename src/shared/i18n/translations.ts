@@ -66,6 +66,7 @@ export const translations = {
             status: 'Статус',
             comment: 'Комментарий',
             confirmDelete: 'Вы уверены, что хотите удалить этот документ?',
+            deleteWarning: 'Вы уверены, что хотите удалить этот элемент? Это действие нельзя отменить.',
             months: 'мес.',
             code: 'Код',
             name: 'Наименование',
@@ -354,6 +355,7 @@ export const translations = {
             edit: 'Редактировать зону',
             editZone: 'Редактировать зону',
             deleteConfirm: 'Удалить зону?',
+            deleteMessage: 'Вы уверены, что хотите удалить эту зону склада? Это действие нельзя отменить.',
             warehouseCannotBeChanged: 'Склад не может быть изменен после создания',
         },
         warehouseCells: {
@@ -429,9 +431,12 @@ export const translations = {
             create: 'Создать норму снабжения',
             edit: 'Редактировать норму снабжения',
             deleteConfirm: 'Удалить норму снабжения?',
+            deleteMessage: 'Вы уверены, что хотите удалить эту норму снабжения? Это действие нельзя отменить.',
             wearMonths: 'Срок носки (месяцев)',
             validFrom: 'Действует с',
             validTo: 'Действует до',
+            categoryCannotBeChanged: 'Категория сотрудника не может быть изменена после создания',
+            itemCannotBeChanged: 'Номенклатура не может быть изменена после создания',
         },
         employees: {
             title: 'Сотрудники',
@@ -618,6 +623,7 @@ export const translations = {
             editUnit: 'Редактировать подразделение',
             deleteConfirm: 'Удалить подразделение?',
             deleteMessage: 'Вы уверены, что хотите удалить это подразделение? Это действие нельзя отменить.',
+            organizationCannotBeChanged: 'Организация не может быть изменена после создания',
         },
         itemGroup: {
             title: 'Группы номенклатуры',
@@ -1030,6 +1036,7 @@ export const translations = {
             status: 'Мәртебе',
             comment: 'Түсініктеме',
             confirmDelete: 'Бұл құжатты жойғыңыз келетініне сенімдісіз бе?',
+            deleteWarning: 'Бұл элементті жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті болдырмау мүмкін емес.',
             months: 'ай',
             code: 'Код',
             name: 'Атауы',
@@ -1295,6 +1302,7 @@ export const translations = {
             edit: 'Аймақты өңдеу',
             editZone: 'Аймақты өңдеу',
             deleteConfirm: 'Аймақты жою керек пе?',
+            deleteMessage: 'Бұл қойма аймағын жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті болдырмау мүмкін емес.',
             warehouseCannotBeChanged: 'Қойманы жасағаннан кейін өзгерту мүмкін емес',
         },
         warehouseCells: {
@@ -1370,9 +1378,12 @@ export const translations = {
             create: 'Жабдықтау нормасын жасау',
             edit: 'Жабдықтау нормасын өңдеу',
             deleteConfirm: 'Жабдықтау нормасын жою керек пе?',
+            deleteMessage: 'Бұл жабдықтау нормасын жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті болдырмау мүмкін емес.',
             wearMonths: 'Киім мерзімі (айлар)',
             validFrom: 'Қолданылады',
             validTo: 'Аяқталады',
+            categoryCannotBeChanged: 'Қызметкер санатын жасағаннан кейін өзгерту мүмкін емес',
+            itemCannotBeChanged: 'Номенклатураны жасағаннан кейін өзгерту мүмкін емес',
         },
         employees: {
             title: 'Қызметкерлер',
@@ -1559,6 +1570,7 @@ export const translations = {
             editUnit: 'Бөлімшені өңдеу',
             deleteConfirm: 'Бөлімшені жою керек пе?',
             deleteMessage: 'Бұл бөлімшені жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті болдырмау мүмкін емес.',
+            organizationCannotBeChanged: 'Ұйымды жасағаннан кейін өзгерту мүмкін емес',
         },
         itemGroup: {
             title: 'Номенклатура топтары',
