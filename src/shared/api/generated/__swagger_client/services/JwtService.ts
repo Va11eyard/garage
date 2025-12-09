@@ -25,7 +25,7 @@ export class JwtService {
     ): CancelablePromise<JwtResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/auth/login',
+            url: '/auth/login',
             body: requestBody,
             mediaType: 'application/json',
         });

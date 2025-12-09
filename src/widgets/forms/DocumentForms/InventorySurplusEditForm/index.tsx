@@ -1,62 +1,96 @@
 'use client'
 
-import { useCreateWriteOff } from '@/features/manage-write-offs/model/useCreateWriteOff'
+import { useInventorySurplus } from '@/features/manage-inventory-surpluses/model/useInventorySurplus'
+import { useUpdateInventorySurplus } from '@/features/manage-inventory-surpluses/model/useUpdateInventorySurplus'
 import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
+import { GovCard, GovCardContent } from '@/gov-design/components/Card'
 import { GovButton } from '@/gov-design/components/Button'
 import { GovInput, GovLabel } from '@/gov-design/components/Form'
 import { DatePicker } from '@/shared/ui/date-picker'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { Spinner } from '@/shared/ui/spinner'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getErrorMessage } from '@/shared/utils/error-handler'
 
-export function WriteOffCreateForm() {
+export function InventorySurplusEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
-    const { mutateAsync } = useCreateWriteOff()
-    const { data: organizationsData } = useOrganizations({ page: 0, size: 100 })
     const router = useRouter()
-    
+    const { data: surplus, isLoading } = useInventorySurplus(id)
+    const { mutateAsync, isPending } = useUpdateInventorySurplus(id)
+    const { data: organizations } = useOrganizations({ page: 0, size: 100 })
     const [selectedOrgId, setSelectedOrgId] = useState<string>()
     const { data: warehouses } = useWarehousesByOrganization(selectedOrgId)
     
     const [formData, setFormData] = useState({
         docNumber: '',
         docDate: '',
-        warehouseId: '',
         organizationId: '',
-        reason: '',
+        warehouseId: '',
+        lines: []
     })
+
+    useEffect(() => {
+        if (surplus) {
+            setFormData({
+                docNumber: surplus.docNumber || '',
+                docDate: surplus.docDate || '',
+                organizationId: surplus.organizationId || '',
+                warehouseId: surplus.warehouseId || '',
+                lines: surplus.lines || []
+            })
+            setSelectedOrgId(surplus.organizationId)
+        }
+    }, [surplus])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.docNumber || !formData.docDate || !formData.warehouseId || !formData.organizationId) {
+        if (!formData.docNumber || !formData.docDate || !formData.organizationId || !formData.warehouseId) {
             toast.error(t('common.required'))
             return
         }
 
         try {
-            const created = await mutateAsync({
-                ...formData,
-                lines: []
-            })
+            await mutateAsync(formData)
             toast.success(t('common.success'))
-            router.push(`/inventory/writeoff/${created.id}`)
+            router.push(`/inventory/surplus/${id}`)
         } catch (error) {
             toast.error(getErrorMessage(error))
         }
+    }
+
+    if (isLoading) return <Spinner />
+    if (!surplus) return <div>{t('common.notFound')}</div>
+    
+    if (surplus?.status !== 'DRAFT') {
+        return (
+            <div className="space-y-6">
+                <GovBreadcrumb items={[
+                    { label: t('breadcrumbs.inventory'), href: '/inventory' },
+                    { label: t('inventorySurpluses.title'), href: '/inventory/surplus' },
+                    { label: surplus.docNumber || id }
+                ]} />
+                <GovCard>
+                    <GovCardContent className="p-6">
+                        <p>Можно редактировать только черновики</p>
+                    </GovCardContent>
+                </GovCard>
+            </div>
+        )
     }
 
     return (
         <div className="space-y-6">
             <GovBreadcrumb items={[
                 { label: t('breadcrumbs.inventory'), href: '/inventory' },
-                { label: t('writeOffs.title'), href: '/inventory/writeoff' },
-                { label: t('common.create') }
+                { label: t('inventorySurpluses.title'), href: '/inventory/surplus' },
+                { label: surplus.docNumber || id, href: `/inventory/surplus/${id}` },
+                { label: t('common.edit') }
             ]} />
 
             <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
@@ -78,7 +112,7 @@ export function WriteOffCreateForm() {
                 </div>
 
                 <div>
-                    <GovLabel required>{t('organizations.organization')}</GovLabel>
+                    <GovLabel required>{t('organization.title')}</GovLabel>
                     <Select
                         value={formData.organizationId || undefined}
                         onValueChange={(value) => {
@@ -90,7 +124,7 @@ export function WriteOffCreateForm() {
                             <SelectValue placeholder={t('common.select')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {organizationsData?.content?.map((org: any) => (
+                            {organizations?.content?.map((org: any) => (
                                 <SelectItem key={org.id} value={org.id!}>
                                     {org.name}
                                 </SelectItem>
@@ -119,18 +153,9 @@ export function WriteOffCreateForm() {
                     </Select>
                 </div>
 
-                <div>
-                    <GovLabel>{t('documents.reason')}</GovLabel>
-                    <GovInput
-                        value={formData.reason}
-                        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                        placeholder={t('documents.reason')}
-                    />
-                </div>
-
                 <div className="flex gap-3 pt-4">
-                    <GovButton type="submit">
-                        {t('common.create')}
+                    <GovButton type="submit" disabled={isPending}>
+                        {isPending ? t('common.loading') : t('common.save')}
                     </GovButton>
                     <GovButton 
                         type="button" 

@@ -18,7 +18,7 @@ export class StubService {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/system/jobs/{code}/run',
+            url: '/admin/system/jobs/{code}/run',
             path: {
                 'code': code,
             },
@@ -37,7 +37,7 @@ export class StubService {
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/system/backup/import',
+            url: '/admin/system/backup/import',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -50,7 +50,7 @@ export class StubService {
     public static adminRequestBackupExport(): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/system/backup/export',
+            url: '/admin/system/backup/export',
         });
     }
     /**
@@ -61,7 +61,7 @@ export class StubService {
     public static adminListSystemJobs(): CancelablePromise<Array<SystemJobInfoDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/system/jobs',
+            url: '/admin/system/jobs',
         });
     }
 }

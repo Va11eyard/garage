@@ -1,7 +1,7 @@
 'use client'
 
 import { useCreateInventorySurplus } from '@/features/manage-inventory-surpluses/model/useCreateInventorySurplus'
-import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
@@ -17,7 +17,6 @@ import { getErrorMessage } from '@/shared/utils/error-handler'
 export function InventorySurplusCreateForm() {
     const { t } = useTranslation()
     const { mutateAsync } = useCreateInventorySurplus()
-    const { data: warehouses } = useWarehouses({})
     const { data: organizations } = useOrganizations({ page: 0, size: 100 })
     const router = useRouter()
     
@@ -28,6 +27,8 @@ export function InventorySurplusCreateForm() {
         warehouseId: '',
         lines: []
     })
+    const [selectedOrgId, setSelectedOrgId] = useState<string>()
+    const { data: warehouses } = useWarehousesByOrganization(selectedOrgId)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -76,7 +77,10 @@ export function InventorySurplusCreateForm() {
                     <GovLabel required>{t('organization.title')}</GovLabel>
                     <Select
                         value={formData.organizationId || undefined}
-                        onValueChange={(value) => setFormData({ ...formData, organizationId: value })}
+                        onValueChange={(value) => {
+                            setFormData({ ...formData, organizationId: value, warehouseId: '' })
+                            setSelectedOrgId(value)
+                        }}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
@@ -96,12 +100,13 @@ export function InventorySurplusCreateForm() {
                     <Select
                         value={formData.warehouseId || undefined}
                         onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
+                        disabled={!selectedOrgId}
                     >
                         <SelectTrigger>
-                            <SelectValue placeholder={t('common.select')} />
+                            <SelectValue placeholder={selectedOrgId ? t('common.select') : t('common.selectOrganizationFirst')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {warehouses?.content?.map((wh: any) => (
+                            {warehouses?.map((wh: any) => (
                                 <SelectItem key={wh.id} value={wh.id!}>
                                     {wh.name}
                                 </SelectItem>

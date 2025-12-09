@@ -1,7 +1,7 @@
 'use client'
 
 import { useCreateReceipt } from '@/features/manage-receipts/model/useCreateReceipt'
-import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
 import { useItems } from '@/features/manage-items/model/useItems'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useUnits } from '@/features/manage-units/model/useUnits'
@@ -18,10 +18,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { getErrorMessage } from '@/shared/utils/error-handler'
+import { useState } from 'react'
 
 export function ReceiptCreateForm() {
     const { t } = useTranslation()
-    const { register, handleSubmit, control, formState: { errors, isSubmitting }, setValue } = useForm<ReceiptCreateRequest>({
+    const [selectedOrgId, setSelectedOrgId] = useState<string>()
+    const { register, handleSubmit, control, formState: { errors, isSubmitting }, setValue, watch } = useForm<ReceiptCreateRequest>({
         defaultValues: {
             lines: [{ itemId: '', quantity: 0, price: 0 }]
         },
@@ -29,7 +31,7 @@ export function ReceiptCreateForm() {
     })
     const { fields, append, remove } = useFieldArray({ control, name: 'lines' })
     const { mutateAsync } = useCreateReceipt()
-    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data: warehousesData } = useWarehousesByOrganization(selectedOrgId)
     const { data: itemsData } = useItems({ page: 0, size: 100 })
     const { data: organizationsData } = useOrganizations({ page: 0, size: 100 })
     const { data: unitsData } = useUnits()
@@ -80,7 +82,11 @@ export function ReceiptCreateForm() {
 
                 <div>
                     <GovLabel required>{t('organization.title')}</GovLabel>
-                    <Select onValueChange={(value) => setValue('organizationId', value, { shouldValidate: true })}>
+                    <Select onValueChange={(value) => {
+                        setValue('organizationId', value, { shouldValidate: true })
+                        setSelectedOrgId(value)
+                        setValue('warehouseId', '', { shouldValidate: true })
+                    }}>
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
                         </SelectTrigger>
@@ -97,12 +103,15 @@ export function ReceiptCreateForm() {
 
                 <div>
                     <GovLabel required>{t('documents.warehouse')}</GovLabel>
-                    <Select onValueChange={(value) => setValue('warehouseId', value, { shouldValidate: true })}>
+                    <Select 
+                        onValueChange={(value) => setValue('warehouseId', value, { shouldValidate: true })}
+                        disabled={!selectedOrgId}
+                    >
                         <SelectTrigger>
-                            <SelectValue placeholder={t('warehouses.selectWarehouse')} />
+                            <SelectValue placeholder={selectedOrgId ? t('warehouses.selectWarehouse') : t('common.selectOrganizationFirst')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {warehousesData?.content?.map((wh: any) => (
+                            {warehousesData?.map((wh: any) => (
                                 <SelectItem key={wh.id} value={wh.id!}>
                                     {wh.name}
                                 </SelectItem>

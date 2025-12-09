@@ -13,9 +13,9 @@ export type PageAuditLogDto = {
     content?: Array<AuditLogDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 

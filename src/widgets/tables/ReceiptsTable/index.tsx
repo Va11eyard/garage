@@ -90,19 +90,23 @@ export function ReceiptsTable() {
                                         {t('common.view')}
                                     </Button>
                                 </Link>
-                                <Link href={`/inventory/receipts/${doc.id}/edit`}>
-                                    <Button variant="ghost" size="sm">
-                                        {t('common.edit')}
-                                    </Button>
-                                </Link>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    className="text-red-600"
-                                    onClick={() => handleDelete(doc.id!)}
-                                >
-                                    {t('common.delete')}
-                                </Button>
+                                {doc.status === 'DRAFT' && (
+                                    <>
+                                        <Link href={`/inventory/receipts/${doc.id}/edit`}>
+                                            <Button variant="ghost" size="sm">
+                                                {t('common.edit')}
+                                            </Button>
+                                        </Link>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="text-red-600"
+                                            onClick={() => handleDelete(doc.id!)}
+                                        >
+                                            {t('common.delete')}
+                                        </Button>
+                                    </>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}

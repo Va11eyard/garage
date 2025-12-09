@@ -1,7 +1,8 @@
 'use client'
 
 import { useCreateTemporaryIssue } from '@/features/manage-temporary-issues/model/useCreateTemporaryIssue'
-import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
+import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useTranslation } from '@/shared/i18n/use-translation'
 import { GovBreadcrumb } from '@/gov-design/patterns'
 import { GovButton } from '@/gov-design/components/Button'
@@ -15,20 +16,27 @@ import { useState, useEffect } from 'react'
 export function TemporaryIssueCreateForm() {
     const { t } = useTranslation()
     const { mutateAsync } = useCreateTemporaryIssue()
-    const { data: warehouses } = useWarehouses({})
+    const { data: organizations } = useOrganizations({ page: 0, size: 100 })
     const router = useRouter()
     
-    const [organizations, setOrganizations] = useState<any[]>([])
+    const [selectedOrgId, setSelectedOrgId] = useState<string>()
+    const { data: warehouses } = useWarehousesByOrganization(selectedOrgId)
     const [employees, setEmployees] = useState<any[]>([])
     
-    // Fetch organizations
+    // Fetch employees when organization is selected
     useEffect(() => {
-        import('@/shared/api/generated/__swagger_client').then(({ Service }) => {
-            Service.searchOrganizationsPage(undefined, undefined, 0, 1000).then((data) => {
-                setOrganizations(data.content || [])
+        if (selectedOrgId) {
+            import('@/shared/api/generated/__swagger_client').then(({ Service }) => {
+                Service.searchEmployeesPage(selectedOrgId, undefined, undefined, 0, 1000).then((data) => {
+                    setEmployees(data.content || [])
+                }).catch(error => {
+                    console.error('Failed to fetch employees:', error)
+                })
             })
-        })
-    }, [])
+        } else {
+            setEmployees([])
+        }
+    }, [selectedOrgId])
     
     const [formData, setFormData] = useState({
         docNumber: '',
@@ -40,21 +48,7 @@ export function TemporaryIssueCreateForm() {
         plannedReturnDate: '',
     })
 
-    // Fetch employees when organization is selected
-    const handleOrganizationChange = async (orgId: string) => {
-        setFormData({ ...formData, organizationId: orgId, employeeId: '' })
-        if (orgId) {
-            try {
-                const { Service } = await import('@/shared/api/generated/__swagger_client')
-                const data = await Service.searchEmployeesPage(orgId, undefined, undefined, 0, 1000)
-                setEmployees(data.content || [])
-            } catch (error) {
-                console.error('Failed to fetch employees:', error)
-            }
-        } else {
-            setEmployees([])
-        }
-    }
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -133,13 +127,16 @@ export function TemporaryIssueCreateForm() {
                     <GovLabel required>{t('organizations.organization')}</GovLabel>
                     <Select
                         value={formData.organizationId}
-                        onValueChange={handleOrganizationChange}
+                        onValueChange={(value) => {
+                            setFormData({ ...formData, organizationId: value, warehouseId: '', employeeId: '' })
+                            setSelectedOrgId(value)
+                        }}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {organizations?.map((org: any) => (
+                            {organizations?.content?.map((org: any) => (
                                 <SelectItem key={org.id} value={org.id!}>
                                     {org.name}
                                 </SelectItem>
@@ -153,12 +150,13 @@ export function TemporaryIssueCreateForm() {
                     <Select
                         value={formData.warehouseId}
                         onValueChange={(value) => setFormData({ ...formData, warehouseId: value })}
+                        disabled={!selectedOrgId}
                     >
                         <SelectTrigger>
-                            <SelectValue placeholder={t('common.select')} />
+                            <SelectValue placeholder={selectedOrgId ? t('common.select') : t('common.selectOrganizationFirst')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {warehouses?.content?.map((wh: any) => (
+                            {warehouses?.map((wh: any) => (
                                 <SelectItem key={wh.id} value={wh.id!}>
                                     {wh.name}
                                 </SelectItem>

@@ -30,7 +30,7 @@ export class StockBalanceService {
     ): CancelablePromise<Array<StockBalanceDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/balances/by-warehouse/{warehouseId}',
+            url: '/stock/balances/by-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -59,7 +59,7 @@ export class StockBalanceService {
     ): CancelablePromise<Array<StockBalanceDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/balances/by-cell/{cellId}',
+            url: '/stock/balances/by-cell/{cellId}',
             path: {
                 'cellId': cellId,
             },

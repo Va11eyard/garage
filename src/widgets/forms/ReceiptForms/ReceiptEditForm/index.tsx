@@ -2,7 +2,7 @@
 
 import { useReceipt } from '@/features/manage-receipts/model/useReceipt'
 import { useUpdateReceipt } from '@/features/manage-receipts/model/useUpdateReceipt'
-import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
 import { useItems } from '@/features/manage-items/model/useItems'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useUnits } from '@/features/manage-units/model/useUnits'
@@ -19,7 +19,7 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Spinner } from '@/shared/ui/spinner'
 import { getErrorMessage } from '@/shared/utils/error-handler'
 
@@ -27,10 +27,11 @@ export function ReceiptEditForm({ id }: { id: string }) {
     const { t } = useTranslation()
     const router = useRouter()
     const { data: receipt, isLoading } = useReceipt(id)
+    const [selectedOrgId, setSelectedOrgId] = useState<string>()
     const { register, handleSubmit, control, formState: { isSubmitting }, setValue } = useForm<ReceiptUpdateRequest>()
     const { fields, append, remove } = useFieldArray({ control, name: 'lines' })
     const { mutateAsync } = useUpdateReceipt(id)
-    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data: warehousesData } = useWarehousesByOrganization(selectedOrgId)
     const { data: itemsData } = useItems({ page: 0, size: 100 })
     const { data: organizationsData } = useOrganizations({ page: 0, size: 100 })
     const { data: unitsData } = useUnits()
@@ -42,6 +43,7 @@ export function ReceiptEditForm({ id }: { id: string }) {
             setValue('warehouseId', receipt.warehouseId)
             setValue('organizationId', receipt.organizationId)
             setValue('lines', receipt.lines || [])
+            setSelectedOrgId(receipt.organizationId)
         }
     }, [receipt, setValue])
 
@@ -115,7 +117,11 @@ export function ReceiptEditForm({ id }: { id: string }) {
                             <Select 
                                 key={receipt?.organizationId}
                                 defaultValue={receipt?.organizationId}
-                                onValueChange={(value) => setValue('organizationId', value)}
+                                onValueChange={(value) => {
+                                    setValue('organizationId', value)
+                                    setSelectedOrgId(value)
+                                    setValue('warehouseId', '')
+                                }}
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder={t('common.select')} />
@@ -136,12 +142,13 @@ export function ReceiptEditForm({ id }: { id: string }) {
                                 key={receipt?.warehouseId}
                                 defaultValue={receipt?.warehouseId}
                                 onValueChange={(value) => setValue('warehouseId', value)}
+                                disabled={!selectedOrgId}
                             >
                                 <SelectTrigger>
-                                    <SelectValue placeholder={t('warehouses.selectWarehouse')} />
+                                    <SelectValue placeholder={selectedOrgId ? t('warehouses.selectWarehouse') : t('common.selectOrganizationFirst')} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {warehousesData?.content?.map((wh: any) => (
+                                    {warehousesData?.map((wh: any) => (
                                         <SelectItem key={wh.id} value={wh.id!}>
                                             {wh.name}
                                         </SelectItem>

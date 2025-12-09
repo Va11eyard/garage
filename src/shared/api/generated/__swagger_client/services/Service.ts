@@ -139,7 +139,7 @@ export class Service {
     ): CancelablePromise<WarehouseDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouses/{id}',
+            url: '/nsi/warehouses/{id}',
             path: {
                 'id': id,
             },
@@ -161,7 +161,7 @@ export class Service {
     ): CancelablePromise<WarehouseDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/warehouses/{id}',
+            url: '/nsi/warehouses/{id}',
             path: {
                 'id': id,
             },
@@ -183,7 +183,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/warehouses/{id}',
+            url: '/nsi/warehouses/{id}',
             path: {
                 'id': id,
             },
@@ -201,7 +201,7 @@ export class Service {
     ): CancelablePromise<WarehouseZoneDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouse-zones/{id}',
+            url: '/nsi/warehouse-zones/{id}',
             path: {
                 'id': id,
             },
@@ -223,7 +223,7 @@ export class Service {
     ): CancelablePromise<WarehouseZoneDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/warehouse-zones/{id}',
+            url: '/nsi/warehouse-zones/{id}',
             path: {
                 'id': id,
             },
@@ -245,7 +245,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/warehouse-zones/{id}',
+            url: '/nsi/warehouse-zones/{id}',
             path: {
                 'id': id,
             },
@@ -263,7 +263,7 @@ export class Service {
     ): CancelablePromise<WarehouseCellDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouse-cells/{id}',
+            url: '/nsi/warehouse-cells/{id}',
             path: {
                 'id': id,
             },
@@ -285,7 +285,7 @@ export class Service {
     ): CancelablePromise<WarehouseCellDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/warehouse-cells/{id}',
+            url: '/nsi/warehouse-cells/{id}',
             path: {
                 'id': id,
             },
@@ -307,7 +307,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/warehouse-cells/{id}',
+            url: '/nsi/warehouse-cells/{id}',
             path: {
                 'id': id,
             },
@@ -325,7 +325,7 @@ export class Service {
     ): CancelablePromise<UnitOfMeasureDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/units/{id}',
+            url: '/nsi/units/{id}',
             path: {
                 'id': id,
             },
@@ -345,7 +345,7 @@ export class Service {
     ): CancelablePromise<UnitOfMeasureDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/units/{id}',
+            url: '/nsi/units/{id}',
             path: {
                 'id': id,
             },
@@ -365,7 +365,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/units/{id}',
+            url: '/nsi/units/{id}',
             path: {
                 'id': id,
             },
@@ -383,7 +383,7 @@ export class Service {
     ): CancelablePromise<QualityCategoryDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/quality-categories/{id}',
+            url: '/nsi/quality-categories/{id}',
             path: {
                 'id': id,
             },
@@ -403,7 +403,7 @@ export class Service {
     ): CancelablePromise<QualityCategoryDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/quality-categories/{id}',
+            url: '/nsi/quality-categories/{id}',
             path: {
                 'id': id,
             },
@@ -423,7 +423,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/quality-categories/{id}',
+            url: '/nsi/quality-categories/{id}',
             path: {
                 'id': id,
             },
@@ -441,7 +441,7 @@ export class Service {
     ): CancelablePromise<OrganizationDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/organizations/{id}',
+            url: '/nsi/organizations/{id}',
             path: {
                 'id': id,
             },
@@ -461,7 +461,7 @@ export class Service {
     ): CancelablePromise<OrganizationDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/organizations/{id}',
+            url: '/nsi/organizations/{id}',
             path: {
                 'id': id,
             },
@@ -481,7 +481,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/organizations/{id}',
+            url: '/nsi/organizations/{id}',
             path: {
                 'id': id,
             },
@@ -499,7 +499,7 @@ export class Service {
     ): CancelablePromise<OrgUnitDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/org-units/{id}',
+            url: '/nsi/org-units/{id}',
             path: {
                 'id': id,
             },
@@ -521,7 +521,7 @@ export class Service {
     ): CancelablePromise<OrgUnitDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/org-units/{id}',
+            url: '/nsi/org-units/{id}',
             path: {
                 'id': id,
             },
@@ -543,7 +543,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/org-units/{id}',
+            url: '/nsi/org-units/{id}',
             path: {
                 'id': id,
             },
@@ -561,7 +561,7 @@ export class Service {
     ): CancelablePromise<ItemDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/items/{id}',
+            url: '/nsi/items/{id}',
             path: {
                 'id': id,
             },
@@ -584,7 +584,7 @@ export class Service {
     ): CancelablePromise<ItemDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/items/{id}',
+            url: '/nsi/items/{id}',
             path: {
                 'id': id,
             },
@@ -605,7 +605,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/items/{id}',
+            url: '/nsi/items/{id}',
             path: {
                 'id': id,
             },
@@ -623,7 +623,7 @@ export class Service {
     ): CancelablePromise<ItemSupplyNormDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-supply-norms/{id}',
+            url: '/nsi/item-supply-norms/{id}',
             path: {
                 'id': id,
             },
@@ -643,7 +643,7 @@ export class Service {
     ): CancelablePromise<ItemSupplyNormDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/item-supply-norms/{id}',
+            url: '/nsi/item-supply-norms/{id}',
             path: {
                 'id': id,
             },
@@ -663,7 +663,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/item-supply-norms/{id}',
+            url: '/nsi/item-supply-norms/{id}',
             path: {
                 'id': id,
             },
@@ -681,7 +681,7 @@ export class Service {
     ): CancelablePromise<ItemGroupDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-groups/{id}',
+            url: '/nsi/item-groups/{id}',
             path: {
                 'id': id,
             },
@@ -703,7 +703,7 @@ export class Service {
     ): CancelablePromise<ItemGroupDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/item-groups/{id}',
+            url: '/nsi/item-groups/{id}',
             path: {
                 'id': id,
             },
@@ -724,7 +724,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/item-groups/{id}',
+            url: '/nsi/item-groups/{id}',
             path: {
                 'id': id,
             },
@@ -742,7 +742,7 @@ export class Service {
     ): CancelablePromise<EmployeeCategoryDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/employee-categories/{id}',
+            url: '/nsi/employee-categories/{id}',
             path: {
                 'id': id,
             },
@@ -762,7 +762,7 @@ export class Service {
     ): CancelablePromise<EmployeeCategoryDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/nsi/employee-categories/{id}',
+            url: '/nsi/employee-categories/{id}',
             path: {
                 'id': id,
             },
@@ -782,7 +782,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/nsi/employee-categories/{id}',
+            url: '/nsi/employee-categories/{id}',
             path: {
                 'id': id,
             },
@@ -800,7 +800,7 @@ export class Service {
     ): CancelablePromise<ProvisionNormDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/provision-norms/{id}',
+            url: '/hr/provision-norms/{id}',
             path: {
                 'id': id,
             },
@@ -822,7 +822,7 @@ export class Service {
     ): CancelablePromise<ProvisionNormDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/hr/provision-norms/{id}',
+            url: '/hr/provision-norms/{id}',
             path: {
                 'id': id,
             },
@@ -844,7 +844,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/hr/provision-norms/{id}',
+            url: '/hr/provision-norms/{id}',
             path: {
                 'id': id,
             },
@@ -862,7 +862,7 @@ export class Service {
     ): CancelablePromise<PersonDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/persons/{id}',
+            url: '/hr/persons/{id}',
             path: {
                 'id': id,
             },
@@ -882,7 +882,7 @@ export class Service {
     ): CancelablePromise<PersonDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/hr/persons/{id}',
+            url: '/hr/persons/{id}',
             path: {
                 'id': id,
             },
@@ -902,7 +902,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/hr/persons/{id}',
+            url: '/hr/persons/{id}',
             path: {
                 'id': id,
             },
@@ -920,7 +920,7 @@ export class Service {
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/writeoff/{id}',
+            url: '/docs/writeoff/{id}',
             path: {
                 'id': id,
             },
@@ -940,7 +940,7 @@ export class Service {
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/writeoff/{id}',
+            url: '/docs/writeoff/{id}',
             path: {
                 'id': id,
             },
@@ -960,7 +960,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/writeoff/{id}',
+            url: '/docs/writeoff/{id}',
             path: {
                 'id': id,
             },
@@ -978,7 +978,7 @@ export class Service {
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/temporary-issue/{id}',
+            url: '/docs/temporary-issue/{id}',
             path: {
                 'id': id,
             },
@@ -998,7 +998,7 @@ export class Service {
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/temporary-issue/{id}',
+            url: '/docs/temporary-issue/{id}',
             path: {
                 'id': id,
             },
@@ -1018,7 +1018,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/temporary-issue/{id}',
+            url: '/docs/temporary-issue/{id}',
             path: {
                 'id': id,
             },
@@ -1036,7 +1036,7 @@ export class Service {
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/return/{id}',
+            url: '/docs/return/{id}',
             path: {
                 'id': id,
             },
@@ -1056,7 +1056,7 @@ export class Service {
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/return/{id}',
+            url: '/docs/return/{id}',
             path: {
                 'id': id,
             },
@@ -1076,7 +1076,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/return/{id}',
+            url: '/docs/return/{id}',
             path: {
                 'id': id,
             },
@@ -1094,7 +1094,7 @@ export class Service {
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/replacement-orders/{id}',
+            url: '/docs/replacement-orders/{id}',
             path: {
                 'id': id,
             },
@@ -1117,7 +1117,7 @@ export class Service {
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/replacement-orders/{id}',
+            url: '/docs/replacement-orders/{id}',
             path: {
                 'id': id,
             },
@@ -1143,7 +1143,7 @@ export class Service {
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/replacement-orders/{id}',
+            url: '/docs/replacement-orders/{id}',
             path: {
                 'id': id,
             },
@@ -1165,7 +1165,7 @@ export class Service {
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/receipts/{id}',
+            url: '/docs/receipts/{id}',
             path: {
                 'id': id,
             },
@@ -1187,7 +1187,7 @@ export class Service {
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/receipts/{id}',
+            url: '/docs/receipts/{id}',
             path: {
                 'id': id,
             },
@@ -1209,7 +1209,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/receipts/{id}',
+            url: '/docs/receipts/{id}',
             path: {
                 'id': id,
             },
@@ -1227,7 +1227,7 @@ export class Service {
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/quality-acceptance/{id}',
+            url: '/docs/quality-acceptance/{id}',
             path: {
                 'id': id,
             },
@@ -1247,7 +1247,7 @@ export class Service {
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/quality-acceptance/{id}',
+            url: '/docs/quality-acceptance/{id}',
             path: {
                 'id': id,
             },
@@ -1267,7 +1267,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/quality-acceptance/{id}',
+            url: '/docs/quality-acceptance/{id}',
             path: {
                 'id': id,
             },
@@ -1285,7 +1285,7 @@ export class Service {
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/movements/{id}',
+            url: '/docs/movements/{id}',
             path: {
                 'id': id,
             },
@@ -1308,7 +1308,7 @@ export class Service {
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/movements/{id}',
+            url: '/docs/movements/{id}',
             path: {
                 'id': id,
             },
@@ -1334,7 +1334,7 @@ export class Service {
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/movements/{id}',
+            url: '/docs/movements/{id}',
             path: {
                 'id': id,
             },
@@ -1356,7 +1356,7 @@ export class Service {
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/issue/{id}',
+            url: '/docs/issue/{id}',
             path: {
                 'id': id,
             },
@@ -1376,7 +1376,7 @@ export class Service {
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/issue/{id}',
+            url: '/docs/issue/{id}',
             path: {
                 'id': id,
             },
@@ -1396,7 +1396,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/issue/{id}',
+            url: '/docs/issue/{id}',
             path: {
                 'id': id,
             },
@@ -1414,7 +1414,7 @@ export class Service {
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/inventory-surplus/{id}',
+            url: '/docs/inventory-surplus/{id}',
             path: {
                 'id': id,
             },
@@ -1434,7 +1434,7 @@ export class Service {
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/inventory-surplus/{id}',
+            url: '/docs/inventory-surplus/{id}',
             path: {
                 'id': id,
             },
@@ -1454,7 +1454,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/inventory-surplus/{id}',
+            url: '/docs/inventory-surplus/{id}',
             path: {
                 'id': id,
             },
@@ -1472,7 +1472,7 @@ export class Service {
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/inventories/{id}',
+            url: '/docs/inventories/{id}',
             path: {
                 'id': id,
             },
@@ -1495,7 +1495,7 @@ export class Service {
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/docs/inventories/{id}',
+            url: '/docs/inventories/{id}',
             path: {
                 'id': id,
             },
@@ -1521,7 +1521,7 @@ export class Service {
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/docs/inventories/{id}',
+            url: '/docs/inventories/{id}',
             path: {
                 'id': id,
             },
@@ -1543,7 +1543,7 @@ export class Service {
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/users/{id}',
+            url: '/admin/users/{id}',
             path: {
                 'id': id,
             },
@@ -1563,7 +1563,7 @@ export class Service {
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/admin/users/{id}',
+            url: '/admin/users/{id}',
             path: {
                 'id': id,
             },
@@ -1583,7 +1583,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/users/{id}',
+            url: '/admin/users/{id}',
             path: {
                 'id': id,
             },
@@ -1610,7 +1610,7 @@ export class Service {
     ): CancelablePromise<PurchasePlanDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/stock/planning/plans/{id}/status',
+            url: '/stock/planning/plans/{id}/status',
             path: {
                 'id': id,
             },
@@ -1640,7 +1640,7 @@ export class Service {
     ): CancelablePromise<PurchasePlanDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/stock/planning/plans/generate',
+            url: '/stock/planning/plans/generate',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1661,7 +1661,7 @@ export class Service {
     ): CancelablePromise<CategoryChangeDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/stock/category-changes',
+            url: '/stock/category-changes',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1682,7 +1682,7 @@ export class Service {
     ): CancelablePromise<CategoryChangeDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/stock/category-changes/{id}/post',
+            url: '/stock/category-changes/{id}/post',
             path: {
                 'id': id,
             },
@@ -1697,7 +1697,7 @@ export class Service {
     public static getList(): CancelablePromise<Array<WarehouseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouses',
+            url: '/nsi/warehouses',
         });
     }
     /**
@@ -1715,7 +1715,7 @@ export class Service {
     ): CancelablePromise<WarehouseDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/warehouses',
+            url: '/nsi/warehouses',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1735,7 +1735,7 @@ export class Service {
     ): CancelablePromise<WarehouseZoneDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/warehouse-zones',
+            url: '/nsi/warehouse-zones',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1754,7 +1754,7 @@ export class Service {
     ): CancelablePromise<WarehouseCellDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/warehouse-cells',
+            url: '/nsi/warehouse-cells',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1768,7 +1768,7 @@ export class Service {
     public static listUnitsOfMeasure(): CancelablePromise<Array<UnitOfMeasureDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/units',
+            url: '/nsi/units',
         });
     }
     /**
@@ -1783,7 +1783,7 @@ export class Service {
     ): CancelablePromise<UnitOfMeasureDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/units',
+            url: '/nsi/units',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1797,7 +1797,7 @@ export class Service {
     public static listQualityCategories(): CancelablePromise<Array<QualityCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/quality-categories',
+            url: '/nsi/quality-categories',
         });
     }
     /**
@@ -1812,7 +1812,7 @@ export class Service {
     ): CancelablePromise<QualityCategoryDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/quality-categories',
+            url: '/nsi/quality-categories',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1826,7 +1826,7 @@ export class Service {
     public static listOrganizations(): CancelablePromise<Array<OrganizationDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/organizations',
+            url: '/nsi/organizations',
         });
     }
     /**
@@ -1841,7 +1841,7 @@ export class Service {
     ): CancelablePromise<OrganizationDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/organizations',
+            url: '/nsi/organizations',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1860,7 +1860,7 @@ export class Service {
     ): CancelablePromise<OrgUnitDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/org-units',
+            url: '/nsi/org-units',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1874,7 +1874,7 @@ export class Service {
     public static listItems(): CancelablePromise<Array<ItemDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/items',
+            url: '/nsi/items',
         });
     }
     /**
@@ -1891,7 +1891,7 @@ export class Service {
     ): CancelablePromise<ItemDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/items',
+            url: '/nsi/items',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1910,7 +1910,7 @@ export class Service {
     ): CancelablePromise<ItemSupplyNormDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/item-supply-norms',
+            url: '/nsi/item-supply-norms',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1924,7 +1924,7 @@ export class Service {
     public static listItemGroups(): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-groups',
+            url: '/nsi/item-groups',
         });
     }
     /**
@@ -1941,7 +1941,7 @@ export class Service {
     ): CancelablePromise<ItemGroupDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/item-groups',
+            url: '/nsi/item-groups',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1955,7 +1955,7 @@ export class Service {
     public static listEmployeeCategories(): CancelablePromise<Array<EmployeeCategoryDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/employee-categories',
+            url: '/nsi/employee-categories',
         });
     }
     /**
@@ -1970,7 +1970,7 @@ export class Service {
     ): CancelablePromise<EmployeeCategoryDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/nsi/employee-categories',
+            url: '/nsi/employee-categories',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -1983,7 +1983,7 @@ export class Service {
     public static listIntegrationEndpoints(): CancelablePromise<Array<IntegrationEndpoint>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/integration/endpoints',
+            url: '/integration/endpoints',
         });
     }
     /**
@@ -2003,7 +2003,7 @@ export class Service {
     ): CancelablePromise<IntegrationEndpoint> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/integration/endpoints',
+            url: '/integration/endpoints',
             query: {
                 'code': code,
                 'name': name,
@@ -2023,7 +2023,7 @@ export class Service {
     ): CancelablePromise<IntegrationEndpoint> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/integration/endpoints/{code}/test',
+            url: '/integration/endpoints/{code}/test',
             path: {
                 'code': code,
             },
@@ -2044,7 +2044,7 @@ export class Service {
     ): CancelablePromise<IntegrationMessage> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/integration/endpoints/{code}/send',
+            url: '/integration/endpoints/{code}/send',
             path: {
                 'code': code,
             },
@@ -2069,7 +2069,7 @@ export class Service {
     ): CancelablePromise<ProvisionNormDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/provision-norms',
+            url: '/hr/provision-norms',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2083,7 +2083,7 @@ export class Service {
     public static listPersons(): CancelablePromise<Array<PersonDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/persons',
+            url: '/hr/persons',
         });
     }
     /**
@@ -2098,7 +2098,7 @@ export class Service {
     ): CancelablePromise<PersonDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/persons',
+            url: '/hr/persons',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2119,7 +2119,7 @@ export class Service {
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employees/{id}/transfer',
+            url: '/hr/employees/{id}/transfer',
             path: {
                 'id': id,
             },
@@ -2142,7 +2142,7 @@ export class Service {
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employees/{id}/dismiss',
+            url: '/hr/employees/{id}/dismiss',
             path: {
                 'id': id,
             },
@@ -2164,7 +2164,7 @@ export class Service {
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employees/hire',
+            url: '/hr/employees/hire',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2183,7 +2183,7 @@ export class Service {
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employee-returns',
+            url: '/hr/employee-returns',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2202,7 +2202,7 @@ export class Service {
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employee-returns/{id}/post',
+            url: '/hr/employee-returns/{id}/post',
             path: {
                 'id': id,
             },
@@ -2222,7 +2222,7 @@ export class Service {
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employee-issues',
+            url: '/hr/employee-issues',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2241,7 +2241,7 @@ export class Service {
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/hr/employee-issues/{id}/post',
+            url: '/hr/employee-issues/{id}/post',
             path: {
                 'id': id,
             },
@@ -2255,7 +2255,7 @@ export class Service {
     public static listDevices(): CancelablePromise<Array<Device>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/equipment/devices',
+            url: '/equipment/devices',
         });
     }
     /**
@@ -2275,7 +2275,7 @@ export class Service {
     ): CancelablePromise<Device> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/equipment/devices',
+            url: '/equipment/devices',
             query: {
                 'code': code,
                 'name': name,
@@ -2297,7 +2297,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/equipment/devices/{code}/heartbeat',
+            url: '/equipment/devices/{code}/heartbeat',
             path: {
                 'code': code,
             },
@@ -2318,7 +2318,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/equipment/devices/{code}/error',
+            url: '/equipment/devices/{code}/error',
             path: {
                 'code': code,
             },
@@ -2340,7 +2340,7 @@ export class Service {
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/writeoff',
+            url: '/docs/writeoff',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2359,7 +2359,7 @@ export class Service {
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/writeoff/{id}/post',
+            url: '/docs/writeoff/{id}/post',
             path: {
                 'id': id,
             },
@@ -2379,7 +2379,7 @@ export class Service {
     ): CancelablePromise<WriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/writeoff/{id}/cancel',
+            url: '/docs/writeoff/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2399,7 +2399,7 @@ export class Service {
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/temporary-issue',
+            url: '/docs/temporary-issue',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2418,7 +2418,7 @@ export class Service {
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/temporary-issue/{id}/post',
+            url: '/docs/temporary-issue/{id}/post',
             path: {
                 'id': id,
             },
@@ -2438,7 +2438,7 @@ export class Service {
     ): CancelablePromise<TemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/temporary-issue/{id}/cancel',
+            url: '/docs/temporary-issue/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2458,7 +2458,7 @@ export class Service {
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/return',
+            url: '/docs/return',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2477,7 +2477,7 @@ export class Service {
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/return/{id}/post',
+            url: '/docs/return/{id}/post',
             path: {
                 'id': id,
             },
@@ -2497,7 +2497,7 @@ export class Service {
     ): CancelablePromise<ReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/return/{id}/cancel',
+            url: '/docs/return/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2517,7 +2517,7 @@ export class Service {
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/replacement-orders',
+            url: '/docs/replacement-orders',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2539,7 +2539,7 @@ export class Service {
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/replacement-orders/{id}/post',
+            url: '/docs/replacement-orders/{id}/post',
             path: {
                 'id': id,
             },
@@ -2563,7 +2563,7 @@ export class Service {
     ): CancelablePromise<ReplacementOrderDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/replacement-orders/{id}/cancel',
+            url: '/docs/replacement-orders/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2586,7 +2586,7 @@ export class Service {
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/receipts',
+            url: '/docs/receipts',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2605,7 +2605,7 @@ export class Service {
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/receipts/{id}/unpost',
+            url: '/docs/receipts/{id}/unpost',
             path: {
                 'id': id,
             },
@@ -2625,7 +2625,7 @@ export class Service {
     ): CancelablePromise<ReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/receipts/{id}/post',
+            url: '/docs/receipts/{id}/post',
             path: {
                 'id': id,
             },
@@ -2645,7 +2645,7 @@ export class Service {
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/quality-acceptance',
+            url: '/docs/quality-acceptance',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2664,7 +2664,7 @@ export class Service {
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/quality-acceptance/{id}/post',
+            url: '/docs/quality-acceptance/{id}/post',
             path: {
                 'id': id,
             },
@@ -2682,7 +2682,7 @@ export class Service {
     ): CancelablePromise<QualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/quality-acceptance/{id}/cancel',
+            url: '/docs/quality-acceptance/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2702,7 +2702,7 @@ export class Service {
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/movements',
+            url: '/docs/movements',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2724,7 +2724,7 @@ export class Service {
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/movements/{id}/post',
+            url: '/docs/movements/{id}/post',
             path: {
                 'id': id,
             },
@@ -2748,7 +2748,7 @@ export class Service {
     ): CancelablePromise<MovementDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/movements/{id}/cancel',
+            url: '/docs/movements/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2771,7 +2771,7 @@ export class Service {
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/issue',
+            url: '/docs/issue',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2790,7 +2790,7 @@ export class Service {
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/issue/{id}/post',
+            url: '/docs/issue/{id}/post',
             path: {
                 'id': id,
             },
@@ -2810,7 +2810,7 @@ export class Service {
     ): CancelablePromise<IssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/issue/{id}/cancel',
+            url: '/docs/issue/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2830,7 +2830,7 @@ export class Service {
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventory-surplus',
+            url: '/docs/inventory-surplus',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2849,7 +2849,7 @@ export class Service {
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventory-surplus/{id}/post',
+            url: '/docs/inventory-surplus/{id}/post',
             path: {
                 'id': id,
             },
@@ -2869,7 +2869,7 @@ export class Service {
     ): CancelablePromise<InventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventory-surplus/{id}/cancel',
+            url: '/docs/inventory-surplus/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2889,7 +2889,7 @@ export class Service {
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventories',
+            url: '/docs/inventories',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2911,7 +2911,7 @@ export class Service {
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventories/{id}/post',
+            url: '/docs/inventories/{id}/post',
             path: {
                 'id': id,
             },
@@ -2935,7 +2935,7 @@ export class Service {
     ): CancelablePromise<InventoryDocumentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/docs/inventories/{id}/cancel',
+            url: '/docs/inventories/{id}/cancel',
             path: {
                 'id': id,
             },
@@ -2953,7 +2953,7 @@ export class Service {
     public static adminListUsers(): CancelablePromise<Array<UserDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/users',
+            url: '/admin/users',
         });
     }
     /**
@@ -2968,7 +2968,7 @@ export class Service {
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/users',
+            url: '/admin/users',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -2985,7 +2985,7 @@ export class Service {
     ): CancelablePromise<UserDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/users/{id}/restore',
+            url: '/admin/users/{id}/restore',
             path: {
                 'id': id,
             },
@@ -2999,7 +2999,7 @@ export class Service {
     public static adminListSystemSettings(): CancelablePromise<Array<SystemSettingDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/settings',
+            url: '/admin/settings',
         });
     }
     /**
@@ -3013,7 +3013,7 @@ export class Service {
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/settings',
+            url: '/admin/settings',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -3027,7 +3027,7 @@ export class Service {
     public static adminListRoles(): CancelablePromise<Array<RoleDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/roles',
+            url: '/admin/roles',
         });
     }
     /**
@@ -3042,7 +3042,7 @@ export class Service {
     ): CancelablePromise<RoleDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/roles',
+            url: '/admin/roles',
             query: {
                 'code': code,
             },
@@ -3067,7 +3067,7 @@ export class Service {
     ): CancelablePromise<Array<PurchasePlanDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/planning/plans',
+            url: '/stock/planning/plans',
             query: {
                 'organizationId': organizationId,
             },
@@ -3087,7 +3087,7 @@ export class Service {
     ): CancelablePromise<PurchasePlanDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/planning/plans/{id}',
+            url: '/stock/planning/plans/{id}',
             path: {
                 'id': id,
             },
@@ -3107,7 +3107,7 @@ export class Service {
     ): CancelablePromise<CategoryChangeDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/category-changes/{id}',
+            url: '/stock/category-changes/{id}',
             path: {
                 'id': id,
             },
@@ -3128,7 +3128,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/stock/category-changes/{id}',
+            url: '/stock/category-changes/{id}',
             path: {
                 'id': id,
             },
@@ -3161,7 +3161,7 @@ export class Service {
     ): CancelablePromise<PageCategoryChangeDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/stock/category-changes/page',
+            url: '/stock/category-changes/page',
             query: {
                 'organizationId': organizationId,
                 'from': from,
@@ -3194,7 +3194,7 @@ export class Service {
     ): CancelablePromise<PageWarehouseDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouses/page',
+            url: '/nsi/warehouses/page',
             query: {
                 'code': code,
                 'name': name,
@@ -3218,7 +3218,7 @@ export class Service {
     ): CancelablePromise<Array<WarehouseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouses/by-organization/{orgId}',
+            url: '/nsi/warehouses/by-organization/{orgId}',
             path: {
                 'orgId': orgId,
             },
@@ -3238,7 +3238,7 @@ export class Service {
     ): CancelablePromise<Array<WarehouseZoneDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouse-zones/by-warehouse/{warehouseId}',
+            url: '/nsi/warehouse-zones/by-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -3258,7 +3258,7 @@ export class Service {
     ): CancelablePromise<Array<WarehouseCellDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouse-cells/by-zone/{zoneId}',
+            url: '/nsi/warehouse-cells/by-zone/{zoneId}',
             path: {
                 'zoneId': zoneId,
             },
@@ -3278,7 +3278,7 @@ export class Service {
     ): CancelablePromise<Array<WarehouseCellDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/warehouse-cells/by-warehouse/{warehouseId}',
+            url: '/nsi/warehouse-cells/by-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -3306,7 +3306,7 @@ export class Service {
     ): CancelablePromise<PageUnitOfMeasureDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/units/page',
+            url: '/nsi/units/page',
             query: {
                 'code': code,
                 'name': name,
@@ -3334,7 +3334,7 @@ export class Service {
     ): CancelablePromise<PageQualityCategoryDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/quality-categories/page',
+            url: '/nsi/quality-categories/page',
             query: {
                 'q': q,
                 'page': page,
@@ -3365,7 +3365,7 @@ export class Service {
     ): CancelablePromise<PageOrganizationDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/organizations/page',
+            url: '/nsi/organizations/page',
             query: {
                 'code': code,
                 'name': name,
@@ -3389,7 +3389,7 @@ export class Service {
     ): CancelablePromise<Array<OrgUnitDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/org-units/by-organization/{orgId}',
+            url: '/nsi/org-units/by-organization/{orgId}',
             path: {
                 'orgId': orgId,
             },
@@ -3419,7 +3419,7 @@ export class Service {
     ): CancelablePromise<PageItemDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/items/page',
+            url: '/nsi/items/page',
             query: {
                 'code': code,
                 'name': name,
@@ -3452,7 +3452,7 @@ export class Service {
     ): CancelablePromise<PageItemSupplyNormDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-supply-norms/page',
+            url: '/nsi/item-supply-norms/page',
             query: {
                 'employeeCategoryId': employeeCategoryId,
                 'itemId': itemId,
@@ -3471,7 +3471,7 @@ export class Service {
     public static listRootItemGroups(): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-groups/roots',
+            url: '/nsi/item-groups/roots',
         });
     }
     /**
@@ -3486,7 +3486,7 @@ export class Service {
     ): CancelablePromise<Array<ItemGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/nsi/item-groups/by-parent/{parentId}',
+            url: '/nsi/item-groups/by-parent/{parentId}',
             path: {
                 'parentId': parentId,
             },
@@ -3525,7 +3525,7 @@ export class Service {
     ): CancelablePromise<PageEmployeeWearReportRowDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/wear-report/page',
+            url: '/hr/wear-report/page',
             query: {
                 'organizationId': organizationId,
                 'orgUnitId': orgUnitId,
@@ -3567,7 +3567,7 @@ export class Service {
     ): CancelablePromise<PageProvisionNormDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/provision-norms/page',
+            url: '/hr/provision-norms/page',
             query: {
                 'organizationId': organizationId,
                 'employeeCategory': employeeCategory,
@@ -3601,7 +3601,7 @@ export class Service {
     ): CancelablePromise<EmployeeProvisionReportDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/provision-analysis/by-employee/{employeeId}',
+            url: '/hr/provision-analysis/by-employee/{employeeId}',
             path: {
                 'employeeId': employeeId,
             },
@@ -3631,7 +3631,7 @@ export class Service {
     ): CancelablePromise<PagePersonDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/persons/page',
+            url: '/hr/persons/page',
             query: {
                 'lastName': lastName,
                 'firstName': firstName,
@@ -3653,7 +3653,7 @@ export class Service {
     ): CancelablePromise<EmployeeDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employees/{id}',
+            url: '/hr/employees/{id}',
             path: {
                 'id': id,
             },
@@ -3673,7 +3673,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/hr/employees/{id}',
+            url: '/hr/employees/{id}',
             path: {
                 'id': id,
             },
@@ -3704,7 +3704,7 @@ export class Service {
     ): CancelablePromise<EmployeeProvisionCardDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employees/{id}/provision-card',
+            url: '/hr/employees/{id}/provision-card',
             path: {
                 'id': id,
             },
@@ -3729,7 +3729,7 @@ export class Service {
     ): CancelablePromise<Array<EmployeeStatusEventDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employees/{id}/history',
+            url: '/hr/employees/{id}/history',
             path: {
                 'id': id,
             },
@@ -3759,7 +3759,7 @@ export class Service {
     ): CancelablePromise<PageEmployeeDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employees/page',
+            url: '/hr/employees/page',
             query: {
                 'organizationId': organizationId,
                 'orgUnitId': orgUnitId,
@@ -3782,7 +3782,7 @@ export class Service {
     ): CancelablePromise<EmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-returns/{id}',
+            url: '/hr/employee-returns/{id}',
             path: {
                 'id': id,
             },
@@ -3802,7 +3802,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/hr/employee-returns/{id}',
+            url: '/hr/employee-returns/{id}',
             path: {
                 'id': id,
             },
@@ -3832,7 +3832,7 @@ export class Service {
     ): CancelablePromise<PageEmployeeReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-returns/page',
+            url: '/hr/employee-returns/page',
             query: {
                 'organizationId': organizationId,
                 'from': from,
@@ -3855,7 +3855,7 @@ export class Service {
     ): CancelablePromise<EmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-issues/{id}',
+            url: '/hr/employee-issues/{id}',
             path: {
                 'id': id,
             },
@@ -3875,7 +3875,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/hr/employee-issues/{id}',
+            url: '/hr/employee-issues/{id}',
             path: {
                 'id': id,
             },
@@ -3905,7 +3905,7 @@ export class Service {
     ): CancelablePromise<PageEmployeeIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-issues/page',
+            url: '/hr/employee-issues/page',
             query: {
                 'organizationId': organizationId,
                 'from': from,
@@ -3928,7 +3928,7 @@ export class Service {
     ): CancelablePromise<EmployeeItemAssignmentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-assignments/{id}',
+            url: '/hr/employee-assignments/{id}',
             path: {
                 'id': id,
             },
@@ -3961,7 +3961,7 @@ export class Service {
     ): CancelablePromise<PageEmployeeItemAssignmentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-assignments/page',
+            url: '/hr/employee-assignments/page',
             query: {
                 'organizationId': organizationId,
                 'orgUnitId': orgUnitId,
@@ -3987,7 +3987,7 @@ export class Service {
     ): CancelablePromise<Array<EmployeeItemAssignmentDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/hr/employee-assignments/by-employee/{employeeId}',
+            url: '/hr/employee-assignments/by-employee/{employeeId}',
             path: {
                 'employeeId': employeeId,
             },
@@ -4019,7 +4019,7 @@ export class Service {
     ): CancelablePromise<PageWriteOffDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/writeoff/page/by-warehouse',
+            url: '/docs/writeoff/page/by-warehouse',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4057,7 +4057,7 @@ export class Service {
     ): CancelablePromise<PageTemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/temporary-issue/page/by-warehouse',
+            url: '/docs/temporary-issue/page/by-warehouse',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4091,7 +4091,7 @@ export class Service {
     ): CancelablePromise<PageTemporaryIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/temporary-issue/page/by-employee',
+            url: '/docs/temporary-issue/page/by-employee',
             query: {
                 'employeeId': employeeId,
                 'from': from,
@@ -4128,7 +4128,7 @@ export class Service {
     ): CancelablePromise<PageReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/return/page/by-warehouse',
+            url: '/docs/return/page/by-warehouse',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4164,7 +4164,7 @@ export class Service {
     ): CancelablePromise<PageReturnDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/return/page/by-employee',
+            url: '/docs/return/page/by-employee',
             query: {
                 'employeeId': employeeId,
                 'from': from,
@@ -4197,7 +4197,7 @@ export class Service {
     ): CancelablePromise<Page> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/replacement-orders/by-warehouse/{warehouseId}',
+            url: '/docs/replacement-orders/by-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -4227,7 +4227,7 @@ export class Service {
     ): CancelablePromise<Page> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/replacement-orders/by-employee/{employeeId}',
+            url: '/docs/replacement-orders/by-employee/{employeeId}',
             path: {
                 'employeeId': employeeId,
             },
@@ -4264,7 +4264,7 @@ export class Service {
     ): CancelablePromise<PageReceiptDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/receipts/page',
+            url: '/docs/receipts/page',
             query: {
                 'warehouseId': warehouseId,
                 'status': status,
@@ -4304,7 +4304,7 @@ export class Service {
     ): CancelablePromise<PageQualityAcceptanceDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/quality-acceptance/page',
+            url: '/docs/quality-acceptance/page',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4339,7 +4339,7 @@ export class Service {
     ): CancelablePromise<Page> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/movements/to-warehouse/{warehouseId}',
+            url: '/docs/movements/to-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -4373,7 +4373,7 @@ export class Service {
     ): CancelablePromise<Page> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/movements/from-warehouse/{warehouseId}',
+            url: '/docs/movements/from-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -4411,7 +4411,7 @@ export class Service {
     ): CancelablePromise<PageIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/issue/page/by-warehouse',
+            url: '/docs/issue/page/by-warehouse',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4447,7 +4447,7 @@ export class Service {
     ): CancelablePromise<PageIssueDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/issue/page/by-employee',
+            url: '/docs/issue/page/by-employee',
             query: {
                 'employeeId': employeeId,
                 'from': from,
@@ -4486,7 +4486,7 @@ export class Service {
     ): CancelablePromise<PageInventorySurplusDocumentDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/inventory-surplus/page',
+            url: '/docs/inventory-surplus/page',
             query: {
                 'warehouseId': warehouseId,
                 'from': from,
@@ -4521,7 +4521,7 @@ export class Service {
     ): CancelablePromise<Page> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/docs/inventories/by-warehouse/{warehouseId}',
+            url: '/docs/inventories/by-warehouse/{warehouseId}',
             path: {
                 'warehouseId': warehouseId,
             },
@@ -4541,7 +4541,7 @@ export class Service {
     public static getConsolidationDashboard(): CancelablePromise<ConsolidatedDashboardDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/consolidation/dashboard',
+            url: '/consolidation/dashboard',
         });
     }
     /**
@@ -4567,7 +4567,7 @@ export class Service {
     ): CancelablePromise<PageUserDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/users/page',
+            url: '/admin/users/page',
             query: {
                 'username': username,
                 'roles': roles,
@@ -4588,7 +4588,7 @@ export class Service {
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/settings/{id}',
+            url: '/admin/settings/{id}',
             path: {
                 'id': id,
             },
@@ -4605,7 +4605,7 @@ export class Service {
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/settings/{id}',
+            url: '/admin/settings/{id}',
             path: {
                 'id': id,
             },
@@ -4622,7 +4622,7 @@ export class Service {
     ): CancelablePromise<SystemSettingDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/settings/by-key/{key}',
+            url: '/admin/settings/by-key/{key}',
             path: {
                 'key': key,
             },
@@ -4641,7 +4641,7 @@ export class Service {
     ): CancelablePromise<Array<AdminSearchResultDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/search',
+            url: '/admin/search',
             query: {
                 'q': q,
                 'limitPerType': limitPerType,
@@ -4680,7 +4680,7 @@ export class Service {
     ): CancelablePromise<PageAuditLogDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/audit/logs',
+            url: '/admin/audit/logs',
             query: {
                 'userId': userId,
                 'username': username,

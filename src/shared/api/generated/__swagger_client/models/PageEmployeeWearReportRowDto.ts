@@ -13,9 +13,9 @@ export type PageEmployeeWearReportRowDto = {
     content?: Array<EmployeeWearReportRowDto>;
     number?: number;
     sort?: Sortnull;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
-    numberOfElements?: number;
     empty?: boolean;
 };
 

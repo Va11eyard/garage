@@ -1,7 +1,7 @@
 'use client'
 
 import { useCreateReturn } from '@/features/manage-returns/model/useCreateReturn'
-import { useWarehouses } from '@/features/manage-warehouses/model/useWarehouses'
+import { useWarehousesByOrganization } from '@/features/manage-warehouses/model/useWarehousesByOrganization'
 import { useOrganizations } from '@/features/manage-organizations/model/useOrganizations'
 import { useEmployeesSearch } from '@/features/manage-employees/model/useEmployeesSearch'
 import { useItems } from '@/features/manage-items/model/useItems'
@@ -17,10 +17,12 @@ import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { getErrorMessage } from '@/shared/utils/error-handler'
 
 export function ReturnCreateForm() {
     const { t } = useTranslation()
+    const [selectedOrgId, setSelectedOrgId] = useState<string>()
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, setValue } = useForm<ReturnCreateRequest>({
         defaultValues: {
             lines: [{ itemId: '', quantity: 0 }]
@@ -28,7 +30,7 @@ export function ReturnCreateForm() {
     })
     const { fields, append, remove } = useFieldArray({ control, name: 'lines' })
     const { mutateAsync } = useCreateReturn()
-    const { data: warehousesData } = useWarehouses({ page: 0, size: 100 })
+    const { data: warehousesData } = useWarehousesByOrganization(selectedOrgId)
     const { data: organizationsData } = useOrganizations({ page: 0, size: 100 })
     const { data: employeesData } = useEmployeesSearch({ page: 0, size: 100 })
     const { data: itemsData } = useItems({ page: 0, size: 100 })
@@ -78,7 +80,11 @@ export function ReturnCreateForm() {
 
                 <div>
                     <GovLabel>{t('organization.title')}</GovLabel>
-                    <Select onValueChange={(value) => setValue('organizationId', value)}>
+                    <Select onValueChange={(value) => {
+                        setValue('organizationId', value)
+                        setSelectedOrgId(value)
+                        setValue('warehouseId', '')
+                    }}>
                         <SelectTrigger>
                             <SelectValue placeholder={t('common.select')} />
                         </SelectTrigger>
@@ -94,12 +100,15 @@ export function ReturnCreateForm() {
 
                 <div>
                     <GovLabel>{t('documents.warehouse')}</GovLabel>
-                    <Select onValueChange={(value) => setValue('warehouseId', value)}>
+                    <Select 
+                        onValueChange={(value) => setValue('warehouseId', value)}
+                        disabled={!selectedOrgId}
+                    >
                         <SelectTrigger>
-                            <SelectValue placeholder={t('warehouses.selectWarehouse')} />
+                            <SelectValue placeholder={selectedOrgId ? t('warehouses.selectWarehouse') : t('common.selectOrganizationFirst')} />
                         </SelectTrigger>
                         <SelectContent>
-                            {warehousesData?.content?.map((wh: any) => (
+                            {warehousesData?.map((wh: any) => (
                                 <SelectItem key={wh.id} value={wh.id!}>
                                     {wh.name}
                                 </SelectItem>
