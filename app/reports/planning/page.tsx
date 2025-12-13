@@ -17,29 +17,28 @@ export default function PlanningReportsPage() {
     const [department, setDepartment] = useState('all')
 
     const reportTypes = [
-        { value: 'purchase-plan', label: t('reports.purchasePlan') || 'План закупок' },
-        { value: 'distribution-plan', label: t('reports.distributionPlan') || 'План распределения' },
-        { value: 'budget-analysis', label: t('reports.budgetAnalysis') || 'Анализ бюджета' },
-        { value: 'forecasting', label: t('reports.forecasting') || 'Прогнозирование' },
+        { value: 'purchase-plan', label: t('reports.purchasePlan') },
+        { value: 'distribution-plan', label: t('reports.distributionPlan') },
+        { value: 'budget-analysis', label: t('reports.budgetAnalysis') },
+        { value: 'forecasting', label: t('reports.forecasting') },
     ]
 
     const periods = [
-        { value: 'month', label: t('common.month') || 'Месяц' },
-        { value: 'quarter', label: t('common.quarter') || 'Квартал' },
-        { value: 'half-year', label: t('common.halfYear') || 'Полугодие' },
-        { value: 'year', label: t('common.year') || 'Год' },
+        { value: 'month', label: t('common.month') },
+        { value: 'quarter', label: t('common.quarter') },
+        { value: 'half-year', label: t('common.halfYear') },
+        { value: 'year', label: t('common.year') },
     ]
 
     const departments = [
-        { value: 'all', label: t('common.all') || 'Все' },
-        { value: 'it', label: t('department.it') || 'IT отдел' },
-        { value: 'hr', label: t('department.hr') || 'HR отдел' },
-        { value: 'finance', label: t('department.finance') || 'Финансовый отдел' },
+        { value: 'all', label: t('common.all') },
+        { value: 'it', label: t('department.it') },
+        { value: 'hr', label: t('department.hr') },
+        { value: 'finance', label: t('department.finance') },
     ]
 
     const handleGenerateReport = () => {
-        // TODO: Implement planning report generation when backend API is available
-        toast.info(t('reports.notImplemented') || 'Функция формирования отчетов находится в разработке')
+        toast.info(t('reports.notImplemented'))
         console.log('Generating planning report:', { reportType, period, department })
     }
 
@@ -55,7 +54,7 @@ export default function PlanningReportsPage() {
                     {t('reports.planning')}
                 </h1>
                 <p className="text-gov-gray-600">
-                    {t('reports.planningDescription') || 'Отчеты по планированию закупок и распределению'}
+                    {t('reports.planningDescription')}
                 </p>
             </div>
 
@@ -64,13 +63,13 @@ export default function PlanningReportsPage() {
                 <GovCardHeader>
                     <div className="flex items-center gap-2">
                         <Filter className="w-5 h-5 text-gov-blue-600" />
-                        <GovCardTitle>{t('reports.configuration') || 'Настройка отчета'}</GovCardTitle>
+                        <GovCardTitle>{t('reports.configuration')}</GovCardTitle>
                     </div>
                 </GovCardHeader>
                 <GovCardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                            <Label>{t('reports.reportType') || 'Тип отчета'}</Label>
+                            <Label>{t('reports.reportType')}</Label>
                             <Select value={reportType} onValueChange={setReportType}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -86,7 +85,7 @@ export default function PlanningReportsPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label>{t('reports.period') || 'Период'}</Label>
+                            <Label>{t('reports.period')}</Label>
                             <Select value={period} onValueChange={setPeriod}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -102,7 +101,7 @@ export default function PlanningReportsPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label>{t('department.department') || 'Подразделение'}</Label>
+                            <Label>{t('department.department')}</Label>
                             <Select value={department} onValueChange={setDepartment}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -121,7 +120,7 @@ export default function PlanningReportsPage() {
                     <div className="flex gap-2">
                         <GovButton onClick={handleGenerateReport} className="flex items-center gap-2">
                             <Download className="w-4 h-4" />
-                            {t('reports.generate') || 'Сформировать отчет'}
+                            {t('reports.generate')}
                         </GovButton>
                     </div>
                 </GovCardContent>
@@ -132,12 +131,12 @@ export default function PlanningReportsPage() {
             {/* Report Preview */}
             <GovCard>
                 <GovCardHeader>
-                    <GovCardTitle>{t('reports.preview') || 'Предпросмотр отчета'}</GovCardTitle>
+                    <GovCardTitle>{t('reports.preview')}</GovCardTitle>
                 </GovCardHeader>
                 <GovCardContent>
                     <div className="text-center py-12 text-gov-gray-500">
                         <Calendar className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                        <p>{t('reports.selectParamsToGenerate') || 'Выберите параметры и нажмите "Сформировать отчет" для просмотра'}</p>
+                        <p>{t('reports.selectParamsToGenerate')}</p>
                     </div>
                 </GovCardContent>
             </GovCard>

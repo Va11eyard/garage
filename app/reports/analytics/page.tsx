@@ -20,29 +20,28 @@ export default function AnalyticsReportsPage() {
     const [endDate, setEndDate] = useState('')
 
     const reportTypes = [
-        { value: 'usage-trends', label: t('reports.usageTrends') || 'Тренды использования' },
-        { value: 'cost-analysis', label: t('reports.costAnalysis') || 'Анализ затрат' },
-        { value: 'efficiency', label: t('reports.efficiency') || 'Эффективность' },
-        { value: 'comparative', label: t('reports.comparative') || 'Сравнительный анализ' },
+        { value: 'usage-trends', label: t('reports.usageTrends') },
+        { value: 'cost-analysis', label: t('reports.costAnalysis') },
+        { value: 'efficiency', label: t('reports.efficiency') },
+        { value: 'comparative', label: t('reports.comparative') },
     ]
 
     const timeframes = [
-        { value: 'quarter', label: t('common.quarter') || 'Квартал' },
-        { value: 'half-year', label: t('common.halfYear') || 'Полугодие' },
-        { value: 'year', label: t('common.year') || 'Год' },
-        { value: 'custom', label: t('common.custom') || 'Настраиваемый' },
+        { value: 'quarter', label: t('common.quarter') },
+        { value: 'half-year', label: t('common.halfYear') },
+        { value: 'year', label: t('common.year') },
+        { value: 'custom', label: t('common.custom') },
     ]
 
     const categories = [
-        { value: 'all', label: t('common.all') || 'Все' },
-        { value: 'clothing', label: t('category.clothing') || 'Одежда' },
-        { value: 'equipment', label: t('category.equipment') || 'Оборудование' },
-        { value: 'supplies', label: t('category.supplies') || 'Расходные материалы' },
+        { value: 'all', label: t('common.all') },
+        { value: 'clothing', label: t('category.clothing') },
+        { value: 'equipment', label: t('category.equipment') },
+        { value: 'supplies', label: t('category.supplies') },
     ]
 
     const handleGenerateReport = () => {
-        // TODO: Implement analytics report generation when backend API is available
-        toast.info(t('reports.notImplemented') || 'Функция формирования отчетов находится в разработке')
+        toast.info(t('reports.notImplemented'))
         console.log('Generating analytics report:', { reportType, timeframe, category, startDate, endDate })
     }
 
@@ -58,7 +57,7 @@ export default function AnalyticsReportsPage() {
                     {t('reports.analytics')}
                 </h1>
                 <p className="text-gov-gray-600">
-                    {t('reports.analyticsDescription') || 'Аналитические отчеты и статистика'}
+                    {t('reports.analyticsDescription')}
                 </p>
             </div>
 
@@ -67,13 +66,13 @@ export default function AnalyticsReportsPage() {
                 <GovCardHeader>
                     <div className="flex items-center gap-2">
                         <Filter className="w-5 h-5 text-gov-blue-600" />
-                        <GovCardTitle>{t('reports.configuration') || 'Настройка отчета'}</GovCardTitle>
+                        <GovCardTitle>{t('reports.configuration')}</GovCardTitle>
                     </div>
                 </GovCardHeader>
                 <GovCardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                            <Label>{t('reports.reportType') || 'Тип отчета'}</Label>
+                            <Label>{t('reports.reportType')}</Label>
                             <Select value={reportType} onValueChange={setReportType}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -89,7 +88,7 @@ export default function AnalyticsReportsPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label>{t('reports.timeframe') || 'Временной период'}</Label>
+                            <Label>{t('reports.timeframe')}</Label>
                             <Select value={timeframe} onValueChange={setTimeframe}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -105,7 +104,7 @@ export default function AnalyticsReportsPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label>{t('category.category') || 'Категория'}</Label>
+                            <Label>{t('category.category')}</Label>
                             <Select value={category} onValueChange={setCategory}>
                                 <SelectTrigger>
                                     <SelectValue />
@@ -124,7 +123,7 @@ export default function AnalyticsReportsPage() {
                     {timeframe === 'custom' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                             <div className="space-y-2">
-                                <Label>{t('common.startDate') || 'Дата начала'}</Label>
+                                <Label>{t('common.startDate')}</Label>
                                 <GovInput
                                     type="date"
                                     value={startDate}
@@ -132,7 +131,7 @@ export default function AnalyticsReportsPage() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label>{t('common.endDate') || 'Дата окончания'}</Label>
+                                <Label>{t('common.endDate')}</Label>
                                 <GovInput
                                     type="date"
                                     value={endDate}
@@ -145,7 +144,7 @@ export default function AnalyticsReportsPage() {
                     <div className="flex gap-2">
                         <GovButton onClick={handleGenerateReport} className="flex items-center gap-2">
                             <Download className="w-4 h-4" />
-                            {t('reports.generate') || 'Сформировать отчет'}
+                            {t('reports.generate')}
                         </GovButton>
                     </div>
                 </GovCardContent>
@@ -156,12 +155,12 @@ export default function AnalyticsReportsPage() {
             {/* Report Preview */}
             <GovCard>
                 <GovCardHeader>
-                    <GovCardTitle>{t('reports.preview') || 'Предпросмотр отчета'}</GovCardTitle>
+                    <GovCardTitle>{t('reports.preview')}</GovCardTitle>
                 </GovCardHeader>
                 <GovCardContent>
                     <div className="text-center py-12 text-gov-gray-500">
                         <BarChart3 className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                        <p>{t('reports.selectParamsToGenerate') || 'Выберите параметры и нажмите "Сформировать отчет" для просмотра'}</p>
+                        <p>{t('reports.selectParamsToGenerate')}</p>
                     </div>
                 </GovCardContent>
             </GovCard>
