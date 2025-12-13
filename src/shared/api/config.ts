@@ -1,6 +1,14 @@
 import { OpenAPI } from "@/shared//api/generated/__swagger_client";
+import axios from 'axios';
 
 OpenAPI.BASE = process.env.NEXT_PUBLIC_API_URL || 'http://10.1.10.83:8087'
+
+axios.interceptors.request.use((config) => {
+    config.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    config.headers['Pragma'] = 'no-cache';
+    config.headers['Expires'] = '0';
+    return config;
+});
 
 export const API_CONFIG = {
     baseURL: OpenAPI.BASE,
