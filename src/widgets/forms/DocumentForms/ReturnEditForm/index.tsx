@@ -72,7 +72,7 @@ export function ReturnEditForm({ id }: { id: string }) {
                 ]} />
                 <GovCard>
                     <GovCardContent className="p-6">
-                        <p>Можно редактировать только черновики</p>
+                        <p>{t('receipts.onlyDraftsEditable')}</p>
                     </GovCardContent>
                 </GovCard>
             </div>
@@ -160,7 +160,7 @@ export function ReturnEditForm({ id }: { id: string }) {
                         </div>
 
                         <div>
-                            <GovLabel>Сотрудник</GovLabel>
+                            <GovLabel>{t('employees.employee')}</GovLabel>
                             <Select 
                                 key={returnDoc?.employeeId}
                                 defaultValue={returnDoc?.employeeId}
@@ -187,16 +187,16 @@ export function ReturnEditForm({ id }: { id: string }) {
                         </div>
 
                         <div>
-                            <GovLabel>Причина возврата</GovLabel>
-                            <GovInput {...register('reason')} placeholder="Причина возврата" />
+                            <GovLabel>{t('returns.returnReason')}</GovLabel>
+                            <GovInput {...register('reason')} placeholder={t('returns.returnReason')} />
                         </div>
 
                         <div className="space-y-2">
-                            <Label className="text-lg font-semibold">Строки документа</Label>
+                            <Label className="text-lg font-semibold">{t('receipts.documentLines')}</Label>
                             {fields.map((field, index) => (
                                 <div key={field.id} className="grid grid-cols-3 gap-2 items-end p-4 border rounded">
                                     <div>
-                                        <Label>Номенклатура</Label>
+                                        <Label>{t('items.item')}</Label>
                                         <Select 
                                             defaultValue={(field as any).itemId}
                                             onValueChange={(value) => setValue(`lines.${index}.itemId`, value)}
@@ -214,7 +214,7 @@ export function ReturnEditForm({ id }: { id: string }) {
                                         </Select>
                                     </div>
                                     <div>
-                                        <Label>Количество</Label>
+                                        <Label>{t('receipts.quantity')}</Label>
                                         <Input 
                                             type="number" 
                                             step="0.01"
@@ -222,7 +222,7 @@ export function ReturnEditForm({ id }: { id: string }) {
                                         />
                                     </div>
                                     <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                                        Удалить
+                                        {t('common.delete')}
                                     </Button>
                                 </div>
                             ))}
@@ -231,7 +231,7 @@ export function ReturnEditForm({ id }: { id: string }) {
                                 variant="outline" 
                                 onClick={() => append({ itemId: '', quantity: 0 } as any)}
                             >
-                                Добавить строку
+                                {t('receipts.addLine')}
                             </Button>
                         </div>
 

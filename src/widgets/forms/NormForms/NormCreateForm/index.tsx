@@ -34,13 +34,13 @@ export function NormCreateForm() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-xl mx-auto p-6">
-            <h2 className="text-2xl font-bold">Создать норму обеспечения</h2>
+            <h2 className="text-2xl font-bold">{t('norm.createNorm')}</h2>
             
             <div>
-                <Label>Категория сотрудников</Label>
+                <Label>{t('norm.category')}</Label>
                 <Select onValueChange={(value) => setValue('employeeCategoryId', value)}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Выберите категорию" />
+                        <SelectValue placeholder={t('norm.filterByCategory')} />
                     </SelectTrigger>
                     <SelectContent>
                         {categories?.map((cat: any) => (
@@ -53,10 +53,10 @@ export function NormCreateForm() {
             </div>
 
             <div>
-                <Label>Номенклатура</Label>
+                <Label>{t('norm.item')}</Label>
                 <Select onValueChange={(value) => setValue('itemId', value)}>
                     <SelectTrigger>
-                        <SelectValue placeholder="Выберите номенклатуру" />
+                        <SelectValue placeholder={t('norm.filterByItem')} />
                     </SelectTrigger>
                     <SelectContent>
                         {itemsData?.content?.map((item: any) => (
@@ -69,7 +69,7 @@ export function NormCreateForm() {
             </div>
 
             <div>
-                <Label>Количество</Label>
+                <Label>{t('norm.quantity')}</Label>
                 <Input 
                     type="number" 
                     step="0.01"
@@ -79,7 +79,7 @@ export function NormCreateForm() {
             </div>
 
             <div>
-                <Label>Срок носки (месяцев)</Label>
+                <Label>{t('itemSupplyNorm.wearMonths')}</Label>
                 <Input 
                     type="number"
                     {...register('wearMonths', { required: true, valueAsNumber: true })} 
@@ -88,12 +88,12 @@ export function NormCreateForm() {
             </div>
 
             <div>
-                <Label>Действует с</Label>
+                <Label>{t('itemSupplyNorm.validFrom')}</Label>
                 <Input type="date" {...register('validFrom')} />
             </div>
 
             <div>
-                <Label>Действует до</Label>
+                <Label>{t('itemSupplyNorm.validTo')}</Label>
                 <Input type="date" {...register('validTo')} />
             </div>
 

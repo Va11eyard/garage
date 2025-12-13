@@ -76,7 +76,7 @@ export function ReceiptCreateForm() {
 
                     <div>
                         <GovLabel>{t('documents.statusLabel')}</GovLabel>
-                        <GovInput value="DRAFT" disabled className="bg-gray-50" />
+                        <GovInput value={t('common.DRAFT')} disabled className="bg-gray-50" />
                     </div>
                 </div>
 
@@ -122,11 +122,11 @@ export function ReceiptCreateForm() {
                 </div>
 
                 <div className="space-y-2">
-                    <Label className="text-lg font-semibold">Строки документа</Label>
+                    <Label className="text-lg font-semibold">{t('receipts.documentLines')}</Label>
                     {fields.map((field, index) => (
                         <div key={field.id} className="grid grid-cols-5 gap-2 items-end p-4 border rounded">
                             <div>
-                                <Label>Номенклатура</Label>
+                                <Label>{t('items.item')}</Label>
                                 <Select onValueChange={(value) => setValue(`lines.${index}.itemId`, value)}>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -141,7 +141,7 @@ export function ReceiptCreateForm() {
                                 </Select>
                             </div>
                             <div>
-                                <Label>Ед. изм.</Label>
+                                <Label>{t('receipts.unit')}</Label>
                                 <Select onValueChange={(value) => setValue(`lines.${index}.unitId`, value)}>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -156,7 +156,7 @@ export function ReceiptCreateForm() {
                                 </Select>
                             </div>
                             <div>
-                                <Label>Количество</Label>
+                                <Label>{t('receipts.quantity')}</Label>
                                 <Input 
                                     type="number" 
                                     step="0.01"
@@ -164,7 +164,7 @@ export function ReceiptCreateForm() {
                                 />
                             </div>
                             <div>
-                                <Label>Цена</Label>
+                                <Label>{t('receipts.price')}</Label>
                                 <Input 
                                     type="number" 
                                     step="0.01"
@@ -172,7 +172,7 @@ export function ReceiptCreateForm() {
                                 />
                             </div>
                             <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                                Удалить
+                                {t('common.delete')}
                             </Button>
                         </div>
                     ))}
@@ -181,7 +181,7 @@ export function ReceiptCreateForm() {
                         variant="outline" 
                         onClick={() => append({ itemId: '', unitId: '', quantity: 0, price: 0 } as ReceiptLineRequest)}
                     >
-                        Добавить строку
+                        {t('receipts.addLine')}
                     </Button>
                 </div>
 

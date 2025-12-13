@@ -75,7 +75,7 @@ export function IssueCreateForm() {
 
                     <div>
                         <GovLabel>{t('documents.statusLabel')}</GovLabel>
-                        <GovInput value="DRAFT" disabled className="bg-gray-50" />
+                        <GovInput value={t('common.DRAFT')} disabled className="bg-gray-50" />
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@ export function IssueCreateForm() {
                 </div>
 
                 <div>
-                    <GovLabel required>Сотрудник</GovLabel>
+                    <GovLabel required>{t('employees.employee')}</GovLabel>
                     <Select onValueChange={(value) => {
                         setValue('employeeId', value)
                         const employee = employeesData?.content?.find((e: any) => e.id === value)
@@ -147,11 +147,11 @@ export function IssueCreateForm() {
                 </div>
 
                 <div className="space-y-2">
-                    <Label className="text-lg font-semibold">Строки документа</Label>
+                    <Label className="text-lg font-semibold">{t('receipts.documentLines')}</Label>
                     {fields.map((field, index) => (
                         <div key={field.id} className="grid grid-cols-3 gap-2 items-end p-4 border rounded">
                             <div>
-                                <Label>Номенклатура</Label>
+                                <Label>{t('items.item')}</Label>
                                 <Select onValueChange={(value) => setValue(`lines.${index}.itemId`, value)}>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -166,7 +166,7 @@ export function IssueCreateForm() {
                                 </Select>
                             </div>
                             <div>
-                                <Label>Количество</Label>
+                                <Label>{t('receipts.quantity')}</Label>
                                 <Input 
                                     type="number" 
                                     step="0.01"
@@ -174,7 +174,7 @@ export function IssueCreateForm() {
                                 />
                             </div>
                             <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                                Удалить
+                                {t('common.delete')}
                             </Button>
                         </div>
                     ))}
@@ -183,7 +183,7 @@ export function IssueCreateForm() {
                         variant="outline" 
                         onClick={() => append({ itemId: '', quantity: 0 } as IssueLineCreateRequest)}
                     >
-                        Добавить строку
+                        {t('receipts.addLine')}
                     </Button>
                 </div>
 
