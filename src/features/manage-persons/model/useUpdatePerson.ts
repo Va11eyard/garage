@@ -18,7 +18,7 @@ export function useUpdatePerson() {
 
     return useMutation<PersonDto, Error, UpdatePersonVariables>({
         mutationFn: ({ id, data }: UpdatePersonVariables) => service.update(id, data),
-        onSuccess: (_data: PersonDto, variables: UpdatePersonVariables) => {
+        onSuccess: async (_data: PersonDto, variables: UpdatePersonVariables) => {
             await queryClient.refetchQueries({ queryKey: ['persons'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['persons', variables.id], exact: false })

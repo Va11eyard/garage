@@ -53,7 +53,7 @@ export function EmployeeHireForm() {
                     <GovLabel required>{t('employees.person')}</GovLabel>
                     <Select onValueChange={(value) => setValue('personId', value)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Выберите физическое лицо" />
+                            <SelectValue placeholder={t('employees.selectPerson')} />
                         </SelectTrigger>
                         <SelectContent>
                             {(Array.isArray(persons) ? persons : persons?.content || []).map((person: any) => (
@@ -88,7 +88,7 @@ export function EmployeeHireForm() {
                     <GovLabel>{t('employees.orgUnit')}</GovLabel>
                     <Select onValueChange={(value) => setValue('orgUnitId', value)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Выберите подразделение" />
+                            <SelectValue placeholder={t('employees.selectOrgUnit')} />
                         </SelectTrigger>
                         <SelectContent>
                             {orgUnits?.map((unit: any) => (
