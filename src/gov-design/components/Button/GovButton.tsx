@@ -11,7 +11,7 @@ const govButtonVariants = cva(
         primary: "bg-gov-blue-500 hover:bg-gov-blue-600 hover:shadow-md text-black shadow-sm border-gov-blue-600 hover:border-gov-blue-700 focus-visible:ring-gov-blue-500",
         secondary: "bg-white hover:bg-gov-gray-50 hover:shadow-md text-gov-blue-500 border-gov-blue-500 hover:border-gov-blue-600 shadow-sm focus-visible:ring-gov-blue-500",
         success: "bg-gov-green-500 hover:bg-gov-green-600 hover:shadow-md text-black shadow-sm border-gov-green-600 hover:border-gov-green-700 focus-visible:ring-gov-green-500",
-        danger: "bg-gov-red-500 hover:bg-red-600 hover:shadow-md text-black shadow-sm border-red-600 hover:border-red-700 focus-visible:ring-gov-red-500",
+        danger: "bg-gov-red-500 hover:bg-red-600 hover:shadow-md text-red-600 hover:text-white shadow-sm border-red-600 hover:border-red-700 focus-visible:ring-gov-red-500",
         ghost: "hover:bg-gov-gray-100 hover:shadow-sm text-gov-gray-700 border-transparent hover:border-gov-gray-300 focus-visible:ring-gov-gray-400",
         outline: "border-gov-gray-300 hover:bg-gov-gray-50 hover:border-gov-gray-400 hover:shadow-sm text-gov-gray-700 focus-visible:ring-gov-gray-400",
       },
