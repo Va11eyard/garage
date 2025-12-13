@@ -10,12 +10,8 @@ export function useDeleteItemGroup() {
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.remove(id),
         onSuccess: () => {
-            // Remove all cached item-groups queries to force fresh fetch
-            queryClient.removeQueries({ queryKey: ['item-groups'] })
-            queryClient.removeQueries({ queryKey: ['itemGroups'] })
-            
-            // Refetch active queries
-            queryClient.refetchQueries({ queryKey: ['item-groups'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['item-groups'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['itemGroups'], exact: false })
         },
     })
 }

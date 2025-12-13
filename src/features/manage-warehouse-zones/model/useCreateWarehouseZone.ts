@@ -12,12 +12,8 @@ export function useCreateWarehouseZone() {
     return useMutation({
         mutationFn: (data: WarehouseZoneCreateRequest) => service.create(data),
         onSuccess: () => {
-            // Remove all cached warehouse-zones queries to force fresh fetch
-            queryClient.removeQueries({ queryKey: ['warehouse-zones'] })
-            queryClient.removeQueries({ queryKey: ['warehouseZones'] })
-            
-            // Refetch active queries
-            queryClient.refetchQueries({ queryKey: ['warehouse-zones'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouse-zones'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseZones'], exact: false })
         },
     })
 }

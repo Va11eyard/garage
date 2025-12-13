@@ -12,15 +12,9 @@ export function useUpdateOrgUnit() {
     return useMutation<OrgUnitDto, Error, { id: string; data: OrgUnitUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
         onSuccess: () => {
-            // Remove all cached org-units queries to force fresh fetch
-            queryClient.removeQueries({ queryKey: ['org-units'] })
-            queryClient.removeQueries({ queryKey: ['orgUnits'] })
-            
-            // Invalidate individual org-unit queries
+            queryClient.invalidateQueries({ queryKey: ['org-units'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['orgUnits'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['orgUnit'], exact: false })
-            
-            // Refetch active queries
-            queryClient.refetchQueries({ queryKey: ['org-units'], exact: false })
         },
     })
 }

@@ -12,12 +12,8 @@ export function useCreateWarehouseCell() {
     return useMutation({
         mutationFn: (data: WarehouseCellCreateRequest) => service.create(data),
         onSuccess: () => {
-            // Remove all cached warehouse-cells queries to force fresh fetch
-            queryClient.removeQueries({ queryKey: ['warehouse-cells'] })
-            queryClient.removeQueries({ queryKey: ['warehouseCells'] })
-            
-            // Refetch active queries
-            queryClient.refetchQueries({ queryKey: ['warehouse-cells'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouse-cells'], exact: false })
+            queryClient.invalidateQueries({ queryKey: ['warehouseCells'], exact: false })
         },
     })
 }
