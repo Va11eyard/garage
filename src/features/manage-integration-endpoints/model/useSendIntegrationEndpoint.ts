@@ -10,7 +10,8 @@ export function useSendIntegrationEndpoint() {
 
     return useMutation({
         mutationFn: (code: string) => Service.sendTestIntegrationMessage(code, 'TEST'),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['integration-endpoints'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['integration-endpoints'], exact: false })
             router.refresh()
         },

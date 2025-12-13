@@ -10,7 +10,8 @@ export function useDeleteNorm() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => Service.deleteItemSupplyNorm(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['norms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['norms'], exact: false })
             router.refresh()
         },

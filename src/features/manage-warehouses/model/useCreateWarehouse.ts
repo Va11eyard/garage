@@ -11,7 +11,8 @@ export function useCreateWarehouse() {
 
     return useMutation<WarehouseDto, Error, WarehouseCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['warehouses'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouses'], exact: false })
             router.refresh()
         },

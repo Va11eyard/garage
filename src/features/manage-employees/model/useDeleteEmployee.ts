@@ -12,7 +12,8 @@ export function useDeleteEmployee() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.remove(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['employees'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
             router.refresh()
         },

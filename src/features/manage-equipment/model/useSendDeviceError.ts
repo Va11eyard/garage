@@ -11,7 +11,8 @@ export function useSendDeviceError() {
     return useMutation({
         mutationFn: ({ code, message }: { code: string; message: string }) => 
             Service.reportDeviceError(code, message),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['equipment'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
             router.refresh()
         },

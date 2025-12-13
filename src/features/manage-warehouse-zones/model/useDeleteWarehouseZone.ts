@@ -12,8 +12,10 @@ export function useDeleteWarehouseZone() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['warehouse-zones'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouse-zones'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['warehouseZones'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouseZones'], exact: false })
             router.refresh()
         },

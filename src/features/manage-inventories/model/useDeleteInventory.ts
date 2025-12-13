@@ -10,7 +10,8 @@ export function useDeleteInventory() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => Service.deleteInventoryDocument(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['inventories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['inventories'], exact: false })
             router.refresh()
         },

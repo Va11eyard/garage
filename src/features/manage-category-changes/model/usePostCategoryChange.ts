@@ -12,7 +12,8 @@ export function usePostCategoryChange() {
 
     return useMutation({
         mutationFn: (id: string) => service.post(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['category-changes'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['category-changes'], exact: false })
             router.refresh()
         },

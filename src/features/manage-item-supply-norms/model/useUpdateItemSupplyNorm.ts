@@ -12,8 +12,10 @@ export function useUpdateItemSupplyNorm(id: string) {
 
     return useMutation({
         mutationFn: (data: ItemSupplyNormUpdateRequest) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['item-supply-norms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['item-supply-norms'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['itemSupplyNorms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['itemSupplyNorms'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['item-supply-norm', id], exact: false })
             router.refresh()

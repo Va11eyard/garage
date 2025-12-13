@@ -13,7 +13,8 @@ export function useCreateUser() {
 
     return useMutation<UserDto, Error, CreateUserRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['users'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
             router.refresh()
         },

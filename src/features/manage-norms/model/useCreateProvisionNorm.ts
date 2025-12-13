@@ -11,7 +11,8 @@ export function useCreateProvisionNorm() {
 
     return useMutation({
         mutationFn: (data: ProvisionNormCreateRequest) => Service.createProvisionNorm(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['provision-norms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['provision-norms'], exact: false })
             router.refresh()
         },

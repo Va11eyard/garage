@@ -13,9 +13,12 @@ export function useUpdateWarehouseZone() {
 
     return useMutation<WarehouseZoneDto, Error, { id: string; data: WarehouseZoneUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['warehouse-zones'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouse-zones'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['warehouseZones'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouseZones'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['warehouseZone'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouseZone'], exact: false })
             router.refresh()
         },

@@ -13,7 +13,8 @@ export function useCreateMovement() {
 
     return useMutation<MovementDocumentDto, Error, MovementDocumentCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['movements'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
             router.refresh()
         },

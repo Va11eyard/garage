@@ -13,7 +13,8 @@ export function useUpdateInventorySurplus(id: string) {
 
     return useMutation<InventorySurplusDocumentDto, Error, InventorySurplusUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['inventory-surpluses'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['inventory-surpluses', id], exact: false })
             router.refresh()

@@ -10,8 +10,10 @@ export function useDeleteItemGroup() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.remove(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['item-groups'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['item-groups'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['itemGroups'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['itemGroups'], exact: false })
             router.refresh()
         },

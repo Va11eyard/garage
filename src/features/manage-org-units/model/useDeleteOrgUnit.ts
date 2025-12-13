@@ -12,8 +12,10 @@ export function useDeleteOrgUnit() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.remove(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['org-units'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['org-units'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['orgUnits'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['orgUnits'], exact: false })
             router.refresh()
         },

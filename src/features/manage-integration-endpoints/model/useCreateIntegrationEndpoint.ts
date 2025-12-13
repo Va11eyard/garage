@@ -12,8 +12,10 @@ export function useCreateIntegrationEndpoint() {
 
     return useMutation({
         mutationFn: service.create.bind(service),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['integration-endpoints'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['integration-endpoints'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['integrationEndpoints'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['integrationEndpoints'], exact: false })
             router.refresh()
         },

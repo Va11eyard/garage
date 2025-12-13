@@ -13,7 +13,8 @@ export function useCreateUnit() {
 
     return useMutation({
         mutationFn: (data: UnitOfMeasureCreateRequest) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['units'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['units'], exact: false })
             router.refresh()
         },

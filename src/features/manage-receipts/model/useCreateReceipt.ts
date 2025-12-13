@@ -13,7 +13,8 @@ export function useCreateReceipt() {
 
     return useMutation<ReceiptDocumentDto, Error, ReceiptCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['receipts'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
             router.refresh()
         },

@@ -12,8 +12,10 @@ export function useDeleteTemporaryIssue() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['temporary-issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['temporaryIssues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['temporaryIssues'], exact: false })
             router.refresh()
         },

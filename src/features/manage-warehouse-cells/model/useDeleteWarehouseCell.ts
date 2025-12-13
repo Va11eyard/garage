@@ -12,8 +12,10 @@ export function useDeleteWarehouseCell() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['warehouse-cells'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouse-cells'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['warehouseCells'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouseCells'], exact: false })
             router.refresh()
         },

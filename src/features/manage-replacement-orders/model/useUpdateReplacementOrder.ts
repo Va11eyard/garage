@@ -13,7 +13,8 @@ export function useUpdateReplacementOrder(id: string) {
 
     return useMutation<ReplacementOrderDto, Error, ReplacementOrderUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['replacement-orders'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['replacement-orders', id], exact: false })
             router.refresh()

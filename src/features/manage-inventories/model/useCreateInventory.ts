@@ -10,7 +10,8 @@ export function useCreateInventory() {
 
     return useMutation<InventoryDocumentDto, Error, InventoryDocumentCreateRequest>({
         mutationFn: (data: InventoryDocumentCreateRequest) => Service.createInventoryDocument(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['inventories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['inventories'], exact: false })
             router.refresh()
         },

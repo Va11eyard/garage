@@ -12,7 +12,8 @@ export function useCreateCategoryChange() {
 
     return useMutation({
         mutationFn: service.create.bind(service),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['category-changes'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['category-changes'], exact: false })
             router.refresh()
         },

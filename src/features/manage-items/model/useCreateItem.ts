@@ -12,7 +12,8 @@ export function useCreateItem() {
 
     return useMutation<ItemDto, Error, ItemCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['items'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['items'], exact: false })
             router.refresh()
         },

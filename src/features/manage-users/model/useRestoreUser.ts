@@ -13,7 +13,8 @@ export function useRestoreUser() {
 
     return useMutation<UserDto, Error, string>({
         mutationFn: (id: string) => service.restore(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['users'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
             router.refresh()
         },

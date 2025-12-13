@@ -12,7 +12,8 @@ export function useDeleteMovement() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['movements'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
             router.refresh()
         },

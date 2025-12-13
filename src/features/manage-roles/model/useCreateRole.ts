@@ -11,7 +11,8 @@ export function useCreateRole() {
 
     return useMutation<RoleDto, Error, string>({
         mutationFn: (code: string) => service.create(code),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['roles'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['roles'], exact: false })
             router.refresh()
         },

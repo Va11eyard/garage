@@ -14,8 +14,10 @@ export function useTransferStaff() {
     return useMutation<EmployeeDto, Error, { employeeId: string; newOrgUnitId: string }>({
         mutationFn: ({ employeeId, newOrgUnitId }: { employeeId: string; newOrgUnitId: string }) => 
             service.transfer(employeeId, newOrgUnitId),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['employees'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['staff'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
             router.refresh()
         },

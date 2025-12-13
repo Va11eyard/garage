@@ -12,7 +12,8 @@ export function usePostReturn() {
 
     return useMutation({
         mutationFn: (id: string) => service.post(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['returns'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
             router.refresh()
         },

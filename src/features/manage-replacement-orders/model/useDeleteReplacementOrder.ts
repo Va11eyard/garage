@@ -12,7 +12,8 @@ export function useDeleteReplacementOrder() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['replacement-orders'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
             router.refresh()
         },

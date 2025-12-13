@@ -10,7 +10,8 @@ export function useCreateNorm() {
 
     return useMutation<ItemSupplyNormDto, Error, ItemSupplyNormCreateRequest>({
         mutationFn: (data: any) => Service.createItemSupplyNorm(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['norms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['norms'], exact: false })
             router.refresh()
         },

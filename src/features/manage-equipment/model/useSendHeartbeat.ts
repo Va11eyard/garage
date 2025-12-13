@@ -10,7 +10,8 @@ export function useSendHeartbeat() {
 
     return useMutation({
         mutationFn: (code: string) => Service.sendDeviceHeartbeat(code),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['equipment'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
             router.refresh()
         },

@@ -10,7 +10,8 @@ export function useUpdateReturn(id: string) {
 
     return useMutation({
         mutationFn: (data: any) => Service.updateReturnDocument(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['returns'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['returns', id], exact: false })
             router.refresh()

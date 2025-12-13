@@ -10,8 +10,10 @@ export function useUpdateWriteOff(id: string) {
 
     return useMutation({
         mutationFn: (data: any) => Service.updateWriteOffDocument(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['write-offs'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['write-offs'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['writeOffs'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['writeOffs'], exact: false })
             router.refresh()
         },

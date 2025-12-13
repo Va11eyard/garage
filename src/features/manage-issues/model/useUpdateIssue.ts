@@ -13,7 +13,8 @@ export function useUpdateIssue(id: string) {
 
     return useMutation<IssueDocumentDto, Error, IssueUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['issues', id], exact: false })
             router.refresh()

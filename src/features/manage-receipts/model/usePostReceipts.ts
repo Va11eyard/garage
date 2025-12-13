@@ -11,7 +11,8 @@ export function usePostReceipt() {
 
     return useMutation<ReceiptDocumentDto, Error, string>({
         mutationFn: (id: string) => service.post(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['receipts'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
             router.refresh()
         },

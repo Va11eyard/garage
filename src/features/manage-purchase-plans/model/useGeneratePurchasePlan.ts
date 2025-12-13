@@ -10,7 +10,8 @@ export function useGeneratePurchasePlan() {
 
     return useMutation({
         mutationFn: (request: any) => Service.generate(request),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['purchase-plans'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['purchase-plans'], exact: false })
             router.refresh()
         },

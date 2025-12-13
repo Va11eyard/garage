@@ -12,7 +12,8 @@ export function useCancelIssue() {
 
     return useMutation({
         mutationFn: (id: string) => service.cancel(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
             router.refresh()
         },

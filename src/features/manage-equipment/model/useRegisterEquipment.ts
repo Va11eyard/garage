@@ -12,7 +12,8 @@ export function useRegisterEquipment() {
 
     return useMutation({
         mutationFn: service.register.bind(service),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['equipment'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['equipment'], exact: false })
             router.refresh()
         },

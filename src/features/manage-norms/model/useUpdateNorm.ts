@@ -10,7 +10,8 @@ export function useUpdateNorm(id: string) {
 
     return useMutation<ProvisionNormDto, Error, ProvisionNormUpdateRequest>({
         mutationFn: (data: any) => Service.updateProvisionNorm(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['norms'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['norms'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['norms', id], exact: false })
             router.refresh()

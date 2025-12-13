@@ -13,7 +13,8 @@ export function useUpdateUser() {
 
     return useMutation<UserDto, Error, { id: string; data: UpdateUserRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['users'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['users'], exact: false })
             router.refresh()
         },

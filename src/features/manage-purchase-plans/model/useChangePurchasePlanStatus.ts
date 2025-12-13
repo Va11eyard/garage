@@ -13,7 +13,8 @@ export function useChangePurchasePlanStatus() {
     return useMutation({
         mutationFn: ({ id, status }: { id: string; status: 'DRAFT' | 'APPROVED' | 'SENT' | 'CLOSED' }) =>
             service.changeStatus(id, status),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['purchase-plans'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['purchase-plans'], exact: false })
             router.refresh()
         },

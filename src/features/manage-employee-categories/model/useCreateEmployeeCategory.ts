@@ -12,8 +12,10 @@ export function useCreateEmployeeCategory() {
 
     return useMutation({
         mutationFn: service.create.bind(service),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['employee-categories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employee-categories'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['employeeCategories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employeeCategories'], exact: false })
             router.refresh()
         },

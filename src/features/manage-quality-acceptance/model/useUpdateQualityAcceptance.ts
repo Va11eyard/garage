@@ -10,9 +10,12 @@ export function useUpdateQualityAcceptance(id: string) {
 
     return useMutation({
         mutationFn: (data: any) => Service.updateQualityAcceptanceDocument(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['quality-acceptance'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['quality-acceptance'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['qualityAcceptance'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['qualityAcceptance'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['quality-acceptances'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['quality-acceptances'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['qualityAcceptance', id], exact: false })
             router.refresh()

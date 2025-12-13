@@ -13,8 +13,10 @@ export function useUpdateTemporaryIssue(id: string) {
 
     return useMutation<TemporaryIssueDocumentDto, Error, TemporaryIssueUpdateRequest>({
         mutationFn: (data: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['temporary-issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['temporary-issues'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['temporaryIssues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['temporaryIssues'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['temporary-issues', id], exact: false })
             router.refresh()

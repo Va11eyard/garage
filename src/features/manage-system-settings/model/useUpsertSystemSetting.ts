@@ -12,7 +12,8 @@ export function useUpsertSystemSetting() {
 
     return useMutation({
         mutationFn: service.upsert.bind(service),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['system-settings'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['system-settings'], exact: false })
             router.refresh()
         },

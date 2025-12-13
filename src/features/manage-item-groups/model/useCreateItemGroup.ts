@@ -12,8 +12,10 @@ export function useCreateItemGroup() {
 
     return useMutation({
         mutationFn: (data: ItemGroupCreateRequest) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['item-groups'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['item-groups'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['itemGroups'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['itemGroups'], exact: false })
             router.refresh()
         },

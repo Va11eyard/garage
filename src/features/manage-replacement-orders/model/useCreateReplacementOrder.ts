@@ -13,7 +13,8 @@ export function useCreateReplacementOrder() {
 
     return useMutation<ReplacementOrderDto, Error, ReplacementOrderCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['replacement-orders'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['replacement-orders'], exact: false })
             router.refresh()
         },

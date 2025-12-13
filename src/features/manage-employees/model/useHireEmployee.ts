@@ -10,7 +10,8 @@ export function useHireEmployee() {
 
     return useMutation<EmployeeDto, Error, EmployeeHireRequest>({
         mutationFn: (data: EmployeeHireRequest) => Service.hireEmployee(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['employees'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employees'], exact: false })
             router.refresh()
         },

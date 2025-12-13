@@ -13,8 +13,10 @@ export function useReturnItems() {
 
     return useMutation<ReturnDocumentDto, Error, ReturnCreateRequest>({
         mutationFn: (data: ReturnCreateRequest) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['returns'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['returns'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['assignments'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['assignments'], exact: false })
             router.refresh()
         },

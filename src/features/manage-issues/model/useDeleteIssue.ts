@@ -12,7 +12,8 @@ export function useDeleteIssue() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.remove(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
             router.refresh()
         },

@@ -13,7 +13,8 @@ export function useUpdateWarehouse() {
 
     return useMutation<WarehouseDto, Error, { id: string; data: WarehouseUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['warehouses'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['warehouses'], exact: false })
             router.refresh()
         },

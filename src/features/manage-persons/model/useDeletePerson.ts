@@ -12,7 +12,8 @@ export function useDeletePerson() {
 
     return useMutation<void, Error, string>({
         mutationFn: (id: string) => service.remove(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['persons'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
             router.refresh()
         },

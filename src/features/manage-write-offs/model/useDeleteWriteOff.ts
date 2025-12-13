@@ -12,8 +12,10 @@ export function useDeleteWriteOff() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['write-offs'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['write-offs'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['writeOffs'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['writeOffs'], exact: false })
             router.refresh()
         },

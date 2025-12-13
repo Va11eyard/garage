@@ -10,7 +10,8 @@ export function useUpdateMovement(id: string) {
 
     return useMutation({
         mutationFn: (data: any) => Service.updateMovementDocument(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['movements'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['movements'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['movements', id], exact: false })
             router.refresh()

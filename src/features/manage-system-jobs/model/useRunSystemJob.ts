@@ -10,7 +10,8 @@ export function useRunSystemJob() {
 
     return useMutation({
         mutationFn: (code: string) => StubService.adminRunSystemJob(code),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['system-jobs'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['system-jobs'], exact: false })
             router.refresh()
         },

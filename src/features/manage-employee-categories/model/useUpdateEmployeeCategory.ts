@@ -12,8 +12,10 @@ export function useUpdateEmployeeCategory() {
 
     return useMutation({
         mutationFn: ({ id, data }: { id: string; data: any }) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['employee-categories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employee-categories'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['employeeCategories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['employeeCategories'], exact: false })
             router.refresh()
         },

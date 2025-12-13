@@ -13,8 +13,10 @@ export function useUpdateUnit() {
 
     return useMutation<UnitOfMeasureDto, Error, { id: string; data: UnitOfMeasureUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: UnitOfMeasureUpdateRequest }) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['units'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['units'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['unit'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['unit'], exact: false })
             router.refresh()
         },

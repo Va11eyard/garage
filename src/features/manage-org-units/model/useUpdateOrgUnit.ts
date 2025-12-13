@@ -13,9 +13,12 @@ export function useUpdateOrgUnit() {
 
     return useMutation<OrgUnitDto, Error, { id: string; data: OrgUnitUpdateRequest }>({
         mutationFn: ({ id, data }: any) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['org-units'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['org-units'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['orgUnits'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['orgUnits'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['orgUnit'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['orgUnit'], exact: false })
             router.refresh()
         },

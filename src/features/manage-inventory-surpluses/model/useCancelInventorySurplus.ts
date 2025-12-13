@@ -10,8 +10,10 @@ export function useCancelInventorySurplus() {
 
     return useMutation({
         mutationFn: (id: string) => Service.cancelInventorySurplusDocument(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['inventory-surpluses'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['inventory-surpluses'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['inventory-surplus'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['inventory-surplus'], exact: false })
             router.refresh()
         },

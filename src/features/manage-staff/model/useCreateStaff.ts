@@ -10,8 +10,10 @@ export function useCreateStaff() {
 
     return useMutation<PersonDto, Error, PersonCreateRequest>({
         mutationFn: (data: PersonCreateRequest) => Service.createPerson(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['staff'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['persons'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['persons'], exact: false })
             router.refresh()
         },

@@ -13,7 +13,8 @@ export function useCreateIssue() {
 
     return useMutation<IssueDocumentDto, Error, IssueCreateRequest>({
         mutationFn: (data: any) => service.create(data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['issues'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['issues'], exact: false })
             router.refresh()
         },

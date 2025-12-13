@@ -10,7 +10,8 @@ export function useUpdateReceipt(id: string) {
 
     return useMutation({
         mutationFn: (data: any) => Service.updateReceiptDocument(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['receipts'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
             queryClient.invalidateQueries({ queryKey: ['receipts', id], exact: false })
             router.refresh()

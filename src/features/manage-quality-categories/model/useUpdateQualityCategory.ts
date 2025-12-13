@@ -13,8 +13,10 @@ export function useUpdateQualityCategory() {
 
     return useMutation<QualityCategoryDto, Error, { id: string; data: QualityCategoryUpdateRequest }>({
         mutationFn: ({ id, data }: { id: string; data: QualityCategoryUpdateRequest }) => service.update(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['quality-categories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['quality-categories'], exact: false })
+            await queryClient.refetchQueries({ queryKey: ['qualityCategories'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['qualityCategories'], exact: false })
             router.refresh()
         },

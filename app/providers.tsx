@@ -30,6 +30,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             defaultOptions: {
                 queries: {
                     staleTime: 0,
+                    gcTime: 0, // Disable cache completely
                     refetchOnWindowFocus: true,
                     refetchOnMount: true,
                     retry: 1,

@@ -13,10 +13,9 @@ export function useCreateOrganization() {
 
     return useMutation<OrganizationDto, Error, OrganizationCreateRequest>({
         mutationFn: (data: OrganizationCreateRequest) => service.create(data),
-        onSuccess: () => {
-            // Invalidate React Query cache
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['organizations'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['organizations'], exact: false })
-            // Force Next.js to refresh the router cache
             router.refresh()
         },
     })

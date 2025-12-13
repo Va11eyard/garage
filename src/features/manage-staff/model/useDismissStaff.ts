@@ -10,7 +10,8 @@ export function useDismissStaff() {
 
     return useMutation({
         mutationFn: ({ id, data }: { id: string, data: EmployeeDismissRequest }) => Service.dismissEmployee(id, data),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['staff'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['staff'], exact: false })
             router.refresh()
         },

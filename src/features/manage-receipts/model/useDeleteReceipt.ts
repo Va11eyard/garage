@@ -10,7 +10,8 @@ export function useDeleteReceipt() {
 
     return useMutation<any, Error, string>({
         mutationFn: (id: string) => service.delete(id),
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.refetchQueries({ queryKey: ['receipts'], type: 'active' })
             queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
             router.refresh()
         },
