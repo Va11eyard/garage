@@ -6,14 +6,12 @@ import { OpenAPI } from '@/shared/api/generated/__swagger_client'
 export function useExportBackup() {
     return useMutation({
         mutationFn: async () => {
-            // Get token from OpenAPI config or localStorage
             const token = OpenAPI.TOKEN || localStorage.getItem('auth_token')
             
             if (!token) {
                 throw new Error('No authentication token found')
             }
 
-            // Make direct fetch call to handle file download
             const response = await fetch(`${OpenAPI.BASE}/api/admin/system/backup/export`, {
                 method: 'POST',
                 headers: {
@@ -27,10 +25,8 @@ export function useExportBackup() {
                 throw new Error(errorText || 'Failed to export backup')
             }
 
-            // Get the blob from response
             const blob = await response.blob()
             
-            // Create download link
             const url = window.URL.createObjectURL(blob)
             const link = document.createElement('a')
             link.href = url

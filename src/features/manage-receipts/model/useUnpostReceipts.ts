@@ -1,16 +1,19 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { type ReceiptDocumentDto } from '@/shared/api/generated/__swagger_client'
 import { ReceiptService } from './service'
 const service = new ReceiptService()
 export function useUnpostReceipt() {
     const queryClient = useQueryClient()
+    const router = useRouter()
 
     return useMutation<ReceiptDocumentDto, Error, string>({
         mutationFn: (id: string) => service.unpost(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['receipts'], exact: false })
+            router.refresh()
         },
     })
 }
