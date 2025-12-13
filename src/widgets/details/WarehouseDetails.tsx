@@ -49,10 +49,10 @@ export function WarehouseDetails({ id }: { id: string }) {
                             <span>{warehouse.address}</span>
                         </div>
                     )}
-                    {warehouse.organizationName && (
+                    {warehouse.description && (
                         <div>
-                            <span className="font-semibold">{t('warehouses.organization')}: </span>
-                            <span>{warehouse.organizationName}</span>
+                            <span className="font-semibold">{t('warehouses.description')}: </span>
+                            <span>{warehouse.description}</span>
                         </div>
                     )}
                 </CardContent>

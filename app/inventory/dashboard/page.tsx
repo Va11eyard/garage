@@ -33,28 +33,19 @@ export default function InventoryDashboardPage() {
 
         <GovCard>
           <GovCardHeader>
-            <GovCardTitle>{t('dashboard.lowStock')}</GovCardTitle>
+            <GovCardTitle>{t('dashboard.totalStockQuantity')}</GovCardTitle>
           </GovCardHeader>
           <GovCardContent>
-            <p className="text-3xl font-bold text-red-600">{data?.lowStockItems || 0}</p>
+            <p className="text-3xl font-bold">{data?.totalStockQuantity || 0}</p>
           </GovCardContent>
         </GovCard>
 
         <GovCard>
           <GovCardHeader>
-            <GovCardTitle>{t('dashboard.pendingReceipts')}</GovCardTitle>
+            <GovCardTitle>{t('dashboard.totalPlannedDeficit')}</GovCardTitle>
           </GovCardHeader>
           <GovCardContent>
-            <p className="text-3xl font-bold">{data?.pendingReceipts || 0}</p>
-          </GovCardContent>
-        </GovCard>
-
-        <GovCard>
-          <GovCardHeader>
-            <GovCardTitle>{t('dashboard.pendingIssues')}</GovCardTitle>
-          </GovCardHeader>
-          <GovCardContent>
-            <p className="text-3xl font-bold">{data?.pendingIssues || 0}</p>
+            <p className="text-3xl font-bold text-red-600">{data?.totalPlannedDeficit || 0}</p>
           </GovCardContent>
         </GovCard>
       </div>

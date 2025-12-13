@@ -49,7 +49,6 @@ export default function QualityCategoryEditPage({ params }: { params: Promise<{ 
             await updateMutation.mutateAsync({
                 id,
                 data: {
-                    code: formData.code || undefined,
                     name: formData.name,
                     description: formData.description || undefined,
                     active: formData.active,

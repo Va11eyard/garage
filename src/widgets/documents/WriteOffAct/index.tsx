@@ -32,11 +32,11 @@ export function WriteOffAct({ id }: { id: string }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <span className="font-semibold">Номер документа: </span>
-                            <span>{writeOff.documentNumber}</span>
+                            <span>{writeOff.docNumber}</span>
                         </div>
                         <div>
                             <span className="font-semibold">Дата: </span>
-                            <span>{new Date(writeOff.documentDate).toLocaleDateString()}</span>
+                            <span>{writeOff.docDate ? new Date(writeOff.docDate).toLocaleDateString() : '—'}</span>
                         </div>
                     </div>
 

@@ -20,8 +20,8 @@ export function MovementEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (movement) {
-            setDocumentNumber(movement.documentNumber || '')
-            setDocumentDate(movement.documentDate ? new Date(movement.documentDate).toISOString().split('T')[0] : '')
+            setDocumentNumber(movement.docNumber || '')
+            setDocumentDate(movement.docDate ? new Date(movement.docDate).toISOString().split('T')[0] : '')
         }
     }, [movement])
 

@@ -101,7 +101,7 @@ export function WearReportTable() {
                 </TableHeader>
                 <TableBody>
                     {data?.content && data.content.length > 0 ? (
-                        data.content.map((row: any, index: number) => (
+                        (data.content || []).map((row: any, index: number) => (
                             <TableRow key={row.assignmentId || index}>
                                 <TableCell>
                                     {row.employeeLastName} {row.employeeFirstName} {row.employeeMiddleName || ''}

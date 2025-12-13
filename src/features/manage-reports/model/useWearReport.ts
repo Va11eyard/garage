@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Service } from '@/shared/api/generated/__swagger_client'
+import { Service, type PageEmployeeWearReportRowDto } from '@/shared/api/generated/__swagger_client'
 
 interface WearReportFilters {
     page?: number
@@ -15,11 +15,11 @@ interface WearReportFilters {
 export function useWearReport(filters: WearReportFilters = {}) {
     const hasValidOrgId = !!(filters.organizationId && filters.organizationId.trim() !== '')
     
-    return useQuery({
+    return useQuery<PageEmployeeWearReportRowDto, Error>({
         queryKey: ['wear-report', filters],
-        queryFn: () => {
+        queryFn: async () => {
             if (!hasValidOrgId) {
-                return Promise.resolve({ content: [], totalElements: 0, totalPages: 0 })
+                return { content: [], totalElements: 0, totalPages: 0 } as PageEmployeeWearReportRowDto
             }
             return Service.searchEmployeeWearReportPage(
                 filters.organizationId!,

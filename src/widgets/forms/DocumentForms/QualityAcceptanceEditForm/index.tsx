@@ -20,8 +20,8 @@ export function QualityAcceptanceEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (qualityAcceptance) {
-            setDocumentNumber(qualityAcceptance.documentNumber || '')
-            setDocumentDate(qualityAcceptance.documentDate ? new Date(qualityAcceptance.documentDate).toISOString().split('T')[0] : '')
+            setDocumentNumber(qualityAcceptance.docNumber || '')
+            setDocumentDate(qualityAcceptance.docDate ? new Date(qualityAcceptance.docDate).toISOString().split('T')[0] : '')
         }
     }, [qualityAcceptance])
 

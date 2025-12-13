@@ -28,25 +28,13 @@ export function NormDetails({ id }: { id: string }) {
                 </CardHeader>
                 <CardContent className="space-y-2">
                     <div>
-                        <span className="font-semibold">Количество: </span>
-                        <span>{norm.quantity}</span>
+                        <span className="font-semibold">Приоритет: </span>
+                        <span>{norm.priority ?? '—'}</span>
                     </div>
                     <div>
-                        <span className="font-semibold">Срок носки (мес): </span>
-                        <span>{norm.wearPeriodMonths}</span>
+                        <span className="font-semibold">Описание: </span>
+                        <span>{norm.description ?? '—'}</span>
                     </div>
-                    {norm.validFrom && (
-                        <div>
-                            <span className="font-semibold">Действует с: </span>
-                            <span>{new Date(norm.validFrom).toLocaleDateString()}</span>
-                        </div>
-                    )}
-                    {norm.validTo && (
-                        <div>
-                            <span className="font-semibold">Действует до: </span>
-                            <span>{new Date(norm.validTo).toLocaleDateString()}</span>
-                        </div>
-                    )}
                     <div>
                         <span className="font-semibold">{t('common.active')}: </span>
                         <span>{norm.active ? t('common.yes') : t('common.no')}</span>

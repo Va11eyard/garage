@@ -20,17 +20,23 @@ export function PersonEditForm({ id }: { id: string }) {
     const updateMutation = useUpdatePerson()
     
     const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        phone: '',
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        nationalId: '',
+        gender: '',
+        active: true,
     })
 
     useEffect(() => {
         if (person) {
             setFormData({
-                fullName: person.fullName || '',
-                email: person.email || '',
-                phone: person.phone || '',
+                lastName: person.lastName || '',
+                firstName: person.firstName || '',
+                middleName: person.middleName || '',
+                nationalId: person.nationalId || '',
+                gender: person.gender || '',
+                active: person.active ?? true,
             })
         }
     }, [person])
@@ -38,7 +44,7 @@ export function PersonEditForm({ id }: { id: string }) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         
-        if (!formData.fullName) {
+        if (!formData.lastName || !formData.firstName) {
             toast.error(t('common.required'))
             return
         }
@@ -47,9 +53,12 @@ export function PersonEditForm({ id }: { id: string }) {
             await updateMutation.mutateAsync({
                 id,
                 data: {
-                    fullName: formData.fullName,
-                    email: formData.email || undefined,
-                    phone: formData.phone || undefined,
+                    lastName: formData.lastName,
+                    firstName: formData.firstName,
+                    middleName: formData.middleName || undefined,
+                    nationalId: formData.nationalId || undefined,
+                    gender: formData.gender || undefined,
+                    active: formData.active,
                 }
             })
             toast.success(t('common.success'))
@@ -62,12 +71,14 @@ export function PersonEditForm({ id }: { id: string }) {
     if (isLoading) return <Spinner />
     if (!person) return <div>{t('common.notFound')}</div>
 
+    const fullName = [person.lastName, person.firstName, person.middleName].filter(Boolean).join(' ')
+
     return (
         <div className="space-y-6">
             <GovBreadcrumb items={[
                 { label: t('sidebar.directoriesSection'), href: '/directories' },
                 { label: t('persons.title'), href: '/directories/persons' },
-                { label: person.fullName || '', href: `/directories/persons/${id}` },
+                { label: fullName || '', href: `/directories/persons/${id}` },
                 { label: t('common.edit') }
             ]} />
 
@@ -78,32 +89,54 @@ export function PersonEditForm({ id }: { id: string }) {
                 <GovCardContent>
                     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
                         <div>
-                            <GovLabel required>{t('persons.fullName')}</GovLabel>
+                            <GovLabel required>{t('persons.lastName')}</GovLabel>
                             <GovInput
-                                value={formData.fullName}
-                                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                value={formData.lastName}
+                                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                 required
-                                placeholder={t('persons.fullName')}
+                                placeholder={t('persons.lastName')}
                             />
                         </div>
 
                         <div>
-                            <GovLabel>{t('persons.email')}</GovLabel>
+                            <GovLabel required>{t('persons.firstName')}</GovLabel>
                             <GovInput
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                placeholder={t('persons.email')}
+                                value={formData.firstName}
+                                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                required
+                                placeholder={t('persons.firstName')}
                             />
                         </div>
 
                         <div>
-                            <GovLabel>{t('persons.phone')}</GovLabel>
+                            <GovLabel>{t('persons.middleName')}</GovLabel>
                             <GovInput
-                                value={formData.phone}
-                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                placeholder={t('persons.phone')}
+                                value={formData.middleName}
+                                onChange={(e) => setFormData({ ...formData, middleName: e.target.value })}
+                                placeholder={t('persons.middleName')}
                             />
+                        </div>
+
+                        <div>
+                            <GovLabel>{t('persons.nationalId')}</GovLabel>
+                            <GovInput
+                                value={formData.nationalId}
+                                onChange={(e) => setFormData({ ...formData, nationalId: e.target.value })}
+                                placeholder={t('persons.nationalId')}
+                            />
+                        </div>
+
+                        <div>
+                            <GovLabel>{t('persons.gender')}</GovLabel>
+                            <select
+                                value={formData.gender}
+                                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                                className="w-full border rounded px-3 py-2"
+                            >
+                                <option value="">{t('common.select')}</option>
+                                <option value="MALE">{t('persons.male')}</option>
+                                <option value="FEMALE">{t('persons.female')}</option>
+                            </select>
                         </div>
 
                         <div className="flex gap-3 pt-4">

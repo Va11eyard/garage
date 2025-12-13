@@ -32,7 +32,7 @@ export function UserEditForm({ id }: { id: string }) {
             setFormData({
                 username: user.username || '',
                 roles: user.roles || [],
-                active: user.enabled ?? true,
+                active: user.active ?? true,
             })
         }
     }, [user])
@@ -49,7 +49,6 @@ export function UserEditForm({ id }: { id: string }) {
             await updateMutation.mutateAsync({
                 id,
                 data: {
-                    username: formData.username,
                     roles: formData.roles,
                     active: formData.active,
                 }

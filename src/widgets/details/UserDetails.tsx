@@ -39,22 +39,10 @@ export function UserDetails({ id }: { id: string }) {
                         <span className="font-semibold">{t('users.username')}:</span>
                         <span>{user.username}</span>
                     </div>
-                    {user.email && (
-                        <div className="grid grid-cols-[200px_1fr] gap-2">
-                            <span className="font-semibold">{t('users.email')}:</span>
-                            <span>{user.email}</span>
-                        </div>
-                    )}
-                    {user.fullName && (
-                        <div className="grid grid-cols-[200px_1fr] gap-2">
-                            <span className="font-semibold">{t('users.fullName')}:</span>
-                            <span>{user.fullName}</span>
-                        </div>
-                    )}
                     <div className="grid grid-cols-[200px_1fr] gap-2">
                         <span className="font-semibold">{t('users.status')}:</span>
-                        <span className={user.enabled ? 'text-green-600' : 'text-red-600'}>
-                            {user.enabled ? t('common.active') : t('common.inactive')}
+                        <span className={user.active ? 'text-green-600' : 'text-red-600'}>
+                            {user.active ? t('common.active') : t('common.inactive')}
                         </span>
                     </div>
                 </GovCardContent>

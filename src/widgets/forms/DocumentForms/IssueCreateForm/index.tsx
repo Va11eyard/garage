@@ -129,7 +129,7 @@ export function IssueCreateForm() {
                             const fullName = `${employee.lastName || ''} ${employee.firstName || ''} ${employee.middleName || ''}`.trim()
                             setValue('employeeFullName', fullName)
                             setValue('employeePosition', employee.positionName || '')
-                            setValue('employeeCategory', employee.categoryName || '')
+                            setValue('employeeCategory', employee.rankName || '')
                         }
                     }}>
                         <SelectTrigger>

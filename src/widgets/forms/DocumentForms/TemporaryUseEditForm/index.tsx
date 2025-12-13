@@ -22,8 +22,8 @@ export function TemporaryUseEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (temporaryUse) {
-            setDocumentNumber(temporaryUse.documentNumber || '')
-            setDocumentDate(temporaryUse.documentDate ? new Date(temporaryUse.documentDate).toISOString().split('T')[0] : '')
+            setDocumentNumber(temporaryUse.docNumber || '')
+            setDocumentDate(temporaryUse.docDate ? new Date(temporaryUse.docDate).toISOString().split('T')[0] : '')
         }
     }, [temporaryUse])
 
@@ -31,8 +31,8 @@ export function TemporaryUseEditForm({ id }: { id: string }) {
         e.preventDefault()
         try {
             await updateTemporaryUse.mutateAsync({
-                documentNumber,
-                documentDate,
+                docNumber: documentNumber,
+                docDate: documentDate,
             })
             toast.success(t('common.success'))
             router.push(`/inventory/temporary-use/${id}`)

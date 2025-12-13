@@ -28,13 +28,15 @@ export function EmployeeProvisionCard({ employeeId }: EmployeeProvisionCardProps
         return variants[status as keyof typeof variants] || 'secondary'
     }
 
+    const employeeName = [data.lastName, data.firstName, data.middleName].filter(Boolean).join(' ')
+
     return (
         <Card>
             <CardHeader>
                 <CardTitle>{t('employeeProvision.provisionCard')}</CardTitle>
                 <div className="text-sm text-muted-foreground space-y-1">
-                    <p><strong>{t('employeeProvision.employee')}:</strong> {data.employeeName}</p>
-                    <p><strong>{t('employeeProvision.category')}:</strong> {data.categoryName}</p>
+                    <p><strong>{t('employeeProvision.employee')}:</strong> {employeeName}</p>
+                    <p><strong>{t('employeeProvision.category')}:</strong> {data.employeeCategory}</p>
                     {data.normName && (
                         <p><strong>{t('employeeProvision.norm')}:</strong> {data.normName}</p>
                     )}

@@ -56,7 +56,7 @@ export function WarehouseCreateForm() {
                     className="w-full border rounded px-3 py-2"
                 >
                     <option value="">{t('warehouses.selectOrganization')}</option>
-                    {organizations?.map((o: any) => (
+                    {(organizations?.content || []).map((o: any) => (
                         <option key={o.id} value={o.id}>{o.name}</option>
                     ))}
                 </select>
@@ -69,7 +69,7 @@ export function WarehouseCreateForm() {
                         className="w-full border rounded px-3 py-2"
                 >
                     <option value="">{t('warehouses.selectOrgUnit')}</option>
-                    {orgUnits?.content?.map((ou: any) => (
+                    {(Array.isArray(orgUnits) ? orgUnits : []).map((ou: any) => (
                         <option key={ou.id} value={ou.id}>{ou.name}</option>
                     ))}
                 </select>

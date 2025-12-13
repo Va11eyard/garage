@@ -14,7 +14,7 @@ export default function ItemGroupDetailPage({ params }: { params: Promise<{ id: 
   const { t } = useTranslation()
   const router = useRouter()
   const { data: itemGroup, isLoading } = useItemGroup(id)
-  const { data: parentGroup } = useItemGroup(itemGroup?.parentId)
+  const { data: parentGroup } = useItemGroup(itemGroup?.parentId || '')
 
   if (isLoading) return <Spinner />
   if (!itemGroup) return <div>{t('common.notFound')}</div>

@@ -17,7 +17,6 @@ export function ConsolidatedDashboard() {
         {
             title: t('stats.employees'),
             value: data.totalEmployees,
-            active: data.activeEmployees,
             icon: Users,
             color: 'text-blue-600',
         },
@@ -34,30 +33,18 @@ export function ConsolidatedDashboard() {
             color: 'text-purple-600',
         },
         {
-            title: t('stats.organizations'),
-            value: data.totalEmployees, // Note: API might not have this field
-            icon: Building2,
+            title: t('stats.totalStockQuantity'),
+            value: data.totalStockQuantity,
+            icon: Package,
             color: 'text-orange-600',
         },
     ]
 
     const alerts = [
         {
-            title: t('documents.issue'),
-            value: data.pendingIssues,
+            title: t('stats.totalPlannedDeficit'),
+            value: data.totalPlannedDeficit,
             icon: AlertCircle,
-            color: 'text-yellow-600',
-        },
-        {
-            title: t('documents.return'),
-            value: data.pendingReturns,
-            icon: TrendingUp,
-            color: 'text-blue-600',
-        },
-        {
-            title: t('stockBalances.available'),
-            value: data.lowStockItems,
-            icon: Package,
             color: 'text-red-600',
         },
     ]
@@ -73,11 +60,6 @@ export function ConsolidatedDashboard() {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{stat.value}</div>
-                            {stat.active !== undefined && (
-                                <p className="text-xs text-muted-foreground">
-                                    {t('common.active')}: {stat.active}
-                                </p>
-                            )}
                         </CardContent>
                     </Card>
                 ))}
@@ -97,14 +79,15 @@ export function ConsolidatedDashboard() {
                 ))}
             </div>
 
-            {data.recentActivities && data.recentActivities.length > 0 && (
+            {/* Recent activities not available in current API */}
+            {false && (
                 <Card>
                     <CardHeader>
                         <CardTitle>{t('auditLog.title')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-2">
-                            {data.recentActivities.slice(0, 5).map((activity: any) => (
+                            {[].slice(0, 5).map((activity: any) => (
                                 <div
                                     key={activity.id}
                                     className="flex items-center justify-between border-b pb-2 last:border-0"

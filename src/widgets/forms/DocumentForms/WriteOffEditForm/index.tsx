@@ -22,8 +22,8 @@ export function WriteOffEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (writeOff) {
-            setDocumentNumber(writeOff.documentNumber || '')
-            setDocumentDate(writeOff.documentDate ? new Date(writeOff.documentDate).toISOString().split('T')[0] : '')
+            setDocumentNumber(writeOff.docNumber || '')
+            setDocumentDate(writeOff.docDate ? new Date(writeOff.docDate).toISOString().split('T')[0] : '')
         }
     }, [writeOff])
 
@@ -31,8 +31,8 @@ export function WriteOffEditForm({ id }: { id: string }) {
         e.preventDefault()
         try {
             await updateWriteOff.mutateAsync({
-                documentNumber,
-                documentDate,
+                docNumber: documentNumber,
+                docDate: documentDate,
             })
             toast.success(t('common.success'))
             router.push(`/inventory/writeoff/${id}`)

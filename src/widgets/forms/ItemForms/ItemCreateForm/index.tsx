@@ -57,7 +57,7 @@ export function ItemCreateForm() {
         <Label>{t('items.unitOfMeasure')}</Label>
         <select {...register('baseUnitId', { required: true })} className="w-full border rounded px-3 py-2">
           <option value="">{t('items.unitOfMeasure')}</option>
-          {units?.content?.map((u: any) => <option key={u.id} value={u.id}>{u.name}</option>)}
+          {(Array.isArray(units) ? units : []).map((u: any) => <option key={u.id} value={u.id}>{u.name}</option>)}
         </select>
         {errors.baseUnitId && <span className="text-red-600">{t('common.error')}</span>}
       </div>

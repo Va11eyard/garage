@@ -30,18 +30,18 @@ export default function ConsolidationDashboardPage() {
 
     const stats = [
         {
-            label: t('consolidation.totalOrganizations'),
-            value: data?.totalOrganizations ?? 0,
-            icon: Building,
-            color: 'text-blue-600',
-            bgColor: 'bg-blue-50'
-        },
-        {
             label: t('consolidation.totalEmployees'),
             value: data?.totalEmployees ?? 0,
             icon: Users,
             color: 'text-green-600',
             bgColor: 'bg-green-50'
+        },
+        {
+            label: t('consolidation.totalWarehouses'),
+            value: data?.totalWarehouses ?? 0,
+            icon: Warehouse,
+            color: 'text-orange-600',
+            bgColor: 'bg-orange-50'
         },
         {
             label: t('consolidation.totalItems'),
@@ -51,11 +51,11 @@ export default function ConsolidationDashboardPage() {
             bgColor: 'bg-purple-50'
         },
         {
-            label: t('consolidation.totalWarehouses'),
-            value: data?.totalWarehouses ?? 0,
-            icon: Warehouse,
-            color: 'text-orange-600',
-            bgColor: 'bg-orange-50'
+            label: t('consolidation.totalStockQuantity'),
+            value: data?.totalStockQuantity ?? 0,
+            icon: Package,
+            color: 'text-blue-600',
+            bgColor: 'bg-blue-50'
         },
     ]
 
@@ -98,14 +98,15 @@ export default function ConsolidationDashboardPage() {
                 })}
             </div>
 
-            {data?.organizationStats && (
+            {/* Organization stats not available in current API */}
+            {false && (
                 <Card>
                     <CardHeader>
                         <CardTitle>{t('consolidation.byOrganization')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            {data.organizationStats.map((org: any) => (
+                            {[].map((org: any) => (
                                 <div key={org.organizationId} className="flex items-center justify-between p-4 border rounded-lg">
                                     <div>
                                         <h3 className="font-semibold">{org.organizationName}</h3>

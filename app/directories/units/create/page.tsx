@@ -31,8 +31,10 @@ export default function UnitCreatePage() {
 
         try {
             await createMutation.mutateAsync({
-                ...formData,
-                shortName: formData.shortName || undefined,
+                code: formData.code,
+                name: formData.name,
+                shortName: formData.shortName || '',
+                active: formData.active,
             })
             toast.success(t('common.success'))
             router.push('/directories/units')

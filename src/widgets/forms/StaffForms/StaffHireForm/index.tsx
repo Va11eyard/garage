@@ -49,7 +49,7 @@ export function StaffHireForm() {
                 <Label>{t('staff.person')}</Label>
                 <select {...register('personId', { required: true })} className="w-full border rounded px-3 py-2">
                     <option value="">{t('staff.selectPerson')}</option>
-                    {persons?.content?.map((p: any) => <option key={p.id} value={p.id}>{`${p.lastName} ${p.firstName} ${p.middleName}`}</option>)}
+                    {(Array.isArray(persons) ? persons : persons?.content || []).map((p: any) => <option key={p.id} value={p.id}>{`${p.lastName} ${p.firstName} ${p.middleName}`}</option>)}
                 </select>
                 {errors.personId && <span className="text-red-600">{t('common.error')}</span>}
             </div>
@@ -69,7 +69,7 @@ export function StaffHireForm() {
                 <Label>{t('staff.orgUnit')}</Label>
                 <select {...register('orgUnitId')} className="w-full border rounded px-3 py-2" disabled={!selectedOrgId}>
                     <option value="">{t('staff.selectOrgUnit')}</option>
-                    {orgUnits?.content?.map((ou: any) => <option key={ou.id} value={ou.id}>{ou.name}</option>)}
+                    {(Array.isArray(orgUnits) ? orgUnits : []).map((ou: any) => <option key={ou.id} value={ou.id}>{ou.name}</option>)}
                 </select>
             </div>
 

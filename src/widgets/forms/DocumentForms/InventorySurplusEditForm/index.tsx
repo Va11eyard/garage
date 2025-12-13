@@ -26,7 +26,20 @@ export function InventorySurplusEditForm({ id }: { id: string }) {
     const [selectedOrgId, setSelectedOrgId] = useState<string>()
     const { data: warehouses } = useWarehousesByOrganization(selectedOrgId)
     
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        docNumber: string
+        docDate: string
+        organizationId: string
+        warehouseId: string
+        lines: Array<{
+            itemId: string
+            unitId: string
+            warehouseZoneId?: string
+            warehouseCellId?: string
+            quantity: number
+            comment?: string
+        }>
+    }>({
         docNumber: '',
         docDate: '',
         organizationId: '',
@@ -36,12 +49,20 @@ export function InventorySurplusEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (surplus) {
+            const validLines = (surplus.lines || []).filter(line => line.itemId && line.unitId && line.quantity).map(line => ({
+                itemId: line.itemId!,
+                unitId: line.unitId!,
+                warehouseZoneId: line.warehouseZoneId,
+                warehouseCellId: line.warehouseCellId,
+                quantity: line.quantity!,
+                comment: line.comment
+            }))
             setFormData({
                 docNumber: surplus.docNumber || '',
                 docDate: surplus.docDate || '',
                 organizationId: surplus.organizationId || '',
                 warehouseId: surplus.warehouseId || '',
-                lines: surplus.lines || []
+                lines: validLines
             })
             setSelectedOrgId(surplus.organizationId)
         }

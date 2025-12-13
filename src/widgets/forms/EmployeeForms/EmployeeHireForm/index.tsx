@@ -56,7 +56,7 @@ export function EmployeeHireForm() {
                             <SelectValue placeholder="Выберите физическое лицо" />
                         </SelectTrigger>
                         <SelectContent>
-                            {persons?.content?.map((person: any) => (
+                            {(Array.isArray(persons) ? persons : persons?.content || []).map((person: any) => (
                                 <SelectItem key={person.id} value={person.id!}>
                                     {person.lastName} {person.firstName}
                                 </SelectItem>

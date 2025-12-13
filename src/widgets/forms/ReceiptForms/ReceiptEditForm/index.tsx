@@ -42,7 +42,16 @@ export function ReceiptEditForm({ id }: { id: string }) {
             setValue('docDate', receipt.docDate)
             setValue('warehouseId', receipt.warehouseId)
             setValue('organizationId', receipt.organizationId)
-            setValue('lines', receipt.lines || [])
+            const validLines = (receipt.lines || []).filter(line => line.itemId && line.unitId && line.quantity).map(line => ({
+                itemId: line.itemId!,
+                unitId: line.unitId!,
+                warehouseZoneId: line.warehouseZoneId,
+                warehouseCellId: line.warehouseCellId,
+                quantity: line.quantity!,
+                price: line.price,
+                amount: line.amount
+            }))
+            setValue('lines', validLines)
             setSelectedOrgId(receipt.organizationId)
         }
     }, [receipt, setValue])

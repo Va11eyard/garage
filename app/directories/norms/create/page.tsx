@@ -72,7 +72,7 @@ export default function NormCreatePage() {
                 description: formData.description || undefined,
                 employeeCategory: formData.employeeCategory || undefined,
                 gender: formData.gender || undefined,
-                season: formData.season,
+                season: formData.season as any,
                 priority: formData.priority ? Number(formData.priority) : undefined,
                 organizationId: formData.organizationId || undefined,
                 active: formData.active,

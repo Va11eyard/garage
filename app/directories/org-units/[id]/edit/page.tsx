@@ -24,7 +24,7 @@ export default function OrgUnitEditPage({ params }: { params: Promise<{ id: stri
     const { data: orgUnit, isLoading } = useOrgUnit(id)
     const updateMutation = useUpdateOrgUnit()
     const { data: organizations } = useOrganizations({})
-    const { data: currentOrganization } = useOrganization(orgUnit?.organizationId)
+    const { data: currentOrganization } = useOrganization(orgUnit?.organizationId || '')
     
     const [formData, setFormData] = useState({
         organizationId: '',

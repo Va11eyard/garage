@@ -47,7 +47,17 @@ export function IssueEditForm({ id }: { id: string }) {
             setValue('employeePosition', issue.employeePosition)
             setValue('employeeCategory', issue.employeeCategory)
             setValue('comment', issue.comment)
-            setValue('lines', issue.lines || [])
+            const validLines = (issue.lines || []).filter(line => line.itemId && line.quantity).map(line => ({
+                itemId: line.itemId!,
+                warehouseZoneId: line.warehouseZoneId,
+                warehouseCellId: line.warehouseCellId,
+                quantity: line.quantity!,
+                wearStartDate: line.wearStartDate,
+                wearNormMonths: line.wearNormMonths,
+                wearEndDate: line.wearEndDate,
+                comment: line.comment
+            }))
+            setValue('lines', validLines)
             setSelectedOrgId(issue.organizationId)
         }
     }, [issue, setValue])
@@ -174,7 +184,7 @@ export function IssueEditForm({ id }: { id: string }) {
                                         const fullName = `${employee.lastName || ''} ${employee.firstName || ''} ${employee.middleName || ''}`.trim()
                                         setValue('employeeFullName', fullName)
                                         setValue('employeePosition', employee.positionName || '')
-                                        setValue('employeeCategory', employee.categoryName || '')
+                                        setValue('employeeCategory', employee.rankName || '')
                                     }
                                 }}
                             >

@@ -55,10 +55,10 @@ export function OrgUnitDetails({ id }: { id: string }) {
                             <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.organization')}</dt>
                             <dd className="mt-1 text-sm text-gov-gray-900">{organization?.name || '-'}</dd>
                         </div>
-                        {orgUnit.type && (
+                        {orgUnit.unitType && (
                             <div>
                                 <dt className="text-sm font-medium text-gov-gray-500">{t('orgUnits.type')}</dt>
-                                <dd className="mt-1 text-sm text-gov-gray-900">{orgUnit.type}</dd>
+                                <dd className="mt-1 text-sm text-gov-gray-900">{orgUnit.unitType}</dd>
                             </div>
                         )}
                         <div>

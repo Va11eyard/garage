@@ -14,7 +14,7 @@ export function UnitDetails({ id }: { id: string }) {
         <div className="max-w-xl mx-auto space-y-4">
             <h2 className="text-2xl font-bold">{data.name}</h2>
             <div>{t('units.code')}: {data.code}</div>
-            <div>{t('units.description')}: {data.description}</div>
+            <div>{t('units.shortName')}: {data.shortName}</div>
             <Button variant="default" size="sm">Редактировать</Button>
         </div>
     )

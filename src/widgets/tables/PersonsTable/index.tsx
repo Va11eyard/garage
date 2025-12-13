@@ -86,7 +86,7 @@ export function PersonsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {data?.content?.map((person: any) => (
+                    {(Array.isArray(data) ? data : data?.content || []).map((person: any) => (
                         <TableRow key={person.id}>
                             <TableCell>{person.nationalId || '-'}</TableCell>
                             <TableCell>{person.lastName}</TableCell>
@@ -133,9 +133,9 @@ export function PersonsTable() {
                     {t('pagination.prev')}
                 </Button>
                 <span className="text-sm text-gov-text-secondary">
-                    {t('pagination.page')} {page + 1} {t('pagination.of')} {data?.totalPages ?? 1}
+                    {t('pagination.page')} {page + 1} {t('pagination.of')} {(!Array.isArray(data) ? data?.totalPages : 1) ?? 1}
                 </span>
-                <Button onClick={nextPage} disabled={data?.last}>
+                <Button onClick={nextPage} disabled={!Array.isArray(data) && data?.last}>
                     {t('pagination.next')}
                 </Button>
             </div>

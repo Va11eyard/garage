@@ -27,8 +27,8 @@ export function EmployeeTransferForm({ id }: { id: string }) {
         e.preventDefault()
         try {
             await transferEmployee.mutateAsync({
-                transferDate,
-                newOrgUnitId,
+                eventDate: transferDate,
+                orgUnitId: newOrgUnitId,
             })
             toast.success(t('common.success'))
             router.push(`/staff/employees/${id}`)

@@ -16,8 +16,8 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
   const { t } = useTranslation()
   const router = useRouter()
   const { data: item, isLoading } = useItem(id)
-  const { data: itemGroup } = useItemGroup(item?.groupId)
-  const { data: unit } = useUnit(item?.baseUnitId)
+  const { data: itemGroup } = useItemGroup(item?.groupId || '')
+  const { data: unit } = useUnit(item?.baseUnitId || '')
 
   if (isLoading) return <Spinner />
   if (!item) return <div>{t('common.notFound')}</div>
@@ -91,10 +91,10 @@ export default function ItemDetailPage({ params }: { params: Promise<{ id: strin
               </p>
             </div>
           </div>
-          {item.description && (
+          {item.barcode && (
             <div>
-              <p className="text-sm text-gray-500">{t('items.description')}</p>
-              <p className="font-medium">{item.description}</p>
+              <p className="text-sm text-gray-500">{t('items.barcode')}</p>
+              <p className="font-medium">{item.barcode}</p>
             </div>
           )}
         </GovCardContent>

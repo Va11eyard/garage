@@ -16,8 +16,8 @@ export default function WarehouseDetailPage({ params }: { params: Promise<{ id: 
   const { t } = useTranslation()
   const router = useRouter()
   const { data: warehouse, isLoading } = useWarehouse(id)
-  const { data: organization } = useOrganization(warehouse?.organizationId)
-  const { data: orgUnit } = useOrgUnit(warehouse?.orgUnitId)
+  const { data: organization } = useOrganization(warehouse?.organizationId || '')
+  const { data: orgUnit } = useOrgUnit(warehouse?.orgUnitId || '')
 
   if (isLoading) return <Spinner />
   if (!warehouse) return <div>{t('common.notFound')}</div>

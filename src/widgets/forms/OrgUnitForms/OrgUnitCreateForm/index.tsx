@@ -27,6 +27,7 @@ export function OrgUnitCreateForm() {
         organizationId: '',
         parentId: '',
         unitType: '',
+        active: true,
     })
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -39,9 +40,12 @@ export function OrgUnitCreateForm() {
 
         try {
             await mutateAsync({
-                ...formData,
+                organizationId: formData.organizationId,
+                code: formData.code,
+                name: formData.name,
                 parentId: formData.parentId || undefined,
-                unitType: formData.unitType || undefined,
+                unitType: formData.unitType || '',
+                active: formData.active,
             })
             toast.success(t('common.success'))
             router.push('/directories/org-units')

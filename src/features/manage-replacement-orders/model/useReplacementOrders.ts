@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { Service, type ReplacementOrderDto } from '@/shared/api/generated/__swagger_client'
+import { Service, type Page } from '@/shared/api/generated/__swagger_client'
 
 export function useReplacementOrders(params: {
     warehouseId?: string
@@ -9,7 +9,7 @@ export function useReplacementOrders(params: {
     page?: number
     size?: number
 }) {
-    return useQuery<{ content: ReplacementOrderDto[]; totalElements: number; totalPages: number }, Error>({
+    return useQuery<Page, Error>({
         queryKey: ['replacement-orders', params],
         queryFn: async () => {
             const pageable = {

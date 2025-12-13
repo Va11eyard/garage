@@ -25,7 +25,7 @@ export function EmployeeDismissForm({ id }: { id: string }) {
         try {
             await dismissEmployee.mutateAsync({
                 dismissalDate,
-                reason,
+                comment: reason,
             })
             toast.success(t('common.success'))
             router.push(`/staff/employees/${id}`)

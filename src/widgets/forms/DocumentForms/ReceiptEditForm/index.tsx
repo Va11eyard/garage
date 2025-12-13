@@ -20,8 +20,8 @@ export function ReceiptEditForm({ id }: { id: string }) {
 
     useEffect(() => {
         if (receipt) {
-            setDocumentNumber(receipt.documentNumber || '')
-            setDocumentDate(receipt.documentDate ? new Date(receipt.documentDate).toISOString().split('T')[0] : '')
+            setDocumentNumber(receipt.docNumber || '')
+            setDocumentDate(receipt.docDate ? new Date(receipt.docDate).toISOString().split('T')[0] : '')
         }
     }, [receipt])
 
@@ -29,8 +29,8 @@ export function ReceiptEditForm({ id }: { id: string }) {
         e.preventDefault()
         try {
             await updateReceipt.mutateAsync({
-                documentNumber,
-                documentDate,
+                docNumber: documentNumber,
+                docDate: documentDate,
             })
             router.push(`/inventory/receipts/${id}`)
         } catch (error) {

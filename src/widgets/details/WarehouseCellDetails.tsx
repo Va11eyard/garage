@@ -25,10 +25,10 @@ export function WarehouseCellDetails({ id }: { id: string }) {
                 {t('warehouseCells.capacity')}: {data.capacity ?? <span className="text-gov-text-secondary">—</span>}
             </div>
             <div>
-                {t('warehouses.title')}: {data.warehouseName ?? <span className="text-gov-text-secondary">—</span>}
+                {t('warehouses.warehouseId')}: {data.warehouseId ?? <span className="text-gov-text-secondary">—</span>}
             </div>
             <div>
-                {t('warehouseZones.title')}: {data.zoneName ?? <span className="text-gov-text-secondary">—</span>}
+                {t('warehouseZones.zoneId')}: {data.zoneId ?? <span className="text-gov-text-secondary">—</span>}
             </div>
             <div className="flex gap-3 mt-6">
                 <Link href={`/directories/warehouse-cells/${id}/edit` as Route}>
